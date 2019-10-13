@@ -13,4 +13,4 @@ Verlet integrator created for our physics II subject at University.
 * Josep Sánchez: 
 * Roger Pérez: https://github.com/rugiacreed
 * Carlos Redolar: https://github.com/carlosredolar
-* Marc Ramos: 
+* Marc Ramos: https://github.com/Ramsubito
