@@ -1,20 +1,15 @@
 #ifndef __RENDER_H__
 #define __RENDER_H__
 
-#include "Module.h"
-#include <limits.h>
+#include "Physics.h"
 
-struct SDL_Renderer;
-
-class Render : public Module
+class Render 
 {
 public:
 	Render();
 	~Render();
-
-	bool Start();
-	bool PostUpdate();
-	bool CleanUp();
+	
+	bool RenderResults(Physics particle);
 	
 };
 

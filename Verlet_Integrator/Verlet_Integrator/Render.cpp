@@ -1,32 +1,14 @@
-#include "App.h"
 #include "Render.h"
 
-#include <cstdlib>
-#include <time.h>
+Render::Render(){}
 
-Render::Render() : Module(){}
+Render::~Render(){}
 
-Render::~Render()
-{}
-
-bool Render::Start()
-{
-	bool ret = true;
-	LOG("Render started")
-	return ret;
-}
-
-bool Render::PostUpdate()
+bool Render::RenderResults(Physics particle)
 {
 	bool ret = true;
 
-	return ret;
-}
-
-// Called before quitting
-bool Render::CleanUp()
-{
-	bool ret = true;
+	//all render functions here
 
 	return ret;
 }

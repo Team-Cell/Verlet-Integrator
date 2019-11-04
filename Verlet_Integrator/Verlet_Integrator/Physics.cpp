@@ -3,12 +3,22 @@
 #include "Verlet.h"
 using namespace std;
 
-bool Physics::Awake() {
-	bool ret = true;
-	return ret;
+Physics::Physics() {
 }
 
-bool Physics::Start() {
+Physics::~Physics() {
+
+}
+
+bool Physics::InitialSituation() {
+	bool ret = true;
+	x_old = 0;
+	x = Verlet_Integration(5, x_old, a, dt);
+	return true;
+}
+
+
+bool Physics::Integrate() {
 	bool ret = true;
 	/*
 	cout << "Case dt: " << dt << " and a: " << a << endl;
@@ -39,25 +49,7 @@ bool Physics::Start() {
 		x = Verlet_Integration(x, x_old, a, dt);
 	}
 	*/
-	LOG("Physics started");
-
-	cout << "Case dt: " << dt << " and a: " << a << endl;
-	x_old = 0;
-	x = Verlet_Integration(5, x_old, a, dt);
-
-	return ret;
-}
-
-bool Physics::PreUpdate() {
-	bool ret = true;
-
 	x = Verlet_Integration(x, x_old, a, dt);
-	ret = (x <= 50);
 
-	return ret;
-}
-
-bool Physics::CleanUp() {
-	bool ret = true;
 	return ret;
 }

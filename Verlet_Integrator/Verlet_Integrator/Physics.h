@@ -1,24 +1,19 @@
 #ifndef _PHYSICS_H
 #define _PHYSICS_H
-#include "Module.h"
 
-class Physics : public Module
+class Physics 
 {
 public:
-	Physics(){}
-	~Physics(){}
+	Physics();
+	~Physics();
 
-	bool Awake();
-
-	bool Start();
-
-	bool PreUpdate();
-
-	bool CleanUp();
+	bool InitialSituation();
+	bool Integrate();
 
 public:
-	float x, x_old;
-	float v;
+	float x = 0;
+	float x_old = 0;
+	float v = 0;
 	float a = 0;
 	float dt = 1;
 };
