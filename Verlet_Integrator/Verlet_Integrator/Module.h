@@ -1,6 +1,8 @@
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
+#include "Globals.h"
+
 class App;
 
 class Module
@@ -12,9 +14,10 @@ public:
 	Module() : active(false)
 	{}
 
-	void Init()
+	virtual bool Init()
 	{
 		active = true;
+		return true;
 	}
 
 	// Called before render is available
@@ -30,21 +33,21 @@ public:
 	}
 
 	// Called each loop iteration
-	virtual bool PreUpdate()
+	virtual update_status PreUpdate()
 	{
-		return true;
+		return update_status::UPDATE_CONTINUE;
 	}
 
 	// Called each loop iteration
-	virtual bool Update(float dt)
+	virtual update_status Update(float dt)
 	{
-		return true;
+		return update_status::UPDATE_CONTINUE;
 	}
 
 	// Called each loop iteration
-	virtual bool PostUpdate()
+	virtual update_status PostUpdate()
 	{
-		return true;
+		return update_status::UPDATE_CONTINUE;
 	}
 
 	// Called before quitting

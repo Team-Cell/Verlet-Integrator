@@ -14,9 +14,9 @@ public:
 	~Render();
 
 	bool Init();
-	bool PostUpdate();
-	bool Update();
-	bool PreUpdate();
+	update_status PreUpdate();	
+	update_status Update();
+	update_status PostUpdate();
 	bool CleanUp();
 	
 };

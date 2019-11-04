@@ -21,23 +21,23 @@ bool Render::Init()
 }
 
 // Called every draw update
-bool Render::PreUpdate()
+update_status Render::PreUpdate()
 {
-	bool ret = true;
+	update_status ret = UPDATE_CONTINUE;
 
 	return ret;
 }
 
-bool Render::Update()
+update_status Render::Update()
 {	
-	bool ret = true;
+	update_status ret = UPDATE_CONTINUE;
 
 	return ret;
 }
 
-bool Render::PostUpdate()
+update_status Render::PostUpdate()
 {
-	bool ret = true;
+	update_status ret = UPDATE_CONTINUE;
 
 	return ret;
 }

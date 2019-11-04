@@ -8,7 +8,7 @@
 //Modulers
 class Render;
 
-class App
+class Application
 {
 public:
 	Render* render = nullptr;
@@ -16,10 +16,12 @@ public:
 public:
 
 	// Constructor
-	App();
+	Application();
 
 	// Destructor
-	virtual ~App();
+	virtual ~Application();
+
+	bool Init();
 
 	// Called before render is available
 	bool Awake();
@@ -28,13 +30,13 @@ public:
 	bool Start();
 
 	// Call modules before each loop iteration
-	bool PreUpdate();
+	update_status PreUpdate();
 
 	// Called each loop iteration
-	bool Update();
+	update_status Update();
 
 	// Call modules after each loop iteration
-	bool PostUpdate();
+	update_status PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
@@ -44,6 +46,6 @@ public:
 
 };
 
-extern App* App;
+extern Application* App;
 
 #endif

@@ -5,23 +5,30 @@
 #include "Render.h"
 
 // Constructor
-App::App()
+Application::Application()
 {
 	render = new Render();
 }
 
 // Destructor
-App::~App()
+Application::~Application()
 {
 }
 
-void App::AddModule(Module* module)
+void Application::AddModule(Module* module)
 {
 
+}
+
+bool Application::Init()
+{
+	bool ret = true;
+
+	return ret;
 }
 
 // Called before render is available
-bool App::Awake()
+bool Application::Awake()
 {
 	bool ret = true;
 
@@ -29,7 +36,7 @@ bool App::Awake()
 }
 
 // Called before the first frame
-bool App::Start()
+bool Application::Start()
 {
 	bool ret = true;
 
@@ -37,31 +44,31 @@ bool App::Start()
 }
 
 // Call modules before each loop iteration
-bool App::PreUpdate()
+update_status Application::PreUpdate()
 {
-	bool ret = true;
+	update_status ret = UPDATE_CONTINUE;
 
 	return ret;
 }
 
 // Called each loop iteration
-bool App::Update()
+update_status Application::Update()
 {
-	bool ret = true;
+	update_status ret = UPDATE_CONTINUE;
 
 	return ret;
 }
 
 // Call modules after each loop iteration
-bool App::PostUpdate()
+update_status Application::PostUpdate()
 {
-	bool ret = true;
+	update_status ret = UPDATE_CONTINUE;
 
 	return ret;
 }
 
 // Called before quitting
-bool App::CleanUp()
+bool Application::CleanUp()
 {
 	bool ret = true;
 
