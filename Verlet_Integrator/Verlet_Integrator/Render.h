@@ -12,7 +12,7 @@ public:
 	Render();
 	~Render();
 
-	bool Init();
+	bool Start();
 	bool PostUpdate();
 	bool CleanUp();
 	

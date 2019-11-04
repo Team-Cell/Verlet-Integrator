@@ -39,6 +39,8 @@ bool Physics::Start() {
 		x = Verlet_Integration(x, x_old, a, dt);
 	}
 	*/
+	LOG("Physics started");
+
 	cout << "Case dt: " << dt << " and a: " << a << endl;
 	x_old = 0;
 	x = Verlet_Integration(5, x_old, a, dt);
@@ -51,6 +53,7 @@ bool Physics::PreUpdate() {
 
 	x = Verlet_Integration(x, x_old, a, dt);
 	ret = (x <= 50);
+
 	return ret;
 }
 

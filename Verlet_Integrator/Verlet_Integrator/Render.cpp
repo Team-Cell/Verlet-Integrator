@@ -4,17 +4,15 @@
 #include <cstdlib>
 #include <time.h>
 
-Render::Render() : Module()
-{
-}
+Render::Render() : Module(){}
 
 Render::~Render()
 {}
 
-bool Render::Init()
+bool Render::Start()
 {
 	bool ret = true;
-
+	LOG("Render started")
 	return ret;
 }
 
