@@ -3,21 +3,18 @@
 
 #include "App.h"
 #include "Render.h"
+#include "Physics.h"
 
 // Constructor
 Application::Application()
 {
 	render = new Render();
+	physics = new Physics();
 }
 
 // Destructor
-Application::~Application()
-{
-}
-
-void Application::AddModule(Module* module)
-{
-
+Application::~Application(){
+	
 }
 
 bool Application::Init()
@@ -27,7 +24,6 @@ bool Application::Init()
 	return ret;
 }
 
-// Called before render is available
 bool Application::Awake()
 {
 	bool ret = true;
@@ -35,34 +31,35 @@ bool Application::Awake()
 	return ret;
 }
 
-// Called before the first frame
 bool Application::Start()
+{
+	bool ret = true;
+	physics->Start();
+	render->Start();
+	return ret;
+}
+
+bool Application::PreUpdate()
+{
+	bool ret = true;
+
+	ret = physics->PreUpdate();
+
+	return ret;
+}
+
+bool Application::Update()
 {
 	bool ret = true;
 
 	return ret;
 }
 
-// Call modules before each loop iteration
-update_status Application::PreUpdate()
+bool Application::PostUpdate()
 {
-	update_status ret = UPDATE_CONTINUE;
+	bool ret = true;
 
-	return ret;
-}
-
-// Called each loop iteration
-update_status Application::Update()
-{
-	update_status ret = UPDATE_CONTINUE;
-
-	return ret;
-}
-
-// Call modules after each loop iteration
-update_status Application::PostUpdate()
-{
-	update_status ret = UPDATE_CONTINUE;
+	ret = render->PostUpdate();
 
 	return ret;
 }
@@ -71,6 +68,9 @@ update_status Application::PostUpdate()
 bool Application::CleanUp()
 {
 	bool ret = true;
+
+	App->physics->CleanUp();
+	App->render->CleanUp();
 
 	return ret;
 }

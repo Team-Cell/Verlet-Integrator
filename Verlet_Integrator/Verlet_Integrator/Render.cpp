@@ -8,11 +8,9 @@ Render::Render() : Module()
 {
 }
 
-// Destructor
 Render::~Render()
 {}
 
-// Called before render is available
 bool Render::Init()
 {
 	bool ret = true;
@@ -20,24 +18,9 @@ bool Render::Init()
 	return ret;
 }
 
-// Called every draw update
-update_status Render::PreUpdate()
+bool Render::PostUpdate()
 {
-	update_status ret = UPDATE_CONTINUE;
-
-	return ret;
-}
-
-update_status Render::Update()
-{	
-	update_status ret = UPDATE_CONTINUE;
-
-	return ret;
-}
-
-update_status Render::PostUpdate()
-{
-	update_status ret = UPDATE_CONTINUE;
+	bool ret = true;
 
 	return ret;
 }

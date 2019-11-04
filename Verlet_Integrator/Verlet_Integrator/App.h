@@ -1,48 +1,39 @@
-#ifndef __j1APP_H__
-#define __j1APP_H__
+#ifndef __APP_H__
+#define __APP_H__
 
 #include "Module.h"
 
 #define NUM_MODULES 
 
-//Modulers
+//Modules
 class Render;
+class Physics;
 
 class Application
 {
 public:
 	Render* render = nullptr;
+	Physics* physics = nullptr;
 
 public:
 
-	// Constructor
 	Application();
 
-	// Destructor
 	virtual ~Application();
 
 	bool Init();
 
-	// Called before render is available
 	bool Awake();
 
-	// Called before the first frame
 	bool Start();
 
-	// Call modules before each loop iteration
-	update_status PreUpdate();
+	bool PreUpdate();
 
-	// Called each loop iteration
-	update_status Update();
+	bool Update();
 
-	// Call modules after each loop iteration
-	update_status PostUpdate();
+	bool PostUpdate();
 
-	// Called before quitting
 	bool CleanUp();
-
-	// Add a new module to handle
-	void AddModule(Module* module);
 
 };
 

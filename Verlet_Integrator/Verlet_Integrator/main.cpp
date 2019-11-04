@@ -1,117 +1,96 @@
 #include "App.h"
-#include "Verlet.h"
 #include <time.h>
 
-enum main_states
-{
-	MAIN_CREATION,
-	MAIN_START,
-	MAIN_UPDATE,
-	MAIN_FINISH,
-	MAIN_EXIT
-};
-
-Application* App = nullptr;
-
-int main() {
-	float x, x_old;
-	float v;
-	float a = 0;
-	float dt = 1;
-
-	cout << "Case dt: " << dt << " and a: " << a << endl;
-	x_old = 0;
-	x = Verlet_Integration(5, x_old, a, dt);
-	while (x <=50)
-	{
-		x = Verlet_Integration(x, x_old, a, dt);
-	}
-	cout << endl;
-
-	a = 1;
-	cout << "Case dt: " << dt << " and a: " << a << endl;
-	x_old = 0;
-	x = Verlet_Integration(5, x_old, a, dt);
-	while (x <= 50)
-	{
-		x = Verlet_Integration(x, x_old, a, dt);
-	}
-	cout <<endl;
-
-	dt = 0.5;
-	cout << "Case dt: " << dt << " and a: " << a << endl;
-	x_old = 0;
-	x = Verlet_Integration(5, x_old, a, dt);
-	while (x <= 50)
-	{
-		x = Verlet_Integration(x, x_old, a, dt);
-	}
-
-
 	//Modules
-	srand(time(NULL));
-	int main_return = EXIT_FAILURE;
-	main_states state = MAIN_CREATION;
-
-	while (state != MAIN_EXIT)
+	enum MainState
 	{
-		switch (state)
-		{
-		case MAIN_CREATION:
-		{
-			LOG("Application Creation --------------");
-			App = new Application();
-			state = MAIN_START;
-		}	break;
+		CREATE = 1,
+		AWAKE,
+		START,
+		LOOP,
+		CLEAN,
+		FAIL,
+		EXIT
+	};
 
-		case MAIN_START:
+	Application* App = NULL;
+
+	int main(int argc, char* args[])
+	{
+		LOG("Engine starting ...");
+
+		MainState state = CREATE;
+		int result = EXIT_FAILURE;
+
+		while (state != EXIT)
 		{
-			LOG("Application Init --------------");
-			if (App->Init() == false)
+			switch (state)
 			{
-				LOG("Application Init exits with error -----");
-				state = MAIN_EXIT;
-			}
-			else
-			{
-				state = MAIN_UPDATE;
-				LOG("Application Update --------------");
-			}
 
-		}	break;
+			case CREATE:
+				LOG("CREATION PHASE ===============================");
 
-		case MAIN_UPDATE:
-		{
-			int update_return = App->Update();
+				App = new Application();
 
-			if (update_return == UPDATE_ERROR)
-			{
-				LOG("Application Update exits with error -----");
-				state = MAIN_EXIT;
+				if (App != NULL)
+					state = AWAKE;
+				else
+					state = FAIL;
+
+				break;
+
+			case AWAKE:
+				LOG("AWAKE PHASE ===============================");
+				if (App->Awake() == true)
+					state = START;
+				else
+				{
+					LOG("ERROR: Awake failed");
+					state = FAIL;
+				}
+
+				break;
+
+			case START:
+				LOG("START PHASE ===============================");
+				if (App->Start() == true)
+				{
+					state = LOOP;
+					LOG("UPDATE PHASE ===============================");
+				}
+				else
+				{
+					state = FAIL;
+					LOG("ERROR: Start failed");
+				}
+				break;
+
+			case LOOP:
+				if (App->Update() == false)
+					state = CLEAN;
+				break;
+
+			case CLEAN:
+				LOG("CLEANUP PHASE ===============================");
+				if (App->CleanUp() == true)
+				{
+					result = EXIT_SUCCESS;
+					state = EXIT;
+				}
+				else
+					state = FAIL;
+
+				break;
+
+			case FAIL:
+				LOG("Exiting with errors :(");
+				result = EXIT_FAILURE;
+				state = EXIT;
+				break;
 			}
-			else if (update_return == UPDATE_STOP)
-				state = MAIN_FINISH;
 		}
-		break;
 
-		case MAIN_FINISH:
-		{
-			LOG("Application CleanUp --------------");
-			if (App->CleanUp() == false)
-			{
-				LOG("Application CleanUp exits with error -----");
-			}
-			else
-				main_return = EXIT_SUCCESS;
+		LOG("... Bye! :)\n");
 
-			state = MAIN_EXIT;
-
-		} break;
-
-		}
+		return result;
 	}
-
-	delete App;
-	LOG("Bye :)\n");
-	return main_return;
-}

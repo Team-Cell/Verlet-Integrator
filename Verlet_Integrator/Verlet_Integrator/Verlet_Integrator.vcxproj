@@ -126,6 +126,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Module.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Verlet.h" />
   </ItemGroup>
@@ -133,6 +134,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Render.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

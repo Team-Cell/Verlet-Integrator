@@ -1,8 +1,7 @@
-#ifndef __ModuleRenderer_H__
-#define __ModuleRenderer_H__
+#ifndef __RENDER_H__
+#define __RENDER_H__
 
 #include "Module.h"
-
 #include <limits.h>
 
 struct SDL_Renderer;
@@ -14,11 +13,9 @@ public:
 	~Render();
 
 	bool Init();
-	update_status PreUpdate();	
-	update_status Update();
-	update_status PostUpdate();
+	bool PostUpdate();
 	bool CleanUp();
 	
 };
 
-#endif //__ModuleRenderer_H__
+#endif //__RENDER_H__

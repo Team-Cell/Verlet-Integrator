@@ -14,69 +14,44 @@ public:
 	Module() : active(false)
 	{}
 
-	virtual bool Init()
+	void Init()
 	{
 		active = true;
-		return true;
 	}
 
-	// Called before render is available
 	virtual bool Awake()
 	{
 		return true;
 	}
 
-	// Called before the first frame
 	virtual bool Start()
 	{
 		return true;
 	}
 
-	// Called each loop iteration
-	virtual update_status PreUpdate()
+	virtual bool PreUpdate()
 	{
-		return update_status::UPDATE_CONTINUE;
+		return true;
 	}
 
-	// Called each loop iteration
-	virtual update_status Update(float dt)
+	virtual bool Update()
 	{
-		return update_status::UPDATE_CONTINUE;
+		return true;
 	}
 
-	// Called each loop iteration
-	virtual update_status PostUpdate()
+	virtual bool PostUpdate()
 	{
-		return update_status::UPDATE_CONTINUE;
+		return true;
 	}
 
-	// Called before quitting
 	virtual bool CleanUp()
 	{
 		return true;
 	}
 
-	bool IsEnabled() const { return enabled; }
-
-	void Enable()
-	{
-		if (enabled == false)
-		{
-			enabled = true;
-			Start();
-		}
-	}
-	void Disable()
-	{
-		if (enabled == true)
-		{
-			enabled = false;
-			CleanUp();
-		}
-	}
-
 public:
-	bool		active;
+
+	bool	active;
 
 };
 
