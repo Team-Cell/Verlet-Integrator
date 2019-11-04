@@ -5,11 +5,7 @@ using namespace std;
 
 float Verlet_Integration(float xi, float& xo, float ai, float dt) {
 	
-	float x_new;
-
-	float v_new;
-
-	float a_new;
+	float x_new, v_new, a_new;
 
 	x_new = xi + (xi - xo) + ai * dt * dt;
 
