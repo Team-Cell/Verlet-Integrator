@@ -16,8 +16,11 @@ public:
 
 	bool CleanUp();
 
-private:
-	 
+public:
+	float x, x_old;
+	float v;
+	float a = 0;
+	float dt = 1;
 };
 
 #endif // !_PHYSICS_H

@@ -10,12 +10,7 @@ bool Physics::Awake() {
 
 bool Physics::Start() {
 	bool ret = true;
-
-	float x, x_old;
-	float v;
-	float a = 0;
-	float dt = 1;
-
+	/*
 	cout << "Case dt: " << dt << " and a: " << a << endl;
 	x_old = 0;
 	x = Verlet_Integration(5, x_old, a, dt);
@@ -43,12 +38,19 @@ bool Physics::Start() {
 	{
 		x = Verlet_Integration(x, x_old, a, dt);
 	}
+	*/
+	cout << "Case dt: " << dt << " and a: " << a << endl;
+	x_old = 0;
+	x = Verlet_Integration(5, x_old, a, dt);
 
 	return ret;
 }
 
 bool Physics::PreUpdate() {
 	bool ret = true;
+
+	x = Verlet_Integration(x, x_old, a, dt);
+	ret = (x <= 50);
 	return ret;
 }
 

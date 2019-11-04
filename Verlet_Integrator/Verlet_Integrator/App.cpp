@@ -52,6 +52,10 @@ bool Application::Update()
 {
 	bool ret = true;
 
+	if (ret == true)
+		ret = PreUpdate();
+	if (ret == true)
+		ret = PostUpdate();
 	return ret;
 }
 
