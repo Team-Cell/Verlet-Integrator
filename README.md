@@ -10,7 +10,7 @@ Verlet integrator created for our physics II subject at University.
 * Silvino Medina: https://github.com/silvino00
 * Arnau Falgueras: https://github.com/arnau77
 * Pol Camacho: https://github.com/polcamacho
-* Josep Sánchez: 
+* Josep Sánchez: https://github.com/daskza19
 * Roger Pérez: https://github.com/rugiacreed
 * Carlos Redolar: https://github.com/carlosredolar
 * Marc Ramos: https://github.com/Ramsubito
