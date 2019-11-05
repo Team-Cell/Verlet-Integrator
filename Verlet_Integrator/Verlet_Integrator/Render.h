@@ -8,8 +8,8 @@
 class Render 
 {
 public:
-	Render(){};
-	~Render(){};
+	Render();
+	~Render();
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	bool RenderResults(Physics particle);
