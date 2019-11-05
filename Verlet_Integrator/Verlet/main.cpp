@@ -1,12 +1,15 @@
 #include <iostream>
 #include "Physics.h"
 #include "Render.h"
+#include "SDL/include/SDL.h"
+#pragma comment(lib,"SDL/libx86/SDL2.lib")
+#pragma comment(lib,"SDL/libx86/SDL2main.lib")
 using namespace std;
 
-void main() {
+int main(int argc, char* argv) {
+
 	Physics particle;
 	Render render;
-
 
 	int firstopcionmenu = 0;
 
@@ -33,4 +36,5 @@ void main() {
 			}
 		}
 	}
+	return 0;
 }
