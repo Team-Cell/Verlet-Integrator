@@ -6,6 +6,7 @@ using namespace std;
 void main() {
 	Physics particle;
 	Render render;
+	
 
 	cout << "Case dt: " << particle.dt << " and a: " << particle.a << endl;
 	particle.InitialSituation();
