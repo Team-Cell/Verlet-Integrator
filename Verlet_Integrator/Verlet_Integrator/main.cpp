@@ -8,11 +8,29 @@ void main() {
 	Render render;
 	
 
-	cout << "Case dt: " << particle.dt << " and a: " << particle.a << endl;
-	particle.InitialSituation();
+	int firstopcionmenu=0;
 
-		while (particle.x <= 500) {
-			particle.Integrate();
-			render.RenderResults(particle);
+	while ((firstopcionmenu != 2) && (firstopcionmenu>=3 || firstopcionmenu<=0)) {
+		cout << "MENU" << endl;
+		cout << "Qué prefieres hacer?" << endl << "1- Ejecutar el programa." << endl << "2- Salir" << endl;
+		cin >> firstopcionmenu;
+		system("cls");
+		if (firstopcionmenu == 1) {
+			cout << "Introduce la velocidad inicial del objeto:" << endl;
+			cin >> particle.v;
+			cout << "Introduce la posicion inicial del objeto:" << endl;
+			cin >> particle.x;
+			cout << "Introduce la acceleracion del objeto:" << endl;
+			cin >> particle.a;
+			cout << "Introduce el diferencial de tiempo:" << endl;
+			cin >> particle.dt;
+			//system("cls");
+			cout << "Case dt: " << particle.dt << " and a: " << particle.a << endl;
+			particle.InitialSituation();
+			while (particle.x <= 500) {
+				particle.Integrate();
+				render.RenderResults(particle);
+			}
 		}
+	}
 }

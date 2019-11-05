@@ -12,8 +12,8 @@ Physics::~Physics() {
 
 bool Physics::InitialSituation() {
 	bool ret = true;
-	x_old = 0;
-	x = Verlet_Integration(5, x_old, a, dt);
+	x_old = x-v;
+	x = Verlet_Integration(x, x_old, a, dt);
 	return true;
 }
 
