@@ -19,13 +19,13 @@ Render::~Render() {}
 
 bool Render::RenderResults(Physics particle)
 {
-	
-		bool ret = true;
+
+	bool ret = true;
 
 	//all render functions here
-	
-	
-	
+
+
+
 
 	return ret;
 }

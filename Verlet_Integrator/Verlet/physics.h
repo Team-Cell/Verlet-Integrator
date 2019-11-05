@@ -1,7 +1,7 @@
 #ifndef _PHYSICS_H
 #define _PHYSICS_H
 
-class Physics 
+class Physics
 {
 public:
 	Physics();
@@ -19,4 +19,5 @@ public:
 };
 
 #endif // !_PHYSICS_H
+
 

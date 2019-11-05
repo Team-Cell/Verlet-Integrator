@@ -2,10 +2,9 @@
 #define __RENDER_H__
 
 #include "Physics.h"
-#include "../SDL/include/SDL.h"
-#include "../SDL/include/SDL_rect.h"
+#include "SDL/include/SDL.h"
 
-class Render 
+class Render
 {
 public:
 	Render();
@@ -14,7 +13,7 @@ public:
 	SDL_Renderer* renderer;
 	bool RenderResults(Physics particle);
 
-	
+
 };
 
 #endif //__RENDER_H__

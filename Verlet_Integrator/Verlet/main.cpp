@@ -6,11 +6,11 @@ using namespace std;
 void main() {
 	Physics particle;
 	Render render;
-	
 
-	int firstopcionmenu=0;
 
-	while ((firstopcionmenu != 2) && (firstopcionmenu>=3 || firstopcionmenu<=0)) {
+	int firstopcionmenu = 0;
+
+	while ((firstopcionmenu != 2) && (firstopcionmenu >= 3 || firstopcionmenu <= 0)) {
 		cout << "MENU" << endl;
 		cout << "Qué prefieres hacer?" << endl << "1- Ejecutar el programa." << endl << "2- Salir" << endl;
 		cin >> firstopcionmenu;
