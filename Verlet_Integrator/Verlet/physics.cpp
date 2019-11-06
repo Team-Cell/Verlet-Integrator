@@ -1,6 +1,7 @@
-#include "Physics.h"
 #include <iostream>
+#include "Physics.h"
 #include "Verlet.h"
+#include "p2Log.h"
 using namespace std;
 
 Physics::Physics() {

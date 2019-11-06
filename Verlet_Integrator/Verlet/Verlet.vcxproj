@@ -124,10 +124,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="render.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="p2Log.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="verlet.h" />

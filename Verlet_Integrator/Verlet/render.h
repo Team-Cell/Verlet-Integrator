@@ -9,11 +9,12 @@ class Render
 public:
 	Render();
 	~Render();
-	SDL_Window* window;
-	SDL_Renderer* renderer;
+	bool InitRender();
 	bool RenderResults(Physics particle);
 
-
+public:
+	SDL_Window* window;
+	SDL_Renderer* renderer;
 };
 
 #endif //__RENDER_H__
