@@ -54,3 +54,9 @@ bool Physics::Integrate() {
 
 	return ret;
 }
+
+// TODO 1: 
+//Make a function which returns the velocity Verlet
+
+//TODO 2:
+//Make a function which returns the acceleration 

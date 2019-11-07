@@ -31,6 +31,8 @@ bool Render::RenderResults(Physics particle)
 	bool ret = true;
 
 	//all render functions here
+	//TODO 1:
+	//Given the position draw a white cirlce representing the particle
 
 	return ret;
 }

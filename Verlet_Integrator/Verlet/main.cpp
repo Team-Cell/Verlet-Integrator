@@ -22,17 +22,17 @@ int main(int argc, char* args[]) {
 
 	while ((firstopcionmenu != 2) && (firstopcionmenu >= 3 || firstopcionmenu <= 0)) {
 		cout << "MENU" << endl;
-		cout << "Qué prefieres hacer?" << endl << "1- Ejecutar el programa." << endl << "2- Salir" << endl;
+		cout << "What do you want to do?" << endl << "1- Execute the program" << endl << "2- Quit" << endl;
 		cin >> firstopcionmenu;
 		system("cls");
 		if (firstopcionmenu == 1) {
-			cout << "Introduce la velocidad inicial del objeto:" << endl;
+			cout << "Which is the initial speed?:" << endl;
 			cin >> particle.v;
-			cout << "Introduce la posicion inicial del objeto:" << endl;
+			cout << "Which is the initial position?:" << endl;
 			cin >> particle.x;
-			cout << "Introduce la acceleracion del objeto:" << endl;
+			cout << "Which is the initial acceleration?: " << endl;
 			cin >> particle.a;
-			cout << "Introduce el diferencial de tiempo:" << endl;
+			cout << "Which is the time difference?: " << endl;
 			cin >> particle.dt;
 			//system("cls");
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a << endl;
