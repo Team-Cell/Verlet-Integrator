@@ -21,5 +21,3 @@ float Verlet_Integration(float xi, float& xo, float ai, float dt) {
 }
 
 #endif // !_VERLET_H
-
-

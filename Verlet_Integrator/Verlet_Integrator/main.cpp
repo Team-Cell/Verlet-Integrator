@@ -5,20 +5,13 @@
 #include "p2Log.h"
 using namespace std;
 
-#include "SDL/include/SDL.h"
-#pragma comment(lib,"SDL/libx86/SDL2.lib")
-#pragma comment(lib,"SDL/libx86/SDL2main.lib")
-
 int main(int argc, char* args[]) {
 
 	LOG("Starting Integrator");
 
 	Physics particle;
-	Render render;
 
 	int firstopcionmenu = 0;
-
-	render.InitRender();
 
 	while ((firstopcionmenu != 2) && (firstopcionmenu >= 3 || firstopcionmenu <= 0)) {
 		cout << "MENU" << endl;
@@ -39,7 +32,6 @@ int main(int argc, char* args[]) {
 			particle.InitialSituation();
 			while (particle.x <= 500) {
 				particle.Integrate();
-				render.RenderResults(particle);
 			}
 		}
 	}

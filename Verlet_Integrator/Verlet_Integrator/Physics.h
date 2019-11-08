@@ -19,5 +19,3 @@ public:
 };
 
 #endif // !_PHYSICS_H
-
-
