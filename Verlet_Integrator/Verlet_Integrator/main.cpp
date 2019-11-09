@@ -12,10 +12,11 @@ int main(int argc, char* args[]) {
 	Physics particle;
 
 	int firstopcionmenu = 0;
+	int case_num = 0;
 
 	//Improve menu so different inputs can be taken
 
-	while ((firstopcionmenu != 2) && (firstopcionmenu >= 3 || firstopcionmenu <= 0)) {
+	while ((firstopcionmenu != 2) && (firstopcionmenu <= 3 || firstopcionmenu >= 0)) {
 		cout << "MENU" << endl;
 		cout << "What do you want to do?" << endl << "1- Execute the program" << endl << "2- Quit" << endl;
 		cin >> firstopcionmenu;
@@ -31,7 +32,10 @@ int main(int argc, char* args[]) {
 			cin >> particle.dt;
 			system("cls");
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a << endl;
-			particle.InitialSituation();
+			if (particle.a == 0 && particle.dt != 0)case_num = 1;
+			else if (particle.a != 0 && particle.dt == 1)case_num = 2;
+			else if (particle.a != 0)case_num = 3;
+			particle.InitialSituation(case_num);
 			while (particle.x <= 500) {
 				particle.Integrate();
 			}

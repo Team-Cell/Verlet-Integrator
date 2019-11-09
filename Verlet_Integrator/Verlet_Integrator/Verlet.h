@@ -5,13 +5,15 @@ using namespace std;
 
 float Verlet_Integration(float xi, float& xo, float ai, float dt) {
 
-	float x_new, v_new, a_new;
+	float x_new, v_new, a_new, vi;
 
 	x_new = xi + (xi - xo) + ai * dt * dt;
 
-	v_new = (x_new - xi) / dt;
+	vi = (x_new - xo) / (2 * dt);
 
-	a_new = ai;
+	v_new = vi + ai / dt;
+
+	a_new = (v_new - vi) / dt;
 
 	cout << "x: " << x_new << " v: " << v_new << " a: " << a_new << endl;
 
@@ -21,6 +23,24 @@ float Verlet_Integration(float xi, float& xo, float ai, float dt) {
 }
 
 //Different variations of the same functions must be done depending on which components we have
+
+float Verlet_Integration(float xi, float& xo, float vi, float ai, float dt) {
+
+	float x_new, v_new, a_new;
+
+	x_new = xi + (xi - xo) + ai * dt * dt;
+
+	v_new = vi + ai / dt;
+
+	a_new = (v_new - vi) / dt;
+
+	cout << "x: " << x_new << " v: " << v_new << " a: " << a_new << endl;
+
+	xo = xi;
+
+	return x_new;
+}
+
 
 // TODO 1: 
 //Make a function which returns the velocity Verlet
@@ -50,26 +70,6 @@ float Verlet_Velocity(float xi, float& x_new, float vi, float ai, float a_new, f
 
 //TODO 2:
 //Make a function which returns the acceleration 
-
-float Verlet_Acceleration(float fi, float m) {
-	
-	float a_new;
-
-	a_new = fi / m;
-
-	return a_new;
-}
-
-float Verlet_Acceleration(float fi, float fi2, float m) {
-
-	float a_new, f_total;
-
-	f_total = fi + fi2;
-
-	a_new = f_total / m;
-
-	return a_new;
-}
 
 //Other functions which return different values depending on the variables we have
 

@@ -16,9 +16,22 @@ Physics::~Physics() {
 
 }
 
-bool Physics::InitialSituation() {
+bool Physics::InitialSituation(int case_num) {
 	bool ret = true;
-	x_old = x - v;
+	switch (case_num) {
+	case 0: //acceleration == 0 and dt == 1, both constant
+		x_old = x - v * dt;
+		break;
+	case 1: //acceleration == 0 and dt !=||== 1, both constant
+		x_old = x - v * dt;
+		break;
+	case 2: //acceleration !=||== 0 and dt == 1, both constant
+		x_old = x - (v - a) - 0.5 * a;
+		break;
+	case 3: //acceleration !=||== 0 and dt !=||== 1, both constant
+		x_old = x - (v - a * dt) * dt - 0.5 * a * dt * dt;
+		break;
+	}
 	x = Verlet_Integration(x, x_old, a, dt);
 	return true;
 }

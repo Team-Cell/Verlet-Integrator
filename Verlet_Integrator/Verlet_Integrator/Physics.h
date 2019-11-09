@@ -7,7 +7,7 @@ public:
 	Physics();
 	~Physics();
 
-	bool InitialSituation();
+	bool InitialSituation(int case_num = 0);
 	bool Integrate();
 
 public:
