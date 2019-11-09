@@ -41,5 +41,8 @@
     <ClInclude Include="p2Log.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="p2Point.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

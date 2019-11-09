@@ -1,69 +1,70 @@
 #ifndef _VERLET_H
 #define _VERLET_H
 #include <iostream>
+#include "p2Point.h"
 using namespace std;
 
-float Verlet_Integration(float xi, float& xo, float ai, float dt) {
+p2Point<float> Verlet_Integration(p2Point<float> pos_i, p2Point<float>& pos_o, p2Point<float> ai, float dt) {
 
-	float x_new, v_new, a_new, vi;
+	p2Point<float> pos_new, v_new, a_new, vi;
 
-	x_new = xi + (xi - xo) + ai * dt * dt;
+	pos_new = pos_i + (pos_i - pos_o) + ai * dt * dt;
 
-	vi = (x_new - xo) / (2 * dt);
+	vi = (pos_new - pos_o) / (2 * dt);
 
 	v_new = vi + ai * dt;
 
 	a_new = (v_new - vi) / dt;
 
-	cout << "x: " << x_new << " v: " << v_new << " a: " << a_new << endl;
+	cout << "x: " << pos_new.x << " y: " << pos_new.y << " v: " << v_new.x << " , " << v_new.y << " a: " << a_new.x << " , " << a_new.y << endl;
 
-	xo = xi;
+	pos_o = pos_i;
 
-	return x_new;
+	return pos_new;
 }
 
 //Different variations of the same functions must be done depending on which components we have
 
-float Verlet_Integration(float xi, float& xo, float vi, float ai, float dt) {
+p2Point<float> Verlet_Integration(p2Point<float> pos_i, p2Point<float>& pos_o, p2Point<float> vi, p2Point<float> ai, float dt) {
 
-	float x_new, v_new, a_new;
+	p2Point<float> pos_new, v_new, a_new;
 
-	x_new = xi + (xi - xo) + ai * dt * dt;
+	pos_new = pos_i + (pos_i - pos_o) + ai * dt * dt;
 
 	v_new = vi + ai * dt;
 
 	a_new = (v_new - vi) / dt;
 
-	cout << "x: " << x_new << " v: " << v_new << " a: " << a_new << endl;
+	cout << "x: " << pos_new.x << " y: " << pos_new.y << " v: " << v_new.x << " , " << v_new.y << " a: " << a_new.x << " , " << a_new.y << endl;
 
-	xo = xi;
+	pos_o = pos_i;
 
-	return x_new;
+	return pos_new;
 }
 
 
 // TODO 1: 
 //Make a function which returns the velocity Verlet
-float Verlet_Velocity(float vi, float ai, float a_new, float dt) {
+p2Point<float> Verlet_Velocity(p2Point<float> vi, p2Point<float> ai, p2Point<float> a_new, float dt) {
 
-	float v_new;
+	p2Point<float> v_new;
 
 	v_new = vi + ((ai + a_new) / 2) * dt;
 
-	cout << " v: " << v_new << " a: " << a_new << endl;
+	cout << "v: " << v_new.x << " , " << v_new.y << " a: " << a_new.x << " , " << a_new.y << endl;
 
 	return v_new;
 }
 
-float Verlet_Velocity(float xi, float& x_new, float vi, float ai, float a_new, float dt) {
+p2Point<float> Verlet_Velocity(p2Point<float> pos_i, p2Point<float>& pos_new, p2Point<float> vi, p2Point<float> ai, p2Point<float> a_new, float dt) {
 
-	float v_new;
+	p2Point<float> v_new;
 
-	x_new = xi + vi * dt + 0.5 * ai * dt * dt;
+	pos_new = pos_i + vi * dt + ai * 0.5 * dt * dt;
 
 	v_new = vi + ((ai + a_new) / 2) * dt;
 
-	cout << "x: " << x_new << " v: " << v_new << " a: " << a_new << endl;
+	cout << "x: " << pos_new.x << " y: " << pos_new.y << " v: " << v_new.x << " , " << v_new.y << " a: " << a_new.x << " , " << a_new.y << endl;
 
 	return v_new;
 }
@@ -71,8 +72,8 @@ float Verlet_Velocity(float xi, float& x_new, float vi, float ai, float a_new, f
 //TODO 2:
 //Make a function which returns the acceleration 
 
-float Verlet_Acceleration(float m, float total_f) {
-	float a_new;
+p2Point<float> Verlet_Acceleration(float m, p2Point<float> total_f) {
+	p2Point<float> a_new;
 
 	a_new = total_f / m;
 	
@@ -81,15 +82,15 @@ float Verlet_Acceleration(float m, float total_f) {
 
 
 //This while could be used to calculate a number of forces before sending to the Verlet_Acceleration function
-/*float Calculate_Total_Forces(int number_forces) {
+/*p2Point<float> Calculate_Total_Forces(int number_forces) {
 	while (number_forces > 1) {
 		Calculate_Two_Forces()
 		number_forces--;
 	}
 }*/
 
-float Calculate_Two_Forces(float f1, float f2) {
-	float total_f;
+p2Point<float> Calculate_Two_Forces(p2Point<float> f1, p2Point<float> f2) {
+	p2Point<float> total_f;
 
 	total_f = f1 + f2;
 
