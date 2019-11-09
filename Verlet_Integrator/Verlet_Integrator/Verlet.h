@@ -71,6 +71,30 @@ float Verlet_Velocity(float xi, float& x_new, float vi, float ai, float a_new, f
 //TODO 2:
 //Make a function which returns the acceleration 
 
+float Verlet_Acceleration(float m, float total_f) {
+	float a_new;
+
+	a_new = total_f / m;
+	
+	return a_new;
+}
+
+
+//This while could be used to calculate a number of forces before sending to the Verlet_Acceleration function
+/*float Calculate_Total_Forces(int number_forces) {
+	while (number_forces > 1) {
+		Calculate_Two_Forces()
+		number_forces--;
+	}
+}*/
+
+float Calculate_Two_Forces(float f1, float f2) {
+	float total_f;
+
+	total_f = f1 + f2;
+
+	return total_f;
+}
 //Other functions which return different values depending on the variables we have
 
 #endif // !_VERLET_H

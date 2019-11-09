@@ -30,6 +30,8 @@ int main(int argc, char* args[]) {
 			cin >> particle.a;
 			cout << "Which is the time difference?: " << endl;
 			cin >> particle.dt;
+			cout << "Which is the mass?:" << endl;
+			cin >> particle.m;
 			system("cls");
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a << endl;
 			if (particle.a == 0 && particle.dt != 0)case_num = 1;

@@ -16,6 +16,7 @@ public:
 	float v;
 	float a;
 	float dt;
+	float m;
 };
 
 #endif // !_PHYSICS_H
