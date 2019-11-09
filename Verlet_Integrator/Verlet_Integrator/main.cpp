@@ -16,16 +16,18 @@ int main(int argc, char* args[]) {
 
 	//Improve menu so different inputs can be taken
 
+	//TODO
+
 	while ((firstopcionmenu != 2) && (firstopcionmenu <= 3 || firstopcionmenu >= 0)) {
 		cout << "MENU" << endl;
 		cout << "What do you want to do?" << endl << "1- Execute the program" << endl << "2- Quit" << endl;
 		cin >> firstopcionmenu;
 		system("cls");
 		if (firstopcionmenu == 1) {
-			cout << "Which is the initial speed?:" << endl;
-			cin >> particle.v.x >> particle.v.y;
 			cout << "Which is the initial position?:" << endl;
 			cin >> particle.pos.x >> particle.pos.y;
+			cout << "Which is the initial speed?:" << endl;
+			cin >> particle.v.x >> particle.v.y;
 			cout << "Which is the initial acceleration?: " << endl;
 			cin >> particle.a.x >> particle.a.y;
 			cout << "Which is the time difference?: " << endl;
