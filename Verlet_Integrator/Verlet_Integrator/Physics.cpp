@@ -5,6 +5,11 @@
 using namespace std;
 
 Physics::Physics() {
+	 x = 0;
+	 x_old = 0;
+	 v = 0;
+	 a = 0;
+	 dt = 1;
 }
 
 Physics::~Physics() {
@@ -54,11 +59,3 @@ bool Physics::Integrate() {
 
 	return ret;
 }
-
-//Different variations of the same functions must be done depending on which components we have
-
-// TODO 1: 
-//Make a function which returns the velocity Verlet
-
-//TODO 2:
-//Make a function which returns the acceleration 

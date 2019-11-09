@@ -13,6 +13,8 @@ int main(int argc, char* args[]) {
 
 	int firstopcionmenu = 0;
 
+	//Improve menu so different inputs can be taken
+
 	while ((firstopcionmenu != 2) && (firstopcionmenu >= 3 || firstopcionmenu <= 0)) {
 		cout << "MENU" << endl;
 		cout << "What do you want to do?" << endl << "1- Execute the program" << endl << "2- Quit" << endl;
@@ -27,7 +29,7 @@ int main(int argc, char* args[]) {
 			cin >> particle.a;
 			cout << "Which is the time difference?: " << endl;
 			cin >> particle.dt;
-			//system("cls");
+			system("cls");
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a << endl;
 			particle.InitialSituation();
 			while (particle.x <= 500) {

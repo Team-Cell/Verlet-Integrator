@@ -11,11 +11,11 @@ public:
 	bool Integrate();
 
 public:
-	float x = 0;
-	float x_old = 0;
-	float v = 0;
-	float a = 0;
-	float dt = 1;
+	float x;
+	float x_old;
+	float v;
+	float a;
+	float dt;
 };
 
 #endif // !_PHYSICS_H
