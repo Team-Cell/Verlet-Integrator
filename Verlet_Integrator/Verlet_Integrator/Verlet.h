@@ -24,6 +24,25 @@ float Verlet_Integration(float xi, float& xo, float ai, float dt) {
 
 // TODO 1: 
 //Make a function which returns the velocity Verlet
+float Verlet_Velocity(float vi, float ai, float ao, float dt) {
+
+	float v_new;
+
+	v_new = vi + ((ai + ao) / 2) * dt;
+
+	return v_new;
+}
+
+float Verlet_Velocity(float xi, float& x_new, float vi, float ai, float ao, float dt) {
+
+	float v_new;
+
+	x_new = xi + vi * dt + 0.5 * ai * dt * dt;
+
+	v_new = vi + ((ai + ao) / 2) * dt;
+
+	return v_new;
+}
 
 //TODO 2:
 //Make a function which returns the acceleration 
