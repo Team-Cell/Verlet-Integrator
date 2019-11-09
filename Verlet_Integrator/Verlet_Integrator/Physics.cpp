@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include "Physics.h"
 #include "Verlet.h"
 #include "p2Log.h"
@@ -48,4 +49,10 @@ bool Physics::Integrate() {
 	pos = Verlet_Integration(pos, pos_old, a, dt);
 
 	return ret;
+}
+
+float Module(fPoint var) {
+
+	return sqrt(var.x * var.x + var.y * var.y);
+
 }
