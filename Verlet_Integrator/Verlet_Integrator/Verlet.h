@@ -28,7 +28,7 @@ fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt) {
 
 fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt) {
 
-	p2Point<float> pos_new, v_new, a_new;
+	fPoint pos_new, v_new, a_new;
 
 	pos_new = pos_i + (pos_i - pos_o) + ai * dt * dt;
 
