@@ -27,7 +27,7 @@ fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt) {
 
 fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt) {
 
-	p2Point<float> pos_new, v_new, a_new;
+	fPoint pos_new, v_new, a_new;
 
 	pos_new = pos_i + (pos_i - pos_o) + ai * dt * dt;
 
@@ -73,7 +73,7 @@ fPoint Verlet_Velocity(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoi
 //Make a function which returns the acceleration 
 
 fPoint Verlet_Acceleration(float m, fPoint total_f) {
-	p2Point<float> a_new;
+	fPoint a_new;
 
 	a_new = total_f / m;
 	

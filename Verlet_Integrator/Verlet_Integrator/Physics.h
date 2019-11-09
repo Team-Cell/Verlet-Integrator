@@ -13,10 +13,10 @@ public:
 	bool Integrate();
 
 public:
-	p2Point<float> pos;
-	p2Point<float> pos_old;
-	p2Point<float> v;
-	p2Point<float> a;
+	fPoint pos;
+	fPoint pos_old;
+	fPoint v;
+	fPoint a;
 	float dt;
 	float m;
 };
