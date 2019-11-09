@@ -11,7 +11,7 @@ float Verlet_Integration(float xi, float& xo, float ai, float dt) {
 
 	vi = (x_new - xo) / (2 * dt);
 
-	v_new = vi + ai / dt;
+	v_new = vi + ai * dt;
 
 	a_new = (v_new - vi) / dt;
 
@@ -30,7 +30,7 @@ float Verlet_Integration(float xi, float& xo, float vi, float ai, float dt) {
 
 	x_new = xi + (xi - xo) + ai * dt * dt;
 
-	v_new = vi + ai / dt;
+	v_new = vi + ai * dt;
 
 	a_new = (v_new - vi) / dt;
 
