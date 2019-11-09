@@ -1,6 +1,7 @@
 #ifndef _VERLET_H
 #define _VERLET_H
 #include <iostream>
+#include "Physics.h"
 #include "p2Point.h"
 using namespace std;
 
@@ -16,7 +17,7 @@ fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt) {
 
 	a_new = (v_new - vi) / dt;
 
-	cout << "x: " << pos_new.x << " y: " << pos_new.y << " v: " << v_new.x << " , " << v_new.y << " a: " << a_new.x << " , " << a_new.y << endl;
+	cout << "p: " << Module(pos_new) << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
 
 	pos_o = pos_i;
 
@@ -35,7 +36,7 @@ fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, flo
 
 	a_new = (v_new - vi) / dt;
 
-	cout << "x: " << pos_new.x << " y: " << pos_new.y << " v: " << v_new.x << " , " << v_new.y << " a: " << a_new.x << " , " << a_new.y << endl;
+	cout << "p: " << Module(pos_new) << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
 
 	pos_o = pos_i;
 
@@ -51,7 +52,7 @@ fPoint Verlet_Velocity(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 	v_new = vi + ((ai + a_new) / 2) * dt;
 
-	cout << "v: " << v_new.x << " , " << v_new.y << " a: " << a_new.x << " , " << a_new.y << endl;
+	cout << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
 
 	return v_new;
 }
@@ -64,7 +65,7 @@ fPoint Verlet_Velocity(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoi
 
 	v_new = vi + ((ai + a_new) / 2) * dt;
 
-	cout << "x: " << pos_new.x << " y: " << pos_new.y << " v: " << v_new.x << " , " << v_new.y << " a: " << a_new.x << " , " << a_new.y << endl;
+	cout << "p: " << Module(pos_new) << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
 
 	return v_new;
 }

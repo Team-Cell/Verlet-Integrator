@@ -21,4 +21,6 @@ public:
 	float m;
 };
 
+float Module(fPoint var);
+
 #endif // !_PHYSICS_H
