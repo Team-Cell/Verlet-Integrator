@@ -4,9 +4,9 @@
 #include "p2Point.h"
 using namespace std;
 
-p2Point<float> Verlet_Integration(p2Point<float> pos_i, p2Point<float>& pos_o, p2Point<float> ai, float dt) {
+fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt) {
 
-	p2Point<float> pos_new, v_new, a_new, vi;
+	fPoint pos_new, v_new, a_new, vi;
 
 	pos_new = pos_i + (pos_i - pos_o) + ai * dt * dt;
 
@@ -25,7 +25,7 @@ p2Point<float> Verlet_Integration(p2Point<float> pos_i, p2Point<float>& pos_o, p
 
 //Different variations of the same functions must be done depending on which components we have
 
-p2Point<float> Verlet_Integration(p2Point<float> pos_i, p2Point<float>& pos_o, p2Point<float> vi, p2Point<float> ai, float dt) {
+fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt) {
 
 	p2Point<float> pos_new, v_new, a_new;
 
@@ -45,9 +45,9 @@ p2Point<float> Verlet_Integration(p2Point<float> pos_i, p2Point<float>& pos_o, p
 
 // TODO 1: 
 //Make a function which returns the velocity Verlet
-p2Point<float> Verlet_Velocity(p2Point<float> vi, p2Point<float> ai, p2Point<float> a_new, float dt) {
+fPoint Verlet_Velocity(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
-	p2Point<float> v_new;
+	fPoint v_new;
 
 	v_new = vi + ((ai + a_new) / 2) * dt;
 
@@ -56,9 +56,9 @@ p2Point<float> Verlet_Velocity(p2Point<float> vi, p2Point<float> ai, p2Point<flo
 	return v_new;
 }
 
-p2Point<float> Verlet_Velocity(p2Point<float> pos_i, p2Point<float>& pos_new, p2Point<float> vi, p2Point<float> ai, p2Point<float> a_new, float dt) {
+fPoint Verlet_Velocity(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
-	p2Point<float> v_new;
+	fPoint v_new;
 
 	pos_new = pos_i + vi * dt + ai * 0.5 * dt * dt;
 
@@ -72,7 +72,7 @@ p2Point<float> Verlet_Velocity(p2Point<float> pos_i, p2Point<float>& pos_new, p2
 //TODO 2:
 //Make a function which returns the acceleration 
 
-p2Point<float> Verlet_Acceleration(float m, p2Point<float> total_f) {
+fPoint Verlet_Acceleration(float m, fPoint total_f) {
 	p2Point<float> a_new;
 
 	a_new = total_f / m;
@@ -89,8 +89,8 @@ p2Point<float> Verlet_Acceleration(float m, p2Point<float> total_f) {
 	}
 }*/
 
-p2Point<float> Calculate_Two_Forces(p2Point<float> f1, p2Point<float> f2) {
-	p2Point<float> total_f;
+fPoint Calculate_Two_Forces(fPoint f1, fPoint f2) {
+	fPoint total_f;
 
 	total_f = f1 + f2;
 

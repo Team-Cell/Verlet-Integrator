@@ -44,35 +44,8 @@ bool Physics::InitialSituation(int case_num) {
 
 bool Physics::Integrate() {
 	bool ret = true;
-	/*
-	cout << "Case dt: " << dt << " and a: " << a << endl;
-	x_old = 0;
-	x = Verlet_Integration(5, x_old, a, dt);
-	while (x <= 50)
-	{
-		x = Verlet_Integration(x, x_old, a, dt);
-	}
-	cout << endl;
 
-	a = 1;
-	cout << "Case dt: " << dt << " and a: " << a << endl;
-	x_old = 0;
-	x = Verlet_Integration(5, x_old, a, dt);
-	while (x <= 50)
-	{
-		x = Verlet_Integration(x, x_old, a, dt);
-	}
-	cout << endl;
-
-	dt = 0.5;
-	cout << "Case dt: " << dt << " and a: " << a << endl;
-	x_old = 0;
-	x = Verlet_Integration(5, x_old, a, dt);
-	while (x <= 50)
-	{
-		x = Verlet_Integration(x, x_old, a, dt);
-	}
-	*/
 	pos = Verlet_Integration(pos, pos_old, a, dt);
+
 	return ret;
 }
