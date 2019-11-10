@@ -5,6 +5,8 @@
 #include "p2Point.h"
 using namespace std;
 
+#define PI 3.1416
+
 fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new, vi;
@@ -98,5 +100,23 @@ fPoint Calculate_Two_Forces(fPoint f1, fPoint f2) {
 	return total_f;
 }
 //Other functions which return different values depending on the variables we have
+
+float Flight_Time(float vi, float gravity, float angle) {
+	
+	float time;
+
+	time = (2*vi*sin(angle*PI/180)) / gravity;
+
+	return time;
+}
+
+float Flight_Time(fPoint vi, float gravity) {
+
+	float time;
+
+	time = (2 * vi.y) / gravity;
+
+	return time;
+}
 
 #endif // !_VERLET_H
