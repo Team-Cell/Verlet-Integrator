@@ -119,4 +119,14 @@ float Flight_Time(fPoint vi, float gravity) {
 	return time;
 }
 
+fPoint Calculate_Acceleration(fPoint vi, fPoint vo, float dt) {
+
+	fPoint ao;
+
+	ao.x = (vo.x - vi.x) / dt;
+	ao.y = (vo.y - vi.y) / dt;
+
+	return ao;
+}
+
 #endif // !_VERLET_H
