@@ -17,7 +17,7 @@ public:
 	fPoint pos_old;
 	fPoint v;
 	fPoint a;
-	float dt;
+	float dt = 1;
 	float m;
 };
 

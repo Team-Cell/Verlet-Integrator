@@ -85,6 +85,21 @@ float flight_time(fPoint vi, float gravity) {
 	return time;
 }
 
+float time_to_distance(float pos, float a, float dt, float distance) {
+	float prev_pos = pos;
+	float time = 0.0f;
+	float temp_pos;
+
+	while (pos < distance)
+	{
+		time += dt;
+		temp_pos = pos;
+		pos = 2 * pos - prev_pos + a * dt * dt;
+		prev_pos = temp_pos;
+	}
+	return time;
+}
+
 fPoint Verlet_Acceleration(float m, fPoint total_f) {
 	fPoint a_new;
 
@@ -103,14 +118,6 @@ fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt) {
 	return af;
 }
 
-//This while could be used to calculate a number of forces before sending to the Verlet_Acceleration function
-/*p2Point<float> Calculate_Total_Forces(int number_forces) {
-	while (number_forces > 1) {
-		Calculate_Two_Forces()
-		number_forces--;
-	}
-}*/
-
 fPoint Calculate_Two_Forces(fPoint f1, fPoint f2) {
 	fPoint total_f;
 
@@ -119,8 +126,16 @@ fPoint Calculate_Two_Forces(fPoint f1, fPoint f2) {
 	return total_f;
 }
 
-float aerodynamic_speed(){}
+//float aerodynamic_speed(){}
 
-float aerodynamic_acceleration(){}
+//float aerodynamic_acceleration(){}
+
+//This while could be used to calculate a number of forces before sending to the Verlet_Acceleration function
+/*p2Point<float> Calculate_Total_Forces(int number_forces) {
+	while (number_forces > 1) {
+		Calculate_Two_Forces()
+		number_forces--;
+	}
+}*/
 
 #endif // !_VERLET_H

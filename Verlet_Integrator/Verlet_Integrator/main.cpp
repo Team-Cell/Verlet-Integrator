@@ -30,8 +30,6 @@ int main(int argc, char* args[]) {
 			cin >> particle.v.x >> particle.v.y;
 			cout << "Which is the initial acceleration?: " << endl;
 			cin >> particle.a.x >> particle.a.y;
-			cout << "Which is the time difference?: " << endl;
-			cin >> particle.dt;
 			cout << "Which is the mass?:" << endl;
 			cin >> particle.m;
 			system("cls");
