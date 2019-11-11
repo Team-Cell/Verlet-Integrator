@@ -26,8 +26,6 @@ fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt) {
 	return pos_new;
 }
 
-//Different variations of the same functions must be done depending on which components we have
-
 fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new;
@@ -45,9 +43,6 @@ fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, flo
 	return pos_new;
 }
 
-
-// TODO 1: 
-//Make a function which returns the velocity Verlet
 fPoint Verlet_Velocity(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 	fPoint v_new;
@@ -72,17 +67,41 @@ fPoint Verlet_Velocity(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoi
 	return v_new;
 }
 
-//TODO 2:
-//Make a function which returns the acceleration 
+float flight_time(float vi, float gravity, float angle) {
+	
+	float time;
+
+	time = (2*vi*sin(angle*PI/180)) / gravity;
+
+	return time;
+}
+
+float flight_time(fPoint vi, float gravity) {
+
+	float time;
+
+	time = (2 * vi.y) / gravity;
+
+	return time;
+}
 
 fPoint Verlet_Acceleration(float m, fPoint total_f) {
 	fPoint a_new;
 
 	a_new = total_f / m;
-	
+
 	return a_new;
 }
 
+fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt) {
+
+	fPoint af;
+
+	af.x = (vf.x - vi.x) / dt;
+	af.y = (vf.y - vi.y) / dt;
+
+	return af;
+}
 
 //This while could be used to calculate a number of forces before sending to the Verlet_Acceleration function
 /*p2Point<float> Calculate_Total_Forces(int number_forces) {
@@ -98,35 +117,6 @@ fPoint Calculate_Two_Forces(fPoint f1, fPoint f2) {
 	total_f = f1 + f2;
 
 	return total_f;
-}
-//Other functions which return different values depending on the variables we have
-
-float Flight_Time(float vi, float gravity, float angle) {
-	
-	float time;
-
-	time = (2*vi*sin(angle*PI/180)) / gravity;
-
-	return time;
-}
-
-float Flight_Time(fPoint vi, float gravity) {
-
-	float time;
-
-	time = (2 * vi.y) / gravity;
-
-	return time;
-}
-
-fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt) {
-
-	fPoint af;
-
-	af.x = (vf.x - vi.x) / dt;
-	af.y = (vf.y - vi.y) / dt;
-
-	return af;
 }
 
 #endif // !_VERLET_H
