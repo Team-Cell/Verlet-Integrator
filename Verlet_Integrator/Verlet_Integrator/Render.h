@@ -15,10 +15,8 @@ public:
 	ModuleRender();
 	~ModuleRender();
 
-	/*bool Init();
-	bool PreUpdate();
-	bool PostUpdate();
-	bool CleanUp();*/
+	bool Render();
+	
 
 public:
 	SDL_Renderer* renderer = nullptr;
