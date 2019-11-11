@@ -7,7 +7,7 @@ using namespace std;
 
 Physics::Physics() {
 	 pos = { 0,0 };
-	 pos_old = { 0,0 };
+	 prev_pos = { 0,0 };
 	 v = { 0,0 };
 	 a = { 0,0 };
 	 dt = 1;
@@ -22,31 +22,31 @@ bool Physics::InitialSituation(int case_num) {
 	bool ret = true;
 	switch (case_num) {
 	case 0: //acceleration == 0 and dt == 1, both constant
-		pos_old.x = pos.x - v.x;
-		pos_old.y = pos.y - v.y;
+		prev_pos.x = pos.x - v.x;
+		prev_pos.y = pos.y - v.y;
 		break;
 	case 1: //acceleration == 0 and dt !=||== 1, both constant
-		pos_old.x = pos.x - v.x * dt;
-		pos_old.y = pos.y - v.y * dt;
+		prev_pos.x = pos.x - v.x * dt;
+		prev_pos.y = pos.y - v.y * dt;
 		break;
 	case 2: //acceleration !=||== 0 and dt == 1, both constant
-		pos_old.x = pos.x - (v.x - a.x) - 0.5 * a.x;
-		pos_old.y = pos.y - (v.y - a.y) - 0.5 * a.y;
+		prev_pos.x = pos.x - (v.x - a.x) - 0.5 * a.x;
+		prev_pos.y = pos.y - (v.y - a.y) - 0.5 * a.y;
 		break;
 	case 3: //acceleration !=||== 0 and dt !=||== 1, both constant
-		pos_old.x = pos.x - (v.x - a.x * dt) * dt - 0.5 * a.x * dt * dt;
-		pos_old.y = pos.y - (v.y - a.y * dt) * dt - 0.5 * a.y * dt * dt;
+		prev_pos.x = pos.x - (v.x - a.x * dt) * dt - 0.5 * a.x * dt * dt;
+		prev_pos.y = pos.y - (v.y - a.y * dt) * dt - 0.5 * a.y * dt * dt;
 		break;
 	}
-	pos = Verlet_Integration(pos, pos_old, a, dt);
+	pos = Verlet_Integration(pos, prev_pos, a, dt);
 	return true;
 }
 
 
-bool Physics::Integrate() {
+bool Physics::Integrate(int constant_acceleration) {
 	bool ret = true;
 
-	pos = Verlet_Integration(pos, pos_old, a, dt);
+	pos = Verlet_Integration(pos, prev_pos, a, dt);
 
 	return ret;
 }

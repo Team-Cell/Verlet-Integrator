@@ -14,9 +14,12 @@ public:
 
 public:
 	fPoint pos;
-	fPoint pos_old;
+	fPoint prev_pos;
 	fPoint v;
 	fPoint a;
+	float density;
+	float area;
+	float drag_coeficient;
 	float dt = 1;
 	float m;
 };
