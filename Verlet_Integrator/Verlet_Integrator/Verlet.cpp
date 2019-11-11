@@ -82,7 +82,7 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 	v_new = vi + ((ai + a_new) / 2) * dt;
 
-	cout << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
+	cout << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
 
 	return v_new;
 }
@@ -95,7 +95,7 @@ fPoint Velocity_Verlet(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoi
 
 	v_new = vi + ((ai + a_new) / 2) * dt;
 
-	cout << "p: " << Module(pos_new) << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
+	cout << "px: " << pos_new.x << " py: " << pos_new.y << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
 
 	return v_new;
 }
