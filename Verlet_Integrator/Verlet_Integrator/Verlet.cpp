@@ -12,6 +12,7 @@ Verlet::Verlet() {
 	density = 1;
 	dt = 1;
 	mass = 0;
+	drag_coeficient = 0;
 }
 
 Verlet::~Verlet() {}
@@ -36,29 +37,25 @@ void InitialSituation(Verlet &particle, int case_num) {
 		particle.prev_pos.y = particle.pos.y - (particle.v.y - particle.a.y * particle.dt) * particle.dt - 0.5 * particle.a.y * particle.dt * particle.dt;
 		break;
 	}
-	particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.v, particle.a, particle.dt);
+	particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, particle.dt);
 }
 
-fPoint Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
+fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new, vi;
 
 	pos_new = pos + (pos - prev_pos) + ai * dt * dt;
 
-	vi = (pos_new - pos) / (2 * dt);
+	//a_new = (v_new - vi) / dt;
 
-	v_new = vi + ai * dt;
-
-	a_new = (v_new - vi) / dt;
-
-	cout << "px: " << pos_new.x <<  " py: " << pos_new.y << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
+	cout << "px: " << pos_new.x <<  " py: " << pos_new.y << endl;
 
 	prev_pos = pos;
 
 	return pos_new;
 }
 
-fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint vi, fPoint ai, float dt) {
+fPoint Verlet_Integration_With_Speed(fPoint pos, fPoint& prev_pos, fPoint vi, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new;
 
@@ -79,22 +76,22 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 	fPoint v_new;
 
-	v_new = vi + ((ai + a_new) / 2) * dt;
+	v_new = vi + ((ai + a_new) * 0.5) * dt;
 
 	cout << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
 
 	return v_new;
 }
 
-fPoint Velocity_Verlet(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoint a_new, float dt) {
+fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, fPoint a, float dt) {
 
-	fPoint v_new;
+	fPoint v_new, next_pos;
 
-	pos_new = pos_i + vi * dt + ai * 0.5 * dt * dt;
+	next_pos = Verlet_Integration(pos, prev_pos, a, dt);
 
-	v_new = vi + ((ai + a_new) / 2) * dt;
+	v_new = (next_pos - pos)/dt;
 
-	cout << "px: " << pos_new.x << " py: " << pos_new.y << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
+	cout << "px: " << next_pos.x << " py: " << next_pos.y << " vx: " << v_new.x << " vy: " << v_new.y << endl;
 
 	return v_new;
 }
@@ -163,8 +160,6 @@ float Acceleration_For_Drag(float density, float drag_coefficient, float area, f
 	acceleration = (0.5 * density * drag_coefficient * area * speed * speed)/ mass;
 	return acceleration;
 }
-
-
 
 //float aerodynamic_speed(){}
 

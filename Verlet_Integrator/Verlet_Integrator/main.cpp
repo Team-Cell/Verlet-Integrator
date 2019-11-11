@@ -28,7 +28,7 @@ int main(int argc, char* args[]) {
 			cout << "Which is the initial acceleration?: " << endl;
 			cin >> particle.a.x >> particle.a.y;
 			cout << "Which is the mass?:" << endl;
-			cin >> particle.m;
+			cin >> particle.mass;
 			system("cls");
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << particle.a.y << endl;
 			if (particle.a.IsZero() == true && particle.dt != 0)case_num = 1;
