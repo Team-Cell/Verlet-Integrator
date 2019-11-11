@@ -11,12 +11,12 @@ Verlet::Verlet() {
 	area = 1;
 	density = 1;
 	dt = 1;
-	m = 0;
+	mass = 0;
 }
 
 Verlet::~Verlet() {}
 
-bool InitialSituation(Verlet &particle, int case_num) {
+void InitialSituation(Verlet &particle, int case_num) {
 	bool ret = true;
 	switch (case_num) {
 	case 0: //acceleration == 0 and dt == 1, both constant
@@ -37,7 +37,6 @@ bool InitialSituation(Verlet &particle, int case_num) {
 		break;
 	}
 	particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.v, particle.a, particle.dt);
-	return true;
 }
 
 fPoint Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
@@ -158,6 +157,14 @@ fPoint Calculate_Two_Forces(fPoint f1, fPoint f2) {
 
 	return total_f;
 }
+
+float Acceleration_For_Drag(float density, float drag_coefficient, float area, float speed, float mass) {
+	float acceleration;
+	acceleration = (0.5 * density * drag_coefficient * area * speed * speed)/ mass;
+	return acceleration;
+}
+
+
 
 //float aerodynamic_speed(){}
 
