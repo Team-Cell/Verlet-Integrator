@@ -10,7 +10,7 @@ public:
 	~Physics();
 
 	bool InitialSituation(int case_num = 0);
-	bool Integrate();
+	bool Integrate(bool constant_acceleration);
 
 public:
 	fPoint pos;

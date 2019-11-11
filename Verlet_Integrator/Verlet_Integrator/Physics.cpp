@@ -43,7 +43,7 @@ bool Physics::InitialSituation(int case_num) {
 }
 
 
-bool Physics::Integrate(int constant_acceleration) {
+bool Physics::Integrate(bool constant_acceleration) {
 	bool ret = true;
 
 	pos = Verlet_Integration(pos, prev_pos, a, dt);
