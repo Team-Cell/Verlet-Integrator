@@ -28,7 +28,7 @@ int main(int argc, char* args[]) {
 			cout << "Which is the initial acceleration?: " << endl;
 			cin >> particle.a.x >> particle.a.y;
 			cout << "Which is the mass?:" << endl;
-			cin >> particle.m;
+			cin >> particle.mass;
 			system("cls");
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << particle.a.y << endl;
 			if (particle.a.IsZero() == true && particle.dt != 0)case_num = 1;
@@ -36,7 +36,7 @@ int main(int argc, char* args[]) {
 			else if (particle.a.IsZero() == false)case_num = 3;
 			InitialSituation(particle, case_num);
 			while (particle.pos.x <= 500 || particle.pos.y <= 500) {
-				particle.pos = Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
+				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
 			}
 		}
 	}
