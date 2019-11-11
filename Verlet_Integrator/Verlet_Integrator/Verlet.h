@@ -119,4 +119,8 @@ fPoint Calculate_Two_Forces(fPoint f1, fPoint f2) {
 	return total_f;
 }
 
+float aerodynamic_speed(){}
+
+float aerodynamic_acceleration(){}
+
 #endif // !_VERLET_H
