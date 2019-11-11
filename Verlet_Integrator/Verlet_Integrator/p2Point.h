@@ -104,6 +104,13 @@ public:
 		return(r);
 	}
 
+	p2Point operator *(p2Point point)const {
+		p2Point r;
+		r.x = x * point.x;
+		r.y = y * point.y;
+		return r;
+	}
+
 	p2Point operator / (float v) const
 	{
 		p2Point r;
