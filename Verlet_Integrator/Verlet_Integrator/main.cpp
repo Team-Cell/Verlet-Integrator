@@ -39,7 +39,7 @@ int main(int argc, char* args[]) {
 			else if (particle.a.IsZero() == false)case_num = 3;
 			particle.InitialSituation(case_num);
 			while (particle.pos.x <= 500 || particle.pos.y <= 500) {
-				particle.Integration();
+				particle.Integration(particle.pos,particle.pos,particle.a,1);
 			}
 		}
 	}

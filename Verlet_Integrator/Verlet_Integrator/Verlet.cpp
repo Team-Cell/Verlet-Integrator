@@ -35,7 +35,7 @@ bool Verlet::InitialSituation(int case_num) {
 		prev_pos.y = pos.y - (v.y - a.y * dt) * dt - 0.5 * a.y * dt * dt;
 		break;
 	}
-	pos = Verlet_Integration(pos, prev_pos, a, dt);
+	pos = Verlet_Integration(pos, prev_pos,v, a, dt);
 	return true;
 }
 
@@ -56,7 +56,7 @@ void Verlet::Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt) {
 	pos_o = pos_i;
 }
 
-void Verlet::Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt) {
+fPoint Verlet::Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new;
 
@@ -69,6 +69,8 @@ void Verlet::Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint a
 	cout << "p: " << Module(pos_new) << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
 
 	pos_o = pos_i;
+
+	return pos_o;
 }
 
 fPoint Verlet::Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
@@ -99,7 +101,7 @@ float Verlet::Flight_Time(float vi, float gravity, float angle) {
 
 	float time;
 
-	time = (2 * vi * sin(angle * pi / 180)) / gravity;
+	time = (2 * vi * sin(angle * PI / 180)) / gravity;
 
 	return time;
 }

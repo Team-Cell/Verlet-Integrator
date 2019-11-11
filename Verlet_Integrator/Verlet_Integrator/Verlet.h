@@ -3,7 +3,7 @@
 #include <math.h>
 #include "p2Point.h"
 
-#define pi 3.1416
+#define PI 3.1416
 
 class Verlet
 {
@@ -12,7 +12,7 @@ public:
 	~Verlet();
 	bool InitialSituation(int case_num = 0);
 	void Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt);
-	void Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt);
+	fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt);
 	fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt);
 	fPoint Velocity_Verlet(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoint a_new, float dt);
 	float Flight_Time(float vi, float gravity, float angle);
