@@ -10,6 +10,7 @@ int main(int argc, char* args[]) {
 	LOG("Starting Integrator");
 
 	Verlet particle;
+	bool constant_acceleration;
 
 	int firstopcionmenu = 0;
 	int case_num = 0;
