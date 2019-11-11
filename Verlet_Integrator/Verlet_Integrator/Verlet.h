@@ -12,9 +12,9 @@ public:
 	~Verlet();
 	bool InitialSituation(int case_num = 0);
 	void Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt);
-	void Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt);
-	void Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt);
-	void Velocity_Verlet(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoint a_new, float dt);
+	void Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt);
+	fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt);
+	fPoint Velocity_Verlet(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoint a_new, float dt);
 	float Flight_Time(float vi, float gravity, float angle);
 	float Flight_Time(fPoint vi, float gravity);
 	float Time_To_Distance(float pos, float a, float dt, float distance);

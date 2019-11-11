@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdlib.h>
-#include "Physics.h"
 #include "Verlet.h"
 #include "Render.h"
 #include "p2Log.h"
@@ -40,7 +39,7 @@ int main(int argc, char* args[]) {
 			else if (particle.a.IsZero() == false)case_num = 3;
 			particle.InitialSituation(case_num);
 			while (particle.pos.x <= 500 || particle.pos.y <= 500) {
-				particle.Integrate();
+				particle.Integration();
 			}
 		}
 	}
