@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "Physics.h"
+#include "Verlet.h"
 #include "Render.h"
 #include "p2Log.h"
 using namespace std;
@@ -9,7 +10,7 @@ int main(int argc, char* args[]) {
 
 	LOG("Starting Integrator");
 
-	Physics particle;
+	Verlet particle;
 
 	int firstopcionmenu = 0;
 	int case_num = 0;
