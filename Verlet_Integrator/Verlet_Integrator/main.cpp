@@ -36,7 +36,7 @@ int main(int argc, char* args[]) {
 			else if (particle.a.IsZero() == false)case_num = 3;
 			InitialSituation(particle, case_num);
 			while (particle.pos.x <= 500 || particle.pos.y <= 500) {
-				particle.pos = Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
+				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
 			}
 		}
 	}

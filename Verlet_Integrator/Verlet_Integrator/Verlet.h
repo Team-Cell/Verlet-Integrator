@@ -28,7 +28,7 @@ void InitialSituation(Verlet &particle, int case_num = 0);
 fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt);
 fPoint Verlet_Integration_With_Speed(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt);
 fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt);
-fPoint Stormer_Verlet(fPoint pos, fPoint& pos_new, float dt);
+fPoint Stormer_Verlet(fPoint pos, fPoint pos_new, fPoint a, float dt);
 float Flight_Time(float vi, float gravity, float angle);
 float Flight_Time(fPoint vi, float gravity);
 float Time_To_Distance(float pos, float a, float dt, float distance);
