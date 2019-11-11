@@ -3,49 +3,50 @@
 #include "p2Point.h"
 using namespace std;
 
-
 Verlet::Verlet() {
 	pos = { 0,0 };
 	prev_pos = { 0,0 };
 	v = { 0,0 };
 	a = { 0,0 };
+	area = 1;
+	density = 1;
 	dt = 1;
 	m = 0;
 }
 
 Verlet::~Verlet() {}
 
-bool Verlet::InitialSituation(int case_num) {
+bool InitialSituation(Verlet &particle, int case_num) {
 	bool ret = true;
 	switch (case_num) {
 	case 0: //acceleration == 0 and dt == 1, both constant
-		prev_pos.x = pos.x - v.x;
-		prev_pos.y = pos.y - v.y;
+		particle.prev_pos.x = particle.pos.x - particle.v.x;
+		particle.prev_pos.y = particle.pos.y - particle.v.y;
 		break;
 	case 1: //acceleration == 0 and dt !=||== 1, both constant
-		prev_pos.x = pos.x - v.x * dt;
-		prev_pos.y = pos.y - v.y * dt;
+		particle.prev_pos.x = particle.pos.x - particle.v.x * particle.dt;
+		particle.prev_pos.y = particle.pos.y - particle.v.y * particle.dt;
 		break;
 	case 2: //acceleration !=||== 0 and dt == 1, both constant
-		prev_pos.x = pos.x - (v.x - a.x) - 0.5 * a.x;
-		prev_pos.y = pos.y - (v.y - a.y) - 0.5 * a.y;
+		particle.prev_pos.x = particle.pos.x - (particle.v.x - particle.a.x) - 0.5 * particle.a.x;
+		particle.prev_pos.y = particle.pos.y - (particle.v.y - particle.a.y) - 0.5 * particle.a.y;
 		break;
 	case 3: //acceleration !=||== 0 and dt !=||== 1, both constant
-		prev_pos.x = pos.x - (v.x - a.x * dt) * dt - 0.5 * a.x * dt * dt;
-		prev_pos.y = pos.y - (v.y - a.y * dt) * dt - 0.5 * a.y * dt * dt;
+		particle.prev_pos.x = particle.pos.x - (particle.v.x - particle.a.x * particle.dt) * particle.dt - 0.5 * particle.a.x * particle.dt * particle.dt;
+		particle.prev_pos.y = particle.pos.y - (particle.v.y - particle.a.y * particle.dt) * particle.dt - 0.5 * particle.a.y * particle.dt * particle.dt;
 		break;
 	}
-	pos = Verlet_Integration(pos, prev_pos,v, a, dt);
+	particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.v, particle.a, particle.dt);
 	return true;
 }
 
-void Verlet::Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt) {
+fPoint Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new, vi;
 
-	pos_new = pos_i + (pos_i - pos_o) + ai * dt * dt;
+	pos_new = pos + (pos - prev_pos) + ai * dt * dt;
 
-	vi = (pos_new - pos_o) / (2 * dt);
+	vi = (pos_new - pos) / (2 * dt);
 
 	v_new = vi + ai * dt;
 
@@ -53,10 +54,12 @@ void Verlet::Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt) {
 
 	cout << "p: " << Module(pos_new) << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
 
-	pos_o = pos_i;
+	prev_pos = pos;
+
+	return pos_new;
 }
 
-fPoint Verlet::Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt) {
+fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new;
 
@@ -73,7 +76,7 @@ fPoint Verlet::Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint
 	return pos_o;
 }
 
-fPoint Verlet::Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
+fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 	fPoint v_new;
 
@@ -84,7 +87,7 @@ fPoint Verlet::Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 	return v_new;
 }
 
-fPoint Verlet::Velocity_Verlet(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoint a_new, float dt) {
+fPoint Velocity_Verlet(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 	fPoint v_new;
 
@@ -97,7 +100,7 @@ fPoint Verlet::Velocity_Verlet(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint 
 	return v_new;
 }
 
-float Verlet::Flight_Time(float vi, float gravity, float angle) {
+float Flight_Time(float vi, float gravity, float angle) {
 
 	float time;
 
@@ -106,7 +109,7 @@ float Verlet::Flight_Time(float vi, float gravity, float angle) {
 	return time;
 }
 
-float Verlet::Flight_Time(fPoint vi, float gravity) {
+float Flight_Time(fPoint vi, float gravity) {
 
 	float time;
 
@@ -115,7 +118,7 @@ float Verlet::Flight_Time(fPoint vi, float gravity) {
 	return time;
 }
 
-float Verlet::Time_To_Distance(float pos, float a, float dt, float distance) {
+float Time_To_Distance(float pos, float a, float dt, float distance) {
 	float prev_pos = pos;
 	float time = 0.0f;
 	float temp_pos;
@@ -130,7 +133,7 @@ float Verlet::Time_To_Distance(float pos, float a, float dt, float distance) {
 	return time;
 }
 
-fPoint Verlet::Verlet_Acceleration(float m, fPoint total_f) {
+fPoint Verlet_Acceleration(float m, fPoint total_f) {
 	fPoint a_new;
 
 	a_new = total_f / m;
@@ -138,7 +141,7 @@ fPoint Verlet::Verlet_Acceleration(float m, fPoint total_f) {
 	return a_new;
 }
 
-fPoint Verlet::Calculate_Acceleration(fPoint vi, fPoint vf, float dt) {
+fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt) {
 
 	fPoint af;
 
@@ -148,7 +151,7 @@ fPoint Verlet::Calculate_Acceleration(fPoint vi, fPoint vf, float dt) {
 	return af;
 }
 
-fPoint Verlet::Calculate_Two_Forces(fPoint f1, fPoint f2) {
+fPoint Calculate_Two_Forces(fPoint f1, fPoint f2) {
 	fPoint total_f;
 
 	total_f = f1 + f2;
@@ -160,7 +163,7 @@ fPoint Verlet::Calculate_Two_Forces(fPoint f1, fPoint f2) {
 
 //float aerodynamic_acceleration(){}
 
-float Verlet::Module(fPoint var) {
+float Module(fPoint var) {
 
 	return sqrt(var.x * var.x + var.y * var.y);
 

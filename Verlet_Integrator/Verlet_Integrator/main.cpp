@@ -14,10 +14,6 @@ int main(int argc, char* args[]) {
 	int firstopcionmenu = 0;
 	int case_num = 0;
 
-	//Improve menu so different inputs can be taken
-
-	//TODO
-
 	while ((firstopcionmenu != 2) && (firstopcionmenu <= 3 || firstopcionmenu >= 0)) {
 		cout << "MENU" << endl;
 		cout << "What do you want to do?" << endl << "1- Execute the program" << endl << "2- Quit" << endl;
@@ -37,9 +33,9 @@ int main(int argc, char* args[]) {
 			if (particle.a.IsZero() == true && particle.dt != 0)case_num = 1;
 			else if (particle.a.IsZero() == false && particle.dt == 1)case_num = 2;
 			else if (particle.a.IsZero() == false)case_num = 3;
-			particle.InitialSituation(case_num);
+			InitialSituation(particle, case_num);
 			while (particle.pos.x <= 500 || particle.pos.y <= 500) {
-				particle.Integration(particle.pos,particle.pos,particle.a,1);
+				particle.pos = Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
 			}
 		}
 	}
