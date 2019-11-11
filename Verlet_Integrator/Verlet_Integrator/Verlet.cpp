@@ -52,28 +52,28 @@ fPoint Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 
 	a_new = (v_new - vi) / dt;
 
-	cout << "px: " << pos_new.x <<  "py: " << pos_new.y << " vx: " << v_new.x << "vy: " << v_new.y << " ax: " << a_new.x << "ay: " << a_new.y << endl;
+	cout << "px: " << pos_new.x <<  " py: " << pos_new.y << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
 
 	prev_pos = pos;
 
 	return pos_new;
 }
 
-fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt) {
+fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint vi, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new;
 
-	pos_new = pos_i + (pos_i - pos_o) + ai * dt * dt;
+	pos_new = pos + (pos - prev_pos) + ai * dt * dt;
 
 	v_new = vi + ai * dt;
 
 	a_new = (v_new - vi) / dt;
 
-	cout << "p: " << Module(pos_new) << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
+	cout << "px: " << pos_new.x << " py: " << pos_new.y << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
 
-	pos_o = pos_i;
+	prev_pos = pos;
 
-	return pos_o;
+	return pos;
 }
 
 fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
