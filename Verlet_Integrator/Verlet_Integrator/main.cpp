@@ -13,6 +13,8 @@ int main(int argc, char* args[]) {
 
 	int firstopcionmenu = 0;
 	int case_num = 0;
+	bool bool_const_acc = false;
+	char char_const_acc= 'A';
 
 	while ((firstopcionmenu != 2) && (firstopcionmenu <= 3 || firstopcionmenu >= 0)) {
 		cout << "MENU" << endl;
@@ -24,8 +26,23 @@ int main(int argc, char* args[]) {
 			cin >> particle.pos.x >> particle.pos.y;
 			cout << "Which is the initial speed?:" << endl;
 			cin >> particle.v.x >> particle.v.y;
-			cout << "Which is the initial acceleration?: " << endl;
-			cin >> particle.a.x >> particle.a.y;
+			while ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')){
+				cout << "Do you prefer a constant Acceleration?: " << endl << "(Yes: Y / No: N)" << endl;
+				cin >> char_const_acc;
+				if ((char_const_acc == 'y') || (char_const_acc == 'Y')) {
+					bool_const_acc = true;
+					cout << "Which is the initial acceleration?: " << endl;
+					cin >> particle.a.x >> particle.a.y;
+				}
+				if ((char_const_acc == 'n') || (char_const_acc == 'N')) {
+					bool_const_acc = false;
+					cout << "Which is the aerodynamic drag coeficient?: " << endl;
+					cin >> particle.drag_coeficient;
+				}
+				if ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')) {
+					cout << endl << "You enter an invalid answer." << endl;
+				}
+			}
 			cout << "Which is the mass?:" << endl;
 			cin >> particle.m;
 			system("cls");
@@ -38,6 +55,8 @@ int main(int argc, char* args[]) {
 				particle.pos = Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
 			}
 		}
+		char_const_acc = 'A';
+		cout << endl << endl;
 	}
 	return 0;
 }
