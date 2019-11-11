@@ -52,7 +52,7 @@ fPoint Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 
 	a_new = (v_new - vi) / dt;
 
-	cout << "p: " << Module(pos_new) << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
+	cout << "px: " << pos_new.x <<  "py: " << pos_new.y << " vx: " << v_new.x << "vy: " << v_new.y << " ax: " << a_new.x << "ay: " << a_new.y << endl;
 
 	prev_pos = pos;
 
