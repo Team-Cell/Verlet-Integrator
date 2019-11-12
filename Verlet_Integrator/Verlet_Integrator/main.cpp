@@ -3,6 +3,10 @@
 #include "Verlet.h"
 #include "Render.h"
 #include "p2Log.h"
+//#include "../SDL/include/SDL.h"
+//#pragma comment( lib, "SDL/libx86/SDL2.lib" )
+//#pragma comment( lib, "SDL/libx86/SDL2main.lib" )
+
 using namespace std;
 
 int main(int argc, char* args[]) {
@@ -10,6 +14,7 @@ int main(int argc, char* args[]) {
 	LOG("Starting Integrator");
 
 	Verlet particle;
+	bool constant_acceleration;
 
 	int firstopcionmenu = 0;
 	int case_num = 0;
@@ -44,15 +49,15 @@ int main(int argc, char* args[]) {
 				}
 			}
 			cout << "Which is the mass?:" << endl;
-			cin >> particle.m;
+			cin >> particle.mass;
 			system("cls");
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << particle.a.y << endl;
 			if (particle.a.IsZero() == true && particle.dt != 0)case_num = 1;
 			else if (particle.a.IsZero() == false && particle.dt == 1)case_num = 2;
 			else if (particle.a.IsZero() == false)case_num = 3;
 			InitialSituation(particle, case_num);
-			while (particle.pos.x <= 500 || particle.pos.y <= 500) {
-				particle.pos = Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
+			while (particle.pos.y > 0) {
+				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
 			}
 		}
 		char_const_acc = 'A';

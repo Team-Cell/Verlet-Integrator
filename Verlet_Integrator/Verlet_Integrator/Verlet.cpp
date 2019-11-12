@@ -11,12 +11,13 @@ Verlet::Verlet() {
 	area = 1;
 	density = 1;
 	dt = 1;
-	m = 0;
+	mass = 0;
+	drag_coeficient = 0;
 }
 
 Verlet::~Verlet() {}
 
-bool InitialSituation(Verlet &particle, int case_num) {
+void InitialSituation(Verlet &particle, int case_num) {
 	bool ret = true;
 	switch (case_num) {
 	case 0: //acceleration == 0 and dt == 1, both constant
@@ -36,66 +37,61 @@ bool InitialSituation(Verlet &particle, int case_num) {
 		particle.prev_pos.y = particle.pos.y - (particle.v.y - particle.a.y * particle.dt) * particle.dt - 0.5 * particle.a.y * particle.dt * particle.dt;
 		break;
 	}
-	particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.v, particle.a, particle.dt);
-	return true;
+	particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, particle.dt);
 }
 
-fPoint Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
+fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new, vi;
 
 	pos_new = pos + (pos - prev_pos) + ai * dt * dt;
 
-	vi = (pos_new - pos) / (2 * dt);
+	//a_new = (v_new - vi) / dt;
 
-	v_new = vi + ai * dt;
-
-	a_new = (v_new - vi) / dt;
-
-	cout << "px: " << pos_new.x <<  "py: " << pos_new.y << " vx: " << v_new.x << "vy: " << v_new.y << " ax: " << a_new.x << "ay: " << a_new.y << endl;
+	cout << "px: " << pos_new.x <<  " py: " << pos_new.y << endl;
 
 	prev_pos = pos;
 
 	return pos_new;
 }
 
-fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt) {
+fPoint Verlet_Integration_With_Speed(fPoint pos, fPoint& prev_pos, fPoint vi, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new;
 
-	pos_new = pos_i + (pos_i - pos_o) + ai * dt * dt;
+	pos_new = pos + (pos - prev_pos) + ai * dt * dt;
 
 	v_new = vi + ai * dt;
 
 	a_new = (v_new - vi) / dt;
 
-	cout << "p: " << Module(pos_new) << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
+	cout << "px: " << pos_new.x << " py: " << pos_new.y << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
 
-	pos_o = pos_i;
+	prev_pos = pos;
 
-	return pos_o;
+	return pos;
 }
 
 fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 	fPoint v_new;
 
-	v_new = vi + ((ai + a_new) / 2) * dt;
+	v_new = vi + ((ai + a_new) * 0.5) * dt;
 
-	cout << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
+	cout << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
 
 	return v_new;
 }
 
-fPoint Velocity_Verlet(fPoint pos_i, fPoint& pos_new, fPoint vi, fPoint ai, fPoint a_new, float dt) {
+fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, fPoint a, float dt) {
 
-	fPoint v_new;
+	fPoint v_new, next_pos;
 
-	pos_new = pos_i + vi * dt + ai * 0.5 * dt * dt;
+	next_pos = Verlet_Integration(pos, prev_pos, a, dt);
 
-	v_new = vi + ((ai + a_new) / 2) * dt;
+	v_new = (next_pos - pos)/dt;
 
-	cout << "p: " << Module(pos_new) << " v: " << Module(v_new) << " a: " << Module(a_new) << endl;
+	cout << "px: " << next_pos.x << " py: " << next_pos.y << " vx: " << v_new.x << " vy: " << v_new.y << endl;
 
 	return v_new;
 }
@@ -159,6 +155,12 @@ fPoint Calculate_Two_Forces(fPoint f1, fPoint f2) {
 	return total_f;
 }
 
+float Acceleration_For_Drag(float density, float drag_coefficient, float area, float speed, float mass) {
+	float acceleration;
+	acceleration = (0.5 * density * drag_coefficient * area * speed * speed)/ mass;
+	return acceleration;
+}
+
 //float aerodynamic_speed(){}
 
 //float aerodynamic_acceleration(){}
@@ -176,4 +178,5 @@ float Module(fPoint var) {
 		number_forces--;
 	}
 }*/
+
 
