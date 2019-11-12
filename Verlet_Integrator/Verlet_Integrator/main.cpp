@@ -43,6 +43,10 @@ int main(int argc, char* args[]) {
 					bool_const_acc = false;
 					cout << "Which is the aerodynamic drag coeficient?: " << endl;
 					cin >> particle.drag_coeficient;
+					cout << "Which is the density of the particle?: " << endl;
+					cin >> particle.density;
+					cout << "Which is the area?: " << endl;
+					cin >> particle.area;
 				}
 				if ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')) {
 					cout << endl << "You enter an invalid answer." << endl;
