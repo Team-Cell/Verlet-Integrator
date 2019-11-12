@@ -3,12 +3,12 @@
 
 
 ModuleRender::ModuleRender() {
-	ball = nullptr;
+	//ball = nullptr;
 }
 ModuleRender::~ModuleRender() {}
 
 bool ModuleRender::Render() {
-	
+	/*
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO);
 	SDL_Window *window;
 	SDL_Renderer *renderer;
@@ -33,6 +33,6 @@ bool ModuleRender::Render() {
 	SDL_RenderClear( renderer);
 	SDL_RenderCopy( renderer, texBall , NULL , &rectBall);
 	SDL_FreeSurface(surBall);
-
+	*/
 	return true;
 }

@@ -76,10 +76,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Ramsubo\Desktop\Verlet-Integrator\Verlet_Integrator\SDL_mixer;C:\Users\Ramsubo\Desktop\Verlet-Integrator\Verlet_Integrator\SDL_image;C:\Users\Ramsubo\Desktop\Verlet-Integrator\Verlet_Integrator\SDL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -104,10 +104,10 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Ramsubo\Desktop\Verlet-Integrator\Verlet_Integrator\SDL_mixer;C:\Users\Ramsubo\Desktop\Verlet-Integrator\Verlet_Integrator\SDL_image;C:\Users\Ramsubo\Desktop\Verlet-Integrator\Verlet_Integrator\SDL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
