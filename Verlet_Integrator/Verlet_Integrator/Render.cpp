@@ -34,10 +34,5 @@ bool ModuleRender::Render() {
 	SDL_RenderCopy( renderer, texBall , NULL , &rectBall);
 	SDL_FreeSurface(surBall);
 
-
-
-	
-
-
-
+	return true;
 }
