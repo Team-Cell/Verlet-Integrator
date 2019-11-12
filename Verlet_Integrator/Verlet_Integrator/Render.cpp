@@ -1,7 +1,10 @@
 #include "Render.h"
 #include "Verlet.h"
 
-ModuleRender::ModuleRender() {}
+
+ModuleRender::ModuleRender() {
+	ball = nullptr;
+}
 ModuleRender::~ModuleRender() {}
 
 bool ModuleRender::Render() {
