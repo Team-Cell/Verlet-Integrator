@@ -1,12 +1,11 @@
 #ifndef _VERLET_H_
-#define _VERLET_H
+#define _VERLET_H_
 #include <math.h>
 #include "p2Point.h"
 
 #define PI 3.1416
 
-class Verlet
-{
+class Verlet{
 public:
 	Verlet();
 	~Verlet();

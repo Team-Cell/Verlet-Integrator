@@ -1,15 +1,8 @@
 #include "Render.h"
 #include "Verlet.h"
-#include "include/SDL.h"
-#include "include/SDL.h"
-#include"include/SDL_image.h"
 
-ModuleRender::ModuleRender() {
-
-}
-ModuleRender::~ModuleRender() {
-
-}
+ModuleRender::ModuleRender() {}
+ModuleRender::~ModuleRender() {}
 
 bool ModuleRender::Render() {
 	

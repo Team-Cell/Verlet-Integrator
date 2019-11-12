@@ -5,6 +5,10 @@
 #include "p2Log.h"
 using namespace std;
 
+#include "SDL/include/SDL.h"
+#pragma comment( lib, "SDL/libx86/SDL2.lib" )
+#pragma comment( lib, "SDL/libx86/SDL2main.lib" )
+
 int main(int argc, char* args[]) {
 
 	LOG("Starting Integrator");
