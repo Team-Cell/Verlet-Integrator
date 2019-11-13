@@ -14,6 +14,8 @@ Verlet::Verlet() {
 	dt = 1;
 	mass = 0;
 	drag_coeficient = 0;
+	radius = 0;
+	col_state = C_NONE;
 }
 
 Verlet::~Verlet() {}
@@ -178,9 +180,6 @@ fPoint Acceleration_For_Drag(float density, float drag_coefficient, float area, 
 	return acceleration;
 }
 
-//float aerodynamic_speed(){}
-
-//float aerodynamic_acceleration(){}
 
 float Module(fPoint var) {
 
@@ -195,7 +194,6 @@ float Module(fPoint var) {
 		number_forces--;
 	}
 }*/
-
 
 bool CheckCollision(Verlet particle, VRectangle rect) {
 	bool ret = false;
