@@ -59,11 +59,13 @@ fPoint Stormer_Verlet(fPoint pos, fPoint pos_new, fPoint a, float dt);
 float Flight_Time(float vi, float gravity, float angle);
 float Flight_Time(fPoint vi, float gravity);
 float Time_To_Distance(float pos, float a, float dt, float distance);
+float Calculate_Time(fPoint pos_i, fPoint pos_new, fPoint v, fPoint a);
 fPoint Verlet_Acceleration(float m, fPoint total_f);
 fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt);
 fPoint Calculate_Two_Forces(fPoint f1, fPoint f2);
 float Acceleration_For_Drag(float density, float drag_coefficient, float area, float speed, float mass);
 bool CheckCollision(Verlet particle, VRectangle rect);
+fPoint CalculatePositionCollision(Verlet particle, VRectangle rect, VRectangle rect2 /*possibly not used*/);
 
 float Module(fPoint var);
 
