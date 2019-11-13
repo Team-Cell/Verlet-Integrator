@@ -180,3 +180,27 @@ float Module(fPoint var) {
 }*/
 
 
+bool CheckCollision(Verlet particle, VRectangle rect) {
+	if (particle.pos.x + particle.radius >= rect.x) {
+		if (particle.col_state == C_NONE)particle.col_state = C_RIGHT;
+		else if (particle.col_state == C_UP)particle.col_state = C_UP_RIGHT;
+		else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_RIGHT;
+	}
+	else if (particle.pos.x - particle.radius <= rect.x + rect.w) {
+		if (particle.col_state == C_NONE)particle.col_state = C_LEFT;
+		else if (particle.col_state == C_UP)particle.col_state = C_UP_LEFT;
+		else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_LEFT;
+	}
+	else if (particle.pos.y - particle.radius <= rect.y + rect.h) {
+		if (particle.col_state == C_NONE)particle.col_state = C_UP;
+		else if (particle.col_state == C_LEFT)particle.col_state = C_UP_LEFT;
+		else if (particle.col_state == C_RIGHT)particle.col_state = C_UP_RIGHT;
+	}
+	else if (particle.pos.y + particle.radius >= rect.y) {
+		if (particle.col_state == C_NONE)particle.col_state = C_DOWN;
+		else if (particle.col_state == C_LEFT)particle.col_state = C_DOWN_LEFT;
+		else if (particle.col_state == C_RIGHT)particle.col_state = C_DOWN_RIGHT;
+	}
+	if (particle.col_state != C_NONE)return true;
+	else return false;
+}

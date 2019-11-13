@@ -4,6 +4,17 @@
 #include "p2Point.h"
 
 #define PI 3.1416
+enum Collision {
+	C_NONE,
+	C_DOWN,
+	C_RIGHT,
+	C_LEFT,
+	C_UP,
+	C_DOWN_LEFT,
+	C_DOWN_RIGHT,
+	C_UP_LEFT,
+	C_UP_RIGHT
+};
 
 struct VRectangle {
 	float x = 0;
@@ -26,6 +37,7 @@ public:
 	~Verlet();
 
 public:
+	Collision col_state;
 	fPoint pos;
 	fPoint next_pos;
 	fPoint prev_pos;
@@ -36,6 +48,7 @@ public:
 	float drag_coeficient;
 	float dt;
 	float mass;
+	int radius;
 };
 
 void InitialSituation(Verlet &particle, int case_num = 0);
@@ -50,6 +63,7 @@ fPoint Verlet_Acceleration(float m, fPoint total_f);
 fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt);
 fPoint Calculate_Two_Forces(fPoint f1, fPoint f2);
 float Acceleration_For_Drag(float density, float drag_coefficient, float area, float speed, float mass);
+bool CheckCollision(Verlet particle, VRectangle rect);
 
 float Module(fPoint var);
 
