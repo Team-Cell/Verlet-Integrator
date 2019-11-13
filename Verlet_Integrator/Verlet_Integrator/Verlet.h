@@ -5,6 +5,21 @@
 
 #define PI 3.1416
 
+struct VRectangle {
+	float x = 0;
+	float y = 0;
+	float w = 0;
+	float h = 0;
+	VRectangle(){};
+	~VRectangle() {};
+	VRectangle(float u_x, float u_y, float u_w, float u_h){
+		x = u_x;
+		y = u_y;
+		w = u_w;
+		h = u_h;
+	}
+};
+
 class Verlet{
 public:
 	Verlet();

@@ -14,6 +14,11 @@ int main(int argc, char* args[]) {
 	LOG("Starting Integrator");
 
 	Verlet particle;
+	VRectangle top_rectangle(0, -20, 100, 20);
+	VRectangle left_rectangle(-20, 0, 20, 100);
+	VRectangle right_rectangle(100, 0, 20, 100);
+	VRectangle bottom_rectangle(0, 100, 100, 20);
+
 	bool constant_acceleration;
 
 	int firstopcionmenu = 0;
