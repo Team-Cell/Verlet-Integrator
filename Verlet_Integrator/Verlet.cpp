@@ -157,7 +157,8 @@ bool CheckCollision(Verlet particle, VRectangle rect) {
 	return ret;
 }
 
-void CalculatePositionCollision(Verlet particle, VRectangle rect, VRectangle rect2 /*possibly not used*/) {
+void CalculateCollisionPosition(Verlet particle, VRectangle* rect, VRectangle* rect2 /*possibly not used*/) {
+
 	float time1, time2 = 0, time;
 	bool col_x, col_y;
 	col_x = col_y = false;
