@@ -21,10 +21,11 @@ int main(int argc, char* args[]) {
 	ModuleRender render;
 
 	VRectangle rectangles[4];
-	VRectangle top_rectangle(0, -20, 100, 20);
-	VRectangle left_rectangle(-20, 0, 20, 100);
-	VRectangle right_rectangle(100, 0, 20, 100);
-	VRectangle bottom_rectangle(0, 100, 100, 20);
+	int rectangle_thickness = 200;
+	VRectangle top_rectangle(0, -SCREEN_HEIGHT, SCREEN_WIDTH, rectangle_thickness);
+	VRectangle left_rectangle(-rectangle_thickness, 0, rectangle_thickness,SCREEN_HEIGHT);
+	VRectangle right_rectangle(SCREEN_WIDTH, 0, rectangle_thickness, SCREEN_HEIGHT);
+	VRectangle bottom_rectangle(0, SCREEN_HEIGHT, SCREEN_WIDTH, rectangle_thickness);
 
 	render.Init();
 
@@ -99,7 +100,7 @@ int main(int argc, char* args[]) {
 				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,0.25f);
 				for (int i = 0; i < 4; i++)
 				{
-					if (CheckCollision(particle, rectangles[i])) {
+					if (particle.CheckCollision(&rectangles[i])) {
 					cout << "Collision" << endl;
 					CalculateCollisionPosition(particle, &rectangles[i]);
 					}

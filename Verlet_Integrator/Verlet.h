@@ -36,7 +36,7 @@ class Verlet{
 public:
 	Verlet();
 	~Verlet();
-
+	bool CheckCollision(VRectangle* rect);
 public:
 	Collision col_state;
 	fPoint pos;
