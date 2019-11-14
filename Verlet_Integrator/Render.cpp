@@ -50,3 +50,7 @@ void ModuleRender::blit_all(float x_ball, float y_ball) {
 	SDL_RenderCopy(renderer, texdoraemon, NULL, &doraemonrect);
 	//SDL_Delay(30);
 }
+
+void ModuleRender::clearScreen() {
+	SDL_RenderClear(renderer);
+}

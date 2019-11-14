@@ -56,18 +56,22 @@ int main(int argc, char* args[]) {
 			cout << "Which is the initial speed?:" << endl;
 			cin >> particle.v.x >> particle.v.y;
 			while ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')){
-				cout << "Do you prefer a constant external acceleration?: " << endl << "(Yes: Y / No: N)" << endl;
+				cout << "Do you want gravity to be the only acceleration?: " << endl << "(Yes: Y / No: N)" << endl;
 				cin >> char_const_acc;
 				if ((char_const_acc == 'y') || (char_const_acc == 'Y')) {
 					bool_const_acc = true;
-					cout << "Which is the initial acceleration?: " << endl;
-					cin >> particle.a.x >> particle.a.y;
-					particle.a.y = -particle.a.y;
+					//cout << "Which is the initial acceleration?: " << endl;
+					//cin >> particle.a.x >> particle.a.y;
+					//particle.a.y = -particle.a.y;
 					cout << "Which is the gravity?" << endl;
 					cin >> particle.gravity;
+					particle.gravity = -particle.gravity;
 				}
 				if ((char_const_acc == 'n') || (char_const_acc == 'N')) {
 					bool_const_acc = false;
+					cout << "Which is the gravity?" << endl;
+					cin >> particle.gravity;
+					particle.gravity = -particle.gravity;
 					cout << "Which is the aerodynamic drag coeficient?: " << endl;
 					cin >> particle.drag_coeficient;
 					cout << "Which is the density of the particle?: " << endl;
@@ -87,12 +91,14 @@ int main(int argc, char* args[]) {
 			if (particle.a.IsZero() == true && particle.dt != 0)case_num = 1;
 			else if (particle.a.IsZero() == false && particle.dt == 1)case_num = 2;
 			else if (particle.a.IsZero() == false)case_num = 3;
+			
 			InitialSituation(particle, case_num);
 
 			//main loop
-			while (particle.pos.x <= SCREEN_WIDTH || particle.pos.y <= SCREEN_HEIGHT) {
+			while (particle.pos.x <= SCREEN_WIDTH && particle.pos.y <= SCREEN_HEIGHT) {
 				render.blit_all(particle.pos.x, particle.pos.y);
-				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
+				particle.a = AccelerationSum(particle);
+				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,0.25f);
 				for (int i = 0; i < 4; i++)
 				{
 					if (CheckCollision(particle, rectangles[i])) cout << "Collision" << endl;

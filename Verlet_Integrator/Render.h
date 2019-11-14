@@ -20,6 +20,7 @@ public:
 	bool Render();
 	void Init();
 	void blit_all(float, float);
+	void clearScreen();
 
 public:
 	SDL_Window *window;
