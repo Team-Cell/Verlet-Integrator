@@ -5,53 +5,42 @@
 
 ModuleRender::ModuleRender() {
 	ball = nullptr;
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO);
+
+	window = SDL_CreateWindow("Verlet Integrator Josep Puto AMO", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, 0);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
 ModuleRender::~ModuleRender() {}
 
 bool ModuleRender::Render() {
 
-
-
 	return true;
 }
 
 void ModuleRender::Init() {
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO);
 
-	//SDL_Event event;
-	//SDL_Rect rectBall;
-
-	//rectBall.x = 100;//pos
-	//rectBall.y = 100;//pos
-	//rectBall.w = 100;//pos
-	//rectBall.h = 100;//pos
-	
-	//SDL_Surface *surBall;
-	//SDL_Texture *texBall;
-	//IMG_Init(IMG_INIT_PNG);
-
-
-	window = SDL_CreateWindow("Verlet Integrator Josep Puto AMO", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, 0);
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 	SDL_RenderClear(renderer);
 
+	//// GRAPHICS BACKGROUND ////
+	backgroundrect.x = 0;
+	backgroundrect.y = 0;
+	backgroundrect.w = screen_width;
+	backgroundrect.h = screen_height;
+	surfacebackground = IMG_Load("Assets/Background.png");
+	texbackground = SDL_CreateTextureFromSurface(renderer, surfacebackground);
+	SDL_FreeSurface(surfacebackground);
+	SDL_RenderCopy(renderer, texbackground, NULL, &backgroundrect);
+
+
+	//// BALL GRAPHICS INIT ////
 	doraemonrect.x = 0;
 	doraemonrect.y = 0;
-	doraemonrect.w = 100;
-	doraemonrect.h = 100;
-
-	surfacedoraemon = IMG_Load("Assets/Doraemon.png");
+	doraemonrect.w = 27;
+	doraemonrect.h = 27;
+	surfacedoraemon = IMG_Load("Assets/Ball.png");
 	texdoraemon = SDL_CreateTextureFromSurface(renderer, surfacedoraemon);
 	SDL_FreeSurface(surfacedoraemon);
-
-	//texBall = IMG_LoadTexture(renderer, "ball");
-	//
-	//surBall = IMG_Load("SDL_Image/Textures");
-	//texBall = SDL_CreateTextureFromSurface(renderer, surBall);
-	//SDL_RenderClear(renderer);
-	//SDL_RenderCopy(renderer, texBall, NULL, &rectBall);
-	//SDL_FreeSurface(surBall);
 }
 
 void ModuleRender::blit_all(float x_ball, float y_ball) {

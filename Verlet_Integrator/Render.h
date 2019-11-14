@@ -8,6 +8,8 @@
 struct SDL_Renderer;
 struct SDL_Texture;
 
+#define screen_width 800
+#define screen_height 800
 
 class ModuleRender : public Verlet
 {
@@ -32,6 +34,8 @@ public:
 	SDL_Surface *surfacedoraemon;
 	SDL_Texture * texdoraemon;
 
-	
+	SDL_Rect backgroundrect;
+	SDL_Surface *surfacebackground;
+	SDL_Texture * texbackground;
 };
 #endif // !__ModuleRenderer_H__

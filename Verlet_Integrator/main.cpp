@@ -45,7 +45,7 @@ int main(int argc, char* args[]) {
 	render.blit_all(0, 0);
 
 	while ((firstopcionmenu != 2) && (firstopcionmenu <= 3 || firstopcionmenu >= 0)) {
-
+		render.Init();
 		//menu
 		cout << "MENU" << endl;
 		cout << "What do you want to do?" << endl << "1- Execute the program" << endl << "2- Quit" << endl;
