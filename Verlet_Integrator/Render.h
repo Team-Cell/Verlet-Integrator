@@ -8,8 +8,8 @@
 struct SDL_Renderer;
 struct SDL_Texture;
 
-#define screen_width 800
-#define screen_height 800
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 800
 
 class ModuleRender : public Verlet
 {

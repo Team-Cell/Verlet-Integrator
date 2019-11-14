@@ -50,6 +50,7 @@ public:
 	float dt;
 	float mass;
 	int radius;
+	float gravity;
 };
 
 void InitialSituation(Verlet &particle, int case_num = 0);

@@ -7,7 +7,7 @@ ModuleRender::ModuleRender() {
 	ball = nullptr;
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO);
 
-	window = SDL_CreateWindow("Verlet Integrator Josep Puto AMO", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, 0);
+	window = SDL_CreateWindow("Verlet Integrator Josep Puto AMO", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
@@ -25,8 +25,8 @@ void ModuleRender::Init() {
 	//// GRAPHICS BACKGROUND ////
 	backgroundrect.x = 0;
 	backgroundrect.y = 0;
-	backgroundrect.w = screen_width;
-	backgroundrect.h = screen_height;
+	backgroundrect.w = SCREEN_WIDTH;
+	backgroundrect.h = SCREEN_HEIGHT;
 	surfacebackground = IMG_Load("Assets/Background.png");
 	texbackground = SDL_CreateTextureFromSurface(renderer, surfacebackground);
 	SDL_FreeSurface(surfacebackground);

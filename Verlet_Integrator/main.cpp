@@ -26,9 +26,7 @@ int main(int argc, char* args[]) {
 	VRectangle right_rectangle(100, 0, 20, 100);
 	VRectangle bottom_rectangle(0, 100, 100, 20);
 
-	
 	render.Init();
-
 
 	rectangles[0] = top_rectangle;
 	rectangles[1] = left_rectangle;
@@ -54,15 +52,19 @@ int main(int argc, char* args[]) {
 		if (firstopcionmenu == 1) {
 			cout << "Which is the initial position?:" << endl;
 			cin >> particle.pos.x >> particle.pos.y;
+			particle.pos.y = SCREEN_HEIGHT -particle.pos.y;
 			cout << "Which is the initial speed?:" << endl;
 			cin >> particle.v.x >> particle.v.y;
 			while ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')){
-				cout << "Do you prefer a constant Acceleration?: " << endl << "(Yes: Y / No: N)" << endl;
+				cout << "Do you prefer a constant external acceleration?: " << endl << "(Yes: Y / No: N)" << endl;
 				cin >> char_const_acc;
 				if ((char_const_acc == 'y') || (char_const_acc == 'Y')) {
 					bool_const_acc = true;
 					cout << "Which is the initial acceleration?: " << endl;
 					cin >> particle.a.x >> particle.a.y;
+					particle.a.y = -particle.a.y;
+					cout << "Which is the gravity?" << endl;
+					cin >> particle.gravity;
 				}
 				if ((char_const_acc == 'n') || (char_const_acc == 'N')) {
 					bool_const_acc = false;
@@ -88,7 +90,7 @@ int main(int argc, char* args[]) {
 			InitialSituation(particle, case_num);
 
 			//main loop
-			while (particle.pos.x <= 500 || particle.pos.y <= 500) {
+			while (particle.pos.x <= SCREEN_WIDTH || particle.pos.y <= SCREEN_HEIGHT) {
 				render.blit_all(particle.pos.x, particle.pos.y);
 				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
 				for (int i = 0; i < 4; i++)
