@@ -100,9 +100,9 @@ int main(int argc, char* args[]) {
 				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,0.25f);
 				for (int i = 0; i < 4; i++)
 				{
-					if (particle.CheckCollision(&rectangles[i])) {
+					if (CheckCollision(particle, rectangles[i])) {
 					cout << "Collision" << endl;
-					//CalculateCollisionPosition(particle, &rectangles[i]);
+					CalculateCollisionPosition(particle, rectangles[i]);
 					}
 				}
 				render.blit_all(particle.pos.x, particle.pos.y);

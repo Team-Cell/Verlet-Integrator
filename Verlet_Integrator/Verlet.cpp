@@ -163,9 +163,9 @@ bool Verlet::CheckCollision(VRectangle* rect) {
 }
 
 
-void CalculateCollisionPosition(Verlet particle, VRectangle* rect, VRectangle* rect2 /*possibly not used*/) {
+void CalculateCollisionPosition(Verlet particle, VRectangle rect, VRectangle* rect2 /*possibly not used*/) {
 
-	float time1, time2 = 0, time;
+	float time1 = 0, time2 = 0, time = 0;
 	bool col_x, col_y;
 	col_x = col_y = false;
 	fPoint pos;
