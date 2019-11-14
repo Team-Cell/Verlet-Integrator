@@ -100,22 +100,10 @@ fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, fPoint a, float dt) {
 	return v_new;
 }
 
-float Flight_Time(float vi, float gravity, float angle) {
-
-	float time;
-
-	time = (2 * vi * sin(angle * PI / 180)) / gravity;
-
-	return time;
-}
-
-float Flight_Time(fPoint vi, float gravity) {
-
-	float time;
-
-	time = (2 * vi.y) / gravity;
-
-	return time;
+fPoint AccelerationSum(Verlet particle) {
+	fPoint accelerationSum;
+	//accelerationSum = Acceleration_For_Drag()
+	return accelerationSum;
 }
 
 float Time_To_Distance(float pos, float a, float dt, float distance) {
@@ -179,13 +167,6 @@ fPoint Acceleration_For_Drag(float density, float drag_coefficient, float area, 
 	acceleration.x = ((0.5 * density * drag_coefficient * area) * (speed.x * speed.x))/ mass;
 	acceleration.y = ((0.5 * density * drag_coefficient * area) * (speed.y * speed.y)) / mass;
 	return acceleration;
-}
-
-
-float Module(fPoint var) {
-
-	return sqrt(var.x * var.x + var.y * var.y);
-
 }
 
 //This while could be used to calculate a number of forces before sending to the Verlet_Acceleration function
@@ -270,4 +251,28 @@ void CalculatePositionCollision(Verlet particle, VRectangle rect, VRectangle rec
 		particle.v.y = -particle.v.y * 0.9;
 		particle.a.y = -particle.a.y;
 	}
+}
+
+float Module(fPoint var) {
+
+	return sqrt(var.x * var.x + var.y * var.y);
+
+}
+
+float Flight_Time(float vi, float gravity, float angle) {
+
+	float time;
+
+	time = (2 * vi * sin(angle * PI / 180)) / gravity;
+
+	return time;
+}
+
+float Flight_Time(fPoint vi, float gravity) {
+
+	float time;
+
+	time = (2 * vi.y) / gravity;
+
+	return time;
 }
