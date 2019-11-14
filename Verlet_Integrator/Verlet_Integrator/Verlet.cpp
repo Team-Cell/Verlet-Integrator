@@ -197,29 +197,34 @@ float Module(fPoint var) {
 
 bool CheckCollision(Verlet particle, VRectangle rect) {
 	bool ret = false;
-	if (particle.pos.x + particle.radius >= rect.x) {
-		if (particle.col_state == C_NONE)particle.col_state = C_RIGHT;
-		else if (particle.col_state == C_UP)particle.col_state = C_UP_RIGHT;
-		else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_RIGHT;
-		ret = true;
+	particle.col_state = C_NONE;
+	if (particle.pos.x + particle.radius >= rect.x && particle.pos.x - particle.radius <= rect.x + rect.w) {
+		if (particle.pos.x > particle.prev_pos.x) {
+			if (particle.col_state == C_NONE)particle.col_state = C_RIGHT;
+			else if (particle.col_state == C_UP)particle.col_state = C_UP_RIGHT;
+			else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_RIGHT;
+			ret = true;
+		}
+		else if (particle.pos.x < particle.prev_pos.x) {
+			if (particle.col_state == C_NONE)particle.col_state = C_LEFT;
+			else if (particle.col_state == C_UP)particle.col_state = C_UP_LEFT;
+			else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_LEFT;
+			ret = true;
+		}
 	}
-	else if (particle.pos.x - particle.radius <= rect.x + rect.w) {
-		if (particle.col_state == C_NONE)particle.col_state = C_LEFT;
-		else if (particle.col_state == C_UP)particle.col_state = C_UP_LEFT;
-		else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_LEFT;
-		ret = true;
-	}
-	else if (particle.pos.y - particle.radius <= rect.y + rect.h) {
-		if (particle.col_state == C_NONE)particle.col_state = C_UP;
-		else if (particle.col_state == C_LEFT)particle.col_state = C_UP_LEFT;
-		else if (particle.col_state == C_RIGHT)particle.col_state = C_UP_RIGHT;
-		ret = true;
-	}
-	else if (particle.pos.y + particle.radius >= rect.y) {
-		if (particle.col_state == C_NONE)particle.col_state = C_DOWN;
-		else if (particle.col_state == C_LEFT)particle.col_state = C_DOWN_LEFT;
-		else if (particle.col_state == C_RIGHT)particle.col_state = C_DOWN_RIGHT;
-		ret = true;
+	else if (particle.pos.y - particle.radius <= rect.y + rect.h && particle.pos.y + particle.radius >= rect.y) {
+		if (particle.pos.y < particle.prev_pos.y) {
+			if (particle.col_state == C_NONE)particle.col_state = C_UP;
+			else if (particle.col_state == C_LEFT)particle.col_state = C_UP_LEFT;
+			else if (particle.col_state == C_RIGHT)particle.col_state = C_UP_RIGHT;
+			ret = true;
+		}
+		else if (particle.pos.y > particle.prev_pos.y) {
+			if (particle.col_state == C_NONE)particle.col_state = C_DOWN;
+			else if (particle.col_state == C_LEFT)particle.col_state = C_DOWN_LEFT;
+			else if (particle.col_state == C_RIGHT)particle.col_state = C_DOWN_RIGHT;
+			ret = true;
+		}
 	}
 	if (particle.col_state != C_NONE)ret = true;
 
