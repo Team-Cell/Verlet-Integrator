@@ -162,10 +162,9 @@ bool Verlet::CheckCollision(VRectangle* rect) {
 			radius + pos.y > rect->y);
 }
 
+void CalculateCollisionPosition(Verlet particle, VRectangle rect) {
 
-void CalculateCollisionPosition(Verlet particle, VRectangle rect, VRectangle* rect2 /*possibly not used*/) {
-
-	float time1 = 0, time2 = 0, time = 0;
+	float time = 0;
 	bool col_x, col_y;
 	col_x = col_y = false;
 	fPoint pos;
@@ -174,33 +173,39 @@ void CalculateCollisionPosition(Verlet particle, VRectangle rect, VRectangle* re
 	{
 	case C_DOWN:
 	case C_UP:
-		time1 = Calculate_Time(particle.prev_pos.y, particle.pos.y, particle.v.y, particle.a.y);
+		time = Calculate_Time(particle.prev_pos.y, particle.pos.y, particle.v.y, particle.a.y);
 		col_y = true;
 		break;
-	case C_DOWN_LEFT:
-	case C_DOWN_RIGHT:
-	case C_UP_LEFT:
-	case C_UP_RIGHT:
-		time2 = Calculate_Time(particle.prev_pos.y, particle.pos.y, particle.v.y, particle.a.y);
-		col_y = true;
 	case C_LEFT:
 	case C_RIGHT:
-		time1 = Calculate_Time(particle.prev_pos.x, particle.pos.x, particle.v.x, particle.a.x);
+		time = Calculate_Time(particle.prev_pos.x, particle.pos.x, particle.v.x, particle.a.x);
 		col_x = true;
 		break;
 	}
-	if (time2 == 0)time = time1;
-	else if (time1 > time2)time = time1;
-	else time = time2;
 	pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
 	if (col_x == true) {
 		particle.v.x = -particle.v.x * 0.9;
 		particle.a.x = -particle.a.x;
 	}
-	if (col_y == true) {
+	else if (col_y == true) {
 		particle.v.y = -particle.v.y * 0.9;
 		particle.a.y = -particle.a.y;
 	}
+}
+
+void CalculateCollisionPosition(Verlet particle, VRectangle rect, VRectangle rect2) {
+
+	float time1 = 0, time2 = 0, time = 0;
+	fPoint pos;
+	time2 = Calculate_Time(particle.prev_pos.y, particle.pos.y, particle.v.y, particle.a.y);
+	time1 = Calculate_Time(particle.prev_pos.x, particle.pos.x, particle.v.x, particle.a.x);
+	if (time1 > time2)time = time1;
+	else time = time2;
+	pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
+	particle.v.x = -particle.v.x * 0.9;
+	particle.a.x = -particle.a.x;
+	particle.v.y = -particle.v.y * 0.9;
+	particle.a.y = -particle.a.y;
 }
 
 //Additional formulas
