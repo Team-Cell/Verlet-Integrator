@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Verlet.h"
+#include "Render.h"
 #include "p2Point.h"
 #include "p2Log.h"
 #include <math.h>
@@ -50,13 +51,13 @@ void InitialSituation(Verlet &particle, int case_num) {
 
 fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 
-	fPoint pos_new, v_new, a_new, vi;
+	fPoint pos_new;
 
 	pos_new = pos + (pos - prev_pos) + ai * dt * dt;
 
 	//a_new = (v_new - vi) / dt;
 
-	cout << "px: " << pos_new.x <<  " py: " << pos_new.y << endl;
+	cout << "px: " << pos_new.x << " py: " << SCREEN_HEIGHT - pos_new.y << " ax: " << -ai.x << " ay: " << -ai.y << endl;
 
 	prev_pos = pos;
 
@@ -86,7 +87,7 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 	v_new = vi + ((ai + a_new) * 0.5) * dt;
 
-	cout << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
+	cout << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << -a_new.x << " ay: " << -a_new.y << endl;
 
 	return v_new;
 }
@@ -107,7 +108,7 @@ fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, fPoint a, float dt) {
 fPoint AccelerationSum(Verlet particle) {
 	fPoint accelerationSum;
 	accelerationSum.x = accelerationSum.y = 0;
-	accelerationSum += particle.a;
+	accelerationSum = particle.a;
 	accelerationSum.y += particle.gravity;
 	accelerationSum -= DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
 	return accelerationSum;
