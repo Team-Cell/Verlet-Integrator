@@ -109,11 +109,11 @@ fPoint AccelerationSum(Verlet particle) {
 	accelerationSum.x = accelerationSum.y = 0;
 	accelerationSum += particle.a;
 	accelerationSum.y += particle.gravity;
-	accelerationSum -= Acceleration_For_Drag(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
+	accelerationSum -= DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
 	return accelerationSum;
 }
 
-fPoint Acceleration_For_Drag(float density, float drag_coefficient, float area, fPoint speed, float mass) {
+fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoint speed, float mass) {
 	fPoint acceleration;
 	acceleration.x = ((0.5 * density * drag_coefficient * area) * (speed.x * speed.x)) / mass;
 	acceleration.y = ((0.5 * density * drag_coefficient * area) * (speed.y * speed.y)) / mass;

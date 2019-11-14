@@ -65,7 +65,7 @@ float Calculate_Time(float pos_i, float pos_new, float v, float a);
 fPoint Verlet_Acceleration(float m, fPoint total_f);
 fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt);
 fPoint Forces_Sum(fPoint f1, fPoint f2);
-fPoint Acceleration_For_Drag(float density, float drag_coefficient, float area, fPoint speed, float mass);
+fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoint speed, float mass);
 bool CheckCollision(Verlet particle, VRectangle rect);
 void CalculateCollisionPosition(Verlet particle, VRectangle* rect, VRectangle* rect2 = nullptr /*possibly not used*/);
 fPoint AccelerationSum(Verlet particle);

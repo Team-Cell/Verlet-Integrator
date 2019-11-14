@@ -33,12 +33,11 @@ int main(int argc, char* args[]) {
 	rectangles[2] = right_rectangle;
 	rectangles[3] = bottom_rectangle;
 
-	bool constant_acceleration;
-
 	int firstopcionmenu = 0;
 	int case_num = 0;
 	bool bool_const_acc = false;
 	char char_const_acc= 'A';
+	bool constant_acceleration;
 
 	render.blit_all(0, 0);
 
