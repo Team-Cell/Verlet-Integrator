@@ -123,36 +123,33 @@ fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoin
 bool CheckCollision(Verlet particle, VRectangle rect) {
 	bool ret = false;
 	particle.col_state = C_NONE;
-	LOG("%f, %f, %f, %f, %f, %f, %f, %f", particle.pos.x + particle.radius, rect.x, particle.pos.x - particle.radius, rect.x + rect.w, particle.pos.y + particle.radius, rect.y, particle.pos.y - particle.radius, rect.y + rect.h);
 	if (particle.pos.x + particle.radius >= rect.x && particle.pos.x - particle.radius <= rect.x + rect.w && particle.pos.y - particle.radius <= rect.y + rect.h && particle.pos.y + particle.radius >= rect.y) {
-		LOG("%f, %f", particle.pos.x, particle.pos.y);
-		if (particle.pos.x > particle.prev_pos.x) {
-			if (particle.col_state == C_NONE)particle.col_state = C_RIGHT;
-			else if (particle.col_state == C_UP)particle.col_state = C_UP_RIGHT;
-			else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_RIGHT;
-			ret = true;
+		ret = true;
+		if (particle.prev_pos.y - particle.radius <= rect.y + rect.h && particle.prev_pos.y + particle.radius >= rect.y) {
+			if (particle.pos.x > particle.prev_pos.x) {
+				if (particle.col_state == C_NONE)particle.col_state = C_RIGHT;
+				else if (particle.col_state == C_UP)particle.col_state = C_UP_RIGHT;
+				else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_RIGHT;
+			}
+			else if (particle.pos.x < particle.prev_pos.x) {
+				if (particle.col_state == C_NONE)particle.col_state = C_LEFT;
+				else if (particle.col_state == C_UP)particle.col_state = C_UP_LEFT;
+				else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_LEFT;
+			}
 		}
-		else if (particle.pos.x < particle.prev_pos.x) {
-			if (particle.col_state == C_NONE)particle.col_state = C_LEFT;
-			else if (particle.col_state == C_UP)particle.col_state = C_UP_LEFT;
-			else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_LEFT;
-			ret = true;
-		}
-		//else if (particle.pos.y - particle.radius <= rect.y + rect.h && particle.pos.y + particle.radius >= rect.y) {
-		if (particle.pos.y < particle.prev_pos.y) {
-			if (particle.col_state == C_NONE)particle.col_state = C_UP;
-			else if (particle.col_state == C_LEFT)particle.col_state = C_UP_LEFT;
-			else if (particle.col_state == C_RIGHT)particle.col_state = C_UP_RIGHT;
-			ret = true;
-		}
-		else if (particle.pos.y > particle.prev_pos.y) {
-			if (particle.col_state == C_NONE)particle.col_state = C_DOWN;
-			else if (particle.col_state == C_LEFT)particle.col_state = C_DOWN_LEFT;
-			else if (particle.col_state == C_RIGHT)particle.col_state = C_DOWN_RIGHT;
-			ret = true;
+		else if (particle.prev_pos.x + particle.radius >= rect.x && particle.prev_pos.x - particle.radius <= rect.x + rect.w) {
+			if (particle.pos.y < particle.prev_pos.y) {
+				if (particle.col_state == C_NONE)particle.col_state = C_UP;
+				else if (particle.col_state == C_LEFT)particle.col_state = C_UP_LEFT;
+				else if (particle.col_state == C_RIGHT)particle.col_state = C_UP_RIGHT;
+			}
+			else if (particle.pos.y > particle.prev_pos.y) {
+				if (particle.col_state == C_NONE)particle.col_state = C_DOWN;
+				else if (particle.col_state == C_LEFT)particle.col_state = C_DOWN_LEFT;
+				else if (particle.col_state == C_RIGHT)particle.col_state = C_DOWN_RIGHT;
+			}
 		}
 	}
-	if (particle.col_state != C_NONE)ret = true;
 
 	return ret;
 }
