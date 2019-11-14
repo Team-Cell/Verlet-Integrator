@@ -3,9 +3,12 @@
 #include "Verlet.h"
 #include "Render.h"
 #include "p2Log.h"
-//#include "../SDL/include/SDL.h"
-//#pragma comment( lib, "SDL/libx86/SDL2.lib" )
-//#pragma comment( lib, "SDL/libx86/SDL2main.lib" )
+#include "SDL/include/SDL.h"
+#include "SDL_Image/include/SDL_image.h"
+
+#pragma comment(lib, "SDL_Image/libx86/SDL2_image.lib")
+#pragma comment(lib, "SDL/libx86/SDL2.lib")
+#pragma comment(lib, "SDL/libx86/SDL2main.lib")
 
 using namespace std;
 
@@ -15,11 +18,17 @@ int main(int argc, char* args[]) {
 
 	Verlet particle;
 
+	ModuleRender render;
+
 	VRectangle rectangles[4];
 	VRectangle top_rectangle(0, -20, 100, 20);
 	VRectangle left_rectangle(-20, 0, 20, 100);
 	VRectangle right_rectangle(100, 0, 20, 100);
 	VRectangle bottom_rectangle(0, 100, 100, 20);
+
+	
+	render.Init();
+
 
 	rectangles[0] = top_rectangle;
 	rectangles[1] = left_rectangle;
@@ -32,6 +41,8 @@ int main(int argc, char* args[]) {
 	int case_num = 0;
 	bool bool_const_acc = false;
 	char char_const_acc= 'A';
+
+	render.blit_all(0, 0);
 
 	while ((firstopcionmenu != 2) && (firstopcionmenu <= 3 || firstopcionmenu >= 0)) {
 
@@ -78,6 +89,7 @@ int main(int argc, char* args[]) {
 
 			//main loop
 			while (particle.pos.x <= 500 || particle.pos.y <= 500) {
+				render.blit_all(particle.pos.x, particle.pos.y);
 				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,1.0f);
 				for (int i = 0; i < 4; i++)
 				{
@@ -89,5 +101,8 @@ int main(int argc, char* args[]) {
 		char_const_acc = 'A';
 		cout << endl << endl;
 	}
+	
+
+	system("pause");
 	return 0;
 }
