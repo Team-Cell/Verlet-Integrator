@@ -48,11 +48,11 @@ void InitialSituation(Verlet &particle, int case_num) {
 
 //Main formulas
 
-fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint a, float dt) {
+fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new, vi;
 
-	pos_new = pos + (pos - prev_pos) + a * dt * dt;
+	pos_new = pos + (pos - prev_pos) + ai * dt * dt;
 
 	//a_new = (v_new - vi) / dt;
 
@@ -63,7 +63,7 @@ fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint a, float dt) {
 	return pos_new;
 }
 
-fPoint Verlet_Integration_With_Speed(fPoint pos, fPoint& prev_pos, fPoint vi, fPoint ai, float dt) {
+fPoint Classical_Motion(fPoint pos, fPoint& prev_pos, fPoint vi, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new;
 
