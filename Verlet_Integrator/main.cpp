@@ -94,14 +94,14 @@ int main(int argc, char* args[]) {
 			InitialSituation(particle, case_num);
 
 			//main loop
-			while (particle.pos.x <= SCREEN_WIDTH && particle.pos.y <= SCREEN_HEIGHT) {
+			while (particle.pos.x <= SCREEN_WIDTH + 100 && particle.pos.y <= SCREEN_HEIGHT + 100) {
 				particle.a = AccelerationSum(particle);
 				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,0.25f);
 				for (int i = 0; i < 4; i++)
 				{
 					if (CheckCollision(particle, rectangles[i])) {
-					CalculateCollisionPosition(particle, &rectangles[i]);
 					cout << "Collision" << endl;
+					CalculateCollisionPosition(particle, &rectangles[i]);
 					}
 				}
 				render.blit_all(particle.pos.x, particle.pos.y);
