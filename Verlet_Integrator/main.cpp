@@ -102,7 +102,7 @@ int main(int argc, char* args[]) {
 				{
 					if (particle.CheckCollision(&rectangles[i])) {
 					cout << "Collision" << endl;
-					CalculateCollisionPosition(particle, &rectangles[i]);
+					//CalculateCollisionPosition(particle, &rectangles[i]);
 					}
 				}
 				render.blit_all(particle.pos.x, particle.pos.y);

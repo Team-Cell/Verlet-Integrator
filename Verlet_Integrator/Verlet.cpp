@@ -154,12 +154,14 @@ bool CheckCollision(Verlet particle, VRectangle rect) {
 	return ret;
 }
 
+
 bool Verlet::CheckCollision(VRectangle* rect) {
 		return (pos.x < rect->x + rect->w &&
 			pos.x + radius > rect->x &&
 			pos.y < rect->y + rect->h &&
 			radius + pos.y > rect->y);
 }
+
 
 void CalculateCollisionPosition(Verlet particle, VRectangle* rect, VRectangle* rect2 /*possibly not used*/) {
 
