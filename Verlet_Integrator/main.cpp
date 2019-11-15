@@ -99,7 +99,7 @@ int main(int argc, char* args[]) {
 				int i1, i2;
 				i1 = i2 = -1;
 				particle.a = AccelerationSum(particle);
-				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,0.25f);
+				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,0.1f);
 				for (int i = 0; i < 4; i++)
 				{
 					if (CheckCollision(particle, rectangles[i])) {

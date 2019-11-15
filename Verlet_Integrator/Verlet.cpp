@@ -209,6 +209,21 @@ void CalculateCollisionPosition(Verlet particle, VRectangle rect, VRectangle rec
 	particle.a.y = -particle.a.y;
 }
 
+float Calculate_Time(float pos_i, float pos_new, float v, float a) {
+	float time, time1, time2, t_pow;
+
+	//v * time + a * 0.5 * time * time + pos_i - pos_new = 0;
+	t_pow = pow((v * v) - ((pos_i - pos_new) * a * 2), 0.5);
+	time1 = (-v + t_pow) / a;
+	time2 = (-v - t_pow) / a;
+
+	if (time1 > 0)time = time1;
+	else if (time2 > 0)time = time2;
+	else time = 0;
+
+	return time;
+}
+
 //Additional formulas
 
 float Time_To_Distance(float pos, float a, float dt, float distance) {
@@ -223,21 +238,6 @@ float Time_To_Distance(float pos, float a, float dt, float distance) {
 		pos = 2 * pos - prev_pos + a * dt * dt;
 		prev_pos = temp_pos;
 	}
-	return time;
-}
-
-float Calculate_Time(float pos_i, float pos_new, float v, float a) {
-	float time, time1, time2, t_pow;
-
-	//v * time + a * 0.5 * time * time + pos_i - pos_new = 0;
-	t_pow = pow((v * v) - ((pos_i - pos_new) * a * 2), 0.5);
-	time1 = (-v + t_pow) / a;
-	time2= (-v - t_pow) / a;
-
-	if (time1 > 0)time = time1;
-	else if (time2 > 0)time = time2;
-	else time = 0;
-
 	return time;
 }
 
