@@ -163,20 +163,19 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
 	if (col_x == true) {
 		particle.v.x = -particle.v.x * 0.9;
-		particle.a.x = -particle.a.x;
+		//particle.a.x = -particle.a.x;
 	}
 	else if (col_y == true) {
 		particle.v.y = -particle.v.y * 0.9;
-		particle.a.y = -particle.a.y;
+		//particle.a.y = -particle.a.y;
 	}
 	return time;
 }
 
 void CalculateCollisionFinalPosition(Verlet& particle, float time) {
-	LOG("INITIAL TIME: %f, %f", particle.dt, time);
 	time = particle.dt - time;
-	LOG("TIME: %f", time);
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
+	particle.prev_pos=particle.pos- particle.v * particle.dt - particle.a * 0.5 * particle.dt * particle.dt;
 }
 
 
@@ -184,10 +183,13 @@ float Calculate_Time(float pos_i, float pos_new, float v, float a) {
 	float time, time1, time2, t_pow;
 
 	//v * time + a * 0.5 * time * time + pos_i - pos_new = 0;
+	if (a == 0) {
+		time = (pos_new - pos_i) / v;
+		return time;
+	}
 	t_pow = pow((v * v) - ((pos_i - pos_new) * a * 2), 0.5);
 	time1 = (-v + t_pow) / a;
 	time2 = (-v - t_pow) / a;
-	LOG("2 TIMES:	%f	%f", time1, time2);
 	if (time1 > 0)time = time1;
 	else if (time2 > 0)time = time2;
 	else time = 0;
