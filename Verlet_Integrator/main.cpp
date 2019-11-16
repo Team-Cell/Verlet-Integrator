@@ -89,10 +89,12 @@ int main(int argc, char* args[]) {
 			system("cls");
 
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << particle.a.y << endl;
+			/*
 			if (particle.a.IsZero() == true && particle.dt != 0)case_num = 1;
 			else if (particle.a.IsZero() == false && particle.dt == 1)case_num = 2;
 			else if (particle.a.IsZero() == false)case_num = 3;
-			
+			*/
+
 			InitialSituation(particle, case_num);
 
 			//main loop

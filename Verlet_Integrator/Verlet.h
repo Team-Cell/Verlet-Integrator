@@ -5,8 +5,6 @@
 
 #define PI 3.1416
 
-
-
 struct VRectangle {
 	float x = 0;
 	float y = 0;
@@ -42,9 +40,9 @@ public:
 	float gravity;
 };
 
-void InitialSituation(Verlet &particle, int case_num = 0);
+void InitialSituation(Verlet &particle, float dt);
 fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt);
-fPoint Classical_Motion(fPoint pos_i, fPoint& pos_o, fPoint vi, fPoint ai, float dt);
+fPoint Classical_Motion(fPoint pos, fPoint vi, fPoint ai, float dt);
 fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt);
 fPoint Stormer_Verlet(fPoint pos, fPoint pos_new, fPoint a, float dt);
 float Flight_Time(float vi, float gravity, float angle);

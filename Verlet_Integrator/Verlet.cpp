@@ -22,8 +22,9 @@ Verlet::Verlet() {
 
 Verlet::~Verlet() {}
 
-void InitialSituation(Verlet &particle, int case_num) {
+void InitialSituation(Verlet &particle, float dt) {
 	bool ret = true;
+	/*
 	switch (case_num) {
 	case 0: //acceleration == 0 and dt == 1, both constant
 		particle.prev_pos.x = particle.pos.x - particle.v.x;
@@ -42,7 +43,12 @@ void InitialSituation(Verlet &particle, int case_num) {
 		particle.prev_pos.y = particle.pos.y - (particle.v.y - particle.a.y * particle.dt) * particle.dt - 0.5 * particle.a.y * particle.dt * particle.dt;
 		break;
 	}
-	particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, particle.dt);
+	*/
+	//a = AccelerationSum(particle) * -1;
+	particle.a = AccelerationSum(particle);
+	particle.prev_pos = particle.pos - particle.v * dt + particle.a * 0.5f * dt * dt;
+
+	//particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, particle.dt);
 }
 
 
@@ -63,19 +69,17 @@ fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 	return pos_new;
 }
 
-fPoint Classical_Motion(fPoint pos, fPoint& prev_pos, fPoint vi, fPoint ai, float dt) {
+fPoint Classical_Motion(fPoint pos, fPoint vi, fPoint ai, float dt) {
 
 	fPoint pos_new, v_new, a_new;
 
-	pos_new = pos + (pos - prev_pos) + ai * dt * dt;
+	pos_new = pos + vi * dt + ai * dt * dt;
 
 	v_new = vi + ai * dt;
 
 	a_new = (v_new - vi) / dt;
 
 	cout << "px: " << pos_new.x << " py: " << pos_new.y << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
-
-	prev_pos = pos;
 
 	return pos;
 }
