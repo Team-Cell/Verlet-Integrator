@@ -37,10 +37,9 @@ int main(int argc, char* args[]) {
 
 	int firstopcionmenu = 0;
 	float time = 0;
-	int case_num = 0;
-	bool bool_const_acc = false;
 	char char_const_acc= 'A';
 	bool constant_acceleration;
+	float dt = 0.1f;
 
 	render.blit_all(0, 0);
 
@@ -62,7 +61,6 @@ int main(int argc, char* args[]) {
 				cout << "Do you want gravity to be the only acceleration?: " << endl << "(Yes: Y / No: N)" << endl;
 				cin >> char_const_acc;
 				if ((char_const_acc == 'y') || (char_const_acc == 'Y')) {
-					bool_const_acc = true;
 					//cout << "Which is the initial acceleration?: " << endl;
 					//cin >> particle.a.x >> particle.a.y;
 					//particle.a.y = -particle.a.y;
@@ -71,7 +69,6 @@ int main(int argc, char* args[]) {
 					particle.gravity = -particle.gravity;
 				}
 				if ((char_const_acc == 'n') || (char_const_acc == 'N')) {
-					bool_const_acc = false;
 					cout << "Which is the gravity?" << endl;
 					cin >> particle.gravity;
 					particle.gravity = -particle.gravity;
@@ -91,16 +88,18 @@ int main(int argc, char* args[]) {
 			system("cls");
 
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << particle.a.y << endl;
+			/*
 			if (particle.a.IsZero() == true && particle.dt != 0)case_num = 1;
 			else if (particle.a.IsZero() == false && particle.dt == 1)case_num = 2;
 			else if (particle.a.IsZero() == false)case_num = 3;
-			
-			InitialSituation(particle, case_num);
+			*/
+
+			InitialSituation(particle, dt);
 
 			//main loop
-			while (loop_counter < 30) {
+			while (loop_counter < 40) {
 				particle.a = AccelerationSum(particle);
-				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,0.1f);
+				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,dt);
 				for (int i = 0; i < 4; i++)
 				{
 					if (CheckCollision(particle, rectangles[i])) {

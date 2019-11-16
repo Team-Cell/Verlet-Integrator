@@ -113,7 +113,7 @@ fPoint AccelerationSum(Verlet particle) {
 	accelerationSum.x = accelerationSum.y = 0;
 	accelerationSum = particle.a;
 	accelerationSum.y += particle.gravity;
-	accelerationSum -= DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
+	accelerationSum += DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
 	return accelerationSum;
 }
 
@@ -129,10 +129,8 @@ bool CheckCollision(Verlet particle, VRectangle rect) {
 	if (particle.pos.x + particle.radius >= rect.x && particle.pos.x - particle.radius <= rect.x + rect.w && particle.pos.y - particle.radius <= rect.y + rect.h && particle.pos.y + particle.radius >= rect.y) {
 		ret = true;
 	}
-
 	return ret;
 }
-
 
 bool Verlet::CheckCollision(VRectangle* rect) {
 		return (pos.x < rect->x + rect->w &&
