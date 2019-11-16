@@ -15,6 +15,7 @@ using namespace std;
 int main(int argc, char* args[]) {
 
 	LOG("Starting Integrator");
+	int loop_counter = 0;
 
 	Verlet particle;
 
@@ -56,6 +57,7 @@ int main(int argc, char* args[]) {
 			particle.pos.y = SCREEN_HEIGHT -particle.pos.y;
 			cout << "Which is the initial speed?:" << endl;
 			cin >> particle.v.x >> particle.v.y;
+			particle.v.y = -particle.v.y;
 			while ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')){
 				cout << "Do you want gravity to be the only acceleration?: " << endl << "(Yes: Y / No: N)" << endl;
 				cin >> char_const_acc;
@@ -89,16 +91,14 @@ int main(int argc, char* args[]) {
 			system("cls");
 
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << particle.a.y << endl;
-			/*
 			if (particle.a.IsZero() == true && particle.dt != 0)case_num = 1;
 			else if (particle.a.IsZero() == false && particle.dt == 1)case_num = 2;
 			else if (particle.a.IsZero() == false)case_num = 3;
-			*/
-
+			
 			InitialSituation(particle, case_num);
 
 			//main loop
-			while (particle.pos.x <= SCREEN_WIDTH + 100 && particle.pos.y <= SCREEN_HEIGHT + 100) {
+			while (loop_counter < 30) {
 				particle.a = AccelerationSum(particle);
 				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,0.1f);
 				for (int i = 0; i < 4; i++)
@@ -113,6 +113,7 @@ int main(int argc, char* args[]) {
 					time = 0;
 				}
 				render.blit_all(particle.pos.x, particle.pos.y);
+				loop_counter++;
 			}
 
 		}
