@@ -35,6 +35,7 @@ int main(int argc, char* args[]) {
 	rectangles[3] = bottom_rectangle;
 
 	int firstopcionmenu = 0;
+	float time = 0;
 	int case_num = 0;
 	bool bool_const_acc = false;
 	char char_const_acc= 'A';
@@ -96,21 +97,22 @@ int main(int argc, char* args[]) {
 
 			//main loop
 			while (particle.pos.x <= SCREEN_WIDTH + 100 && particle.pos.y <= SCREEN_HEIGHT + 100) {
-				int i1, i2;
-				i1 = i2 = -1;
 				particle.a = AccelerationSum(particle);
 				particle.pos = Verlet_Integration(particle.pos,particle.prev_pos,particle.a,0.1f);
 				for (int i = 0; i < 4; i++)
 				{
 					if (CheckCollision(particle, rectangles[i])) {
-					cout << "Collision" << endl;
-					if (i1 == -1)i1 = i;
-					else i2 = i;
-					//CalculateCollisionPosition(particle, rectangles[i]);
+						cout << "Collision" << endl;
+						LOG("%f %f", particle.pos.x, particle.pos.y);
+						time+=CalculateCollisionPosition(particle, rectangles[i]);
+						LOG("%f %f", particle.pos.x, particle.pos.y);
 					}
 				}
-				if(i2==-1)CalculateCollisionPosition(particle, rectangles[i1]);
-				else if(i1!=-1)CalculateCollisionPosition(particle, rectangles[i1],rectangles[i2]);
+				if (time > 0) {
+					CalculateCollisionFinalPosition(particle, time);
+					LOG("%f %f", particle.pos.x, particle.pos.y);
+					time = 0;
+				}
 				render.blit_all(particle.pos.x, particle.pos.y);
 			}
 

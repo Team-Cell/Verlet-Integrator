@@ -5,17 +5,7 @@
 
 #define PI 3.1416
 
-enum Collision {
-	C_NONE,
-	C_DOWN,
-	C_RIGHT,
-	C_LEFT,
-	C_UP,
-	C_DOWN_LEFT,
-	C_DOWN_RIGHT,
-	C_UP_LEFT,
-	C_UP_RIGHT
-};
+
 
 struct VRectangle {
 	float x = 0;
@@ -38,7 +28,6 @@ public:
 	~Verlet();
 	bool CheckCollision(VRectangle* rect);
 public:
-	Collision col_state;
 	fPoint pos;
 	fPoint next_pos;
 	fPoint prev_pos;
@@ -67,8 +56,8 @@ fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt);
 fPoint Forces_Sum(fPoint f1, fPoint f2);
 fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoint speed, float mass);
 bool CheckCollision(Verlet particle, VRectangle rect);
-void CalculateCollisionPosition(Verlet particle, VRectangle rect);
-void CalculateCollisionPosition(Verlet particle, VRectangle rect, VRectangle rect2);
+float CalculateCollisionPosition(Verlet& particle, VRectangle rect);
+void CalculateCollisionFinalPosition(Verlet& particle, float time);
 fPoint AccelerationSum(Verlet particle);
 
 float Module(fPoint var);

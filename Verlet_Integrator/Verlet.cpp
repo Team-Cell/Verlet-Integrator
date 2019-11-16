@@ -17,7 +17,6 @@ Verlet::Verlet() {
 	mass = 0;
 	drag_coeficient = 0;
 	radius = 0;
-	col_state = C_NONE;
 	gravity = 0;
 }
 
@@ -123,33 +122,8 @@ fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoin
 
 bool CheckCollision(Verlet particle, VRectangle rect) {
 	bool ret = false;
-	particle.col_state = C_NONE;
 	if (particle.pos.x + particle.radius >= rect.x && particle.pos.x - particle.radius <= rect.x + rect.w && particle.pos.y - particle.radius <= rect.y + rect.h && particle.pos.y + particle.radius >= rect.y) {
 		ret = true;
-		if (particle.prev_pos.y - particle.radius <= rect.y + rect.h && particle.prev_pos.y + particle.radius >= rect.y) {
-			if (particle.pos.x > particle.prev_pos.x) {
-				if (particle.col_state == C_NONE)particle.col_state = C_RIGHT;
-				else if (particle.col_state == C_UP)particle.col_state = C_UP_RIGHT;
-				else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_RIGHT;
-			}
-			else if (particle.pos.x < particle.prev_pos.x) {
-				if (particle.col_state == C_NONE)particle.col_state = C_LEFT;
-				else if (particle.col_state == C_UP)particle.col_state = C_UP_LEFT;
-				else if (particle.col_state == C_DOWN)particle.col_state = C_DOWN_LEFT;
-			}
-		}
-		else if (particle.prev_pos.x + particle.radius >= rect.x && particle.prev_pos.x - particle.radius <= rect.x + rect.w) {
-			if (particle.pos.y < particle.prev_pos.y) {
-				if (particle.col_state == C_NONE)particle.col_state = C_UP;
-				else if (particle.col_state == C_LEFT)particle.col_state = C_UP_LEFT;
-				else if (particle.col_state == C_RIGHT)particle.col_state = C_UP_RIGHT;
-			}
-			else if (particle.pos.y > particle.prev_pos.y) {
-				if (particle.col_state == C_NONE)particle.col_state = C_DOWN;
-				else if (particle.col_state == C_LEFT)particle.col_state = C_DOWN_LEFT;
-				else if (particle.col_state == C_RIGHT)particle.col_state = C_DOWN_RIGHT;
-			}
-		}
 	}
 
 	return ret;
@@ -163,27 +137,30 @@ bool Verlet::CheckCollision(VRectangle* rect) {
 			radius + pos.y > rect->y);
 }
 
-void CalculateCollisionPosition(Verlet particle, VRectangle rect) {
+float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 
 	float time = 0;
 	bool col_x, col_y;
 	col_x = col_y = false;
-	fPoint pos;
-
-	switch (particle.col_state)
-	{
-	case C_DOWN:
-	case C_UP:
-		time = Calculate_Time(particle.prev_pos.y, particle.pos.y, particle.v.y, particle.a.y);
-		col_y = true;
-		break;
-	case C_LEFT:
-	case C_RIGHT:
-		time = Calculate_Time(particle.prev_pos.x, particle.pos.x, particle.v.x, particle.a.x);
+	
+	if (particle.prev_pos.x + particle.radius < rect.x) {
+		time = Calculate_Time(particle.prev_pos.x, rect.x, particle.v.x, particle.a.x);
 		col_x = true;
-		break;
 	}
-	pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
+	else if(particle.prev_pos.x - particle.radius > rect.x + rect.w) {
+		time = Calculate_Time(particle.prev_pos.x, rect.x + rect.w, particle.v.x, particle.a.x);
+		col_x = true;
+	}
+	else if (particle.prev_pos.y + particle.radius < rect.y) {
+		time = Calculate_Time(particle.prev_pos.y, rect.y, particle.v.y, particle.a.y);
+		col_y = true;
+	}
+	else if (particle.prev_pos.y - particle.radius > rect.y + rect.h) {
+		time = Calculate_Time(particle.prev_pos.y, rect.y + rect.h, particle.v.y, particle.a.y);
+		col_y = true;
+	}
+
+	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
 	if (col_x == true) {
 		particle.v.x = -particle.v.x * 0.9;
 		particle.a.x = -particle.a.x;
@@ -192,22 +169,16 @@ void CalculateCollisionPosition(Verlet particle, VRectangle rect) {
 		particle.v.y = -particle.v.y * 0.9;
 		particle.a.y = -particle.a.y;
 	}
+	return time;
 }
 
-void CalculateCollisionPosition(Verlet particle, VRectangle rect, VRectangle rect2) {
-
-	float time1 = 0, time2 = 0, time = 0;
-	fPoint pos;
-	time2 = Calculate_Time(particle.prev_pos.y, particle.pos.y, particle.v.y, particle.a.y);
-	time1 = Calculate_Time(particle.prev_pos.x, particle.pos.x, particle.v.x, particle.a.x);
-	if (time1 > time2)time = time1;
-	else time = time2;
-	pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
-	particle.v.x = -particle.v.x * 0.9;
-	particle.a.x = -particle.a.x;
-	particle.v.y = -particle.v.y * 0.9;
-	particle.a.y = -particle.a.y;
+void CalculateCollisionFinalPosition(Verlet& particle, float time) {
+	LOG("INITIAL TIME: %f, %f", particle.dt, time);
+	time = particle.dt - time;
+	LOG("TIME: %f", time);
+	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
 }
+
 
 float Calculate_Time(float pos_i, float pos_new, float v, float a) {
 	float time, time1, time2, t_pow;
@@ -216,7 +187,7 @@ float Calculate_Time(float pos_i, float pos_new, float v, float a) {
 	t_pow = pow((v * v) - ((pos_i - pos_new) * a * 2), 0.5);
 	time1 = (-v + t_pow) / a;
 	time2 = (-v - t_pow) / a;
-
+	LOG("2 TIMES:	%f	%f", time1, time2);
 	if (time1 > 0)time = time1;
 	else if (time2 > 0)time = time2;
 	else time = 0;
