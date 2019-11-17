@@ -86,7 +86,7 @@ int main(int argc, char* args[]) {
 			cin >> particle.mass;
 			system("cls");
 
-			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << particle.a.y << endl;
+			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << -particle.a.y << endl;
 			InitialSituation(particle, dt);
 
 			//main loop

@@ -141,14 +141,18 @@ bool Verlet::CheckCollision(VRectangle* rect) {
 void SolveCollision(Verlet particle, VRectangle rect)
 {
 	float time = 0;
+	fPoint aux_pos;
+	fPoint a = particle.a * -1;
+	aux_pos = particle.prev_pos;
+	particle.prev_pos = particle.pos;
+	particle.pos = aux_pos;
 	while (CheckCollision(particle,rect))
 	{
-		time += CalculateCollisionPosition(particle, rect);
-		if (time > 0) {
-			CalculateCollisionFinalPosition(particle, time);
-			time = 0;
-		}
+		particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, a, 0.1);
 	}
+	aux_pos = particle.prev_pos;
+	particle.prev_pos = particle.pos;
+	particle.pos = aux_pos;
 }
 
 float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
