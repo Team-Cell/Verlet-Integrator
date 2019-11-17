@@ -57,6 +57,7 @@ bool CheckCollision(Verlet particle, VRectangle rect);
 float CalculateCollisionPosition(Verlet& particle, VRectangle rect);
 void CalculateCollisionFinalPosition(Verlet& particle, float time);
 fPoint AccelerationSum(Verlet particle);
+void SolveCollision(Verlet particle, VRectangle rect);
 
 float Module(fPoint var);
 

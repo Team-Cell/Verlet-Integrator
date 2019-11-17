@@ -110,10 +110,9 @@ fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, fPoint a, float dt) {
 
 fPoint AccelerationSum(Verlet particle) {
 	fPoint accelerationSum;
-	accelerationSum.x = accelerationSum.y = 0;
+	//accelerationSum.x = accelerationSum.y = 0;
 	accelerationSum = particle.a;
-	accelerationSum.y += particle.gravity;
-	accelerationSum += DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
+	//accelerationSum += DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
 	return accelerationSum;
 }
 
@@ -137,6 +136,15 @@ bool Verlet::CheckCollision(VRectangle* rect) {
 			pos.x + radius > rect->x &&
 			pos.y < rect->y + rect->h &&
 			radius + pos.y > rect->y);
+}
+
+void SolveCollision(Verlet particle, VRectangle rect)
+{
+	float time = 0;
+	while (CheckCollision(particle,rect))
+	{
+		time += CalculateCollisionPosition(particle, rect);
+	}
 }
 
 float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
@@ -179,7 +187,6 @@ void CalculateCollisionFinalPosition(Verlet& particle, float time) {
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
 	particle.prev_pos=particle.pos- particle.v * particle.dt - particle.a * 0.5 * particle.dt * particle.dt;
 }
-
 
 float Calculate_Time(float pos_i, float pos_new, float v, float a) {
 	float time, time1, time2, t_pow;
