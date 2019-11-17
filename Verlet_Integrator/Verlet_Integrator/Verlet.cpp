@@ -144,6 +144,10 @@ void SolveCollision(Verlet particle, VRectangle rect)
 	while (CheckCollision(particle,rect))
 	{
 		time += CalculateCollisionPosition(particle, rect);
+		if (time > 0) {
+			CalculateCollisionFinalPosition(particle, time);
+			time = 0;
+		}
 	}
 }
 

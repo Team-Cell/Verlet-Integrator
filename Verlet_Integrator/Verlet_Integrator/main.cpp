@@ -36,10 +36,8 @@ int main(int argc, char* args[]) {
 	rectangles[3] = bottom_rectangle;
 
 	int firstopcionmenu = 0;
-	float time = 0;
 	char char_const_acc= 'A';
-	bool constant_acceleration;
-	float dt = 0.1f;
+	float dt = 0.4f;
 
 	render.blit_all(0, 0);
 
@@ -67,6 +65,7 @@ int main(int argc, char* args[]) {
 					cout << "Which is the gravity?" << endl;
 					cin >> particle.gravity;
 					particle.gravity = -particle.gravity;
+					particle.a.y = particle.gravity;
 				}
 				if ((char_const_acc == 'n') || (char_const_acc == 'N')) {
 					cout << "Which is the gravity?" << endl;
@@ -88,12 +87,6 @@ int main(int argc, char* args[]) {
 			system("cls");
 
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << particle.a.y << endl;
-			/*
-			if (particle.a.IsZero() == true && particle.dt != 0)case_num = 1;
-			else if (particle.a.IsZero() == false && particle.dt == 1)case_num = 2;
-			else if (particle.a.IsZero() == false)case_num = 3;
-			*/
-
 			InitialSituation(particle, dt);
 
 			//main loop
@@ -104,12 +97,8 @@ int main(int argc, char* args[]) {
 				{
 					if (CheckCollision(particle, rectangles[i])) {
 						cout << "Collision" << endl;
-						time+=CalculateCollisionPosition(particle, rectangles[i]);
+						SolveCollision(particle, rectangles[i]);
 					}
-				}
-				if (time > 0) {
-					CalculateCollisionFinalPosition(particle, time);
-					time = 0;
 				}
 				render.blit_all(particle.pos.x, particle.pos.y);
 				loop_counter++;
