@@ -119,6 +119,7 @@ void request_data(Verlet& particle, int menu_option) {
 		cout << "2. Time to reach a certain position" << endl;
 		cout << "3. Terminal velocity of the particle" << endl;
 		cin >> choice;
+		system("cls");
 		switch (choice)
 		{
 		case 1:
