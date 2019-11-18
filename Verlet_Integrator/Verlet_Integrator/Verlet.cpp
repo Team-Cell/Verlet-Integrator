@@ -280,6 +280,32 @@ float Module(fPoint var) {
 
 }
 
+float Parachutist_Acceleration(float m, float v_y, float gravity, float k) {
+	float acceleration;
+
+	// k: constant based on falling object form
+
+	acceleration = (-m * gravity + k * v_y * v_y) / m;
+
+	return acceleration;
+}
+
+float Freefall_Speed(float gravity, float m, float air_density, float area, float friction_const) {
+	float speed;
+
+	speed = sqrt((2 * m * gravity) / (air_density * area * friction_const));
+
+	return speed;
+}
+
+float Freefall_Acceleration(float gravity, float m, float friction_const) {
+	float acceleration;
+
+	acceleration = (m * gravity - m * gravity * friction_const) / m;
+
+	return acceleration;
+}
+
 //This while could be used to calculate a number of forces before sending to the Verlet_Acceleration function
 /*p2Point<float> Calculate_Total_Forces(int number_forces) {
 	while (number_forces > 1) {
