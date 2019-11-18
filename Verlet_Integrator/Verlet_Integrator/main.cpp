@@ -103,13 +103,13 @@ void request_data(Verlet& particle, int menu_option) {
 		switch (choice)
 		{
 		case 1:
-
+			//classical motion combined with verlet
 			break;
 		case 2: 
-
+			//calculate time
 			break;
 		case 3:
-
+			cout << "Terminal velocity" << Terminal_Velocity << endl;
 			break;
 		default:
 			goto LOOP;

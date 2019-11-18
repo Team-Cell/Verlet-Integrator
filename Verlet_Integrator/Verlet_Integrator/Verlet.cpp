@@ -288,3 +288,7 @@ float Flight_Time(fPoint vi, float gravity) {
 
 	return time;
 }
+
+float Terminal_Velocity(Verlet particle) {
+	return sqrt( (2 * particle.mass * particle.gravity) / (particle.density*particle.drag_coeficient*particle.area) );
+}
