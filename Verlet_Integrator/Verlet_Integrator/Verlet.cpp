@@ -235,7 +235,7 @@ float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, f
 	particle.a = acceleration;
 	int max_iterations = 100;
 	int current_iterations = 0;
-
+	LOG("here");
 	InitialSituation(particle, dt);
 
 	while (particle.pos != final_position)
