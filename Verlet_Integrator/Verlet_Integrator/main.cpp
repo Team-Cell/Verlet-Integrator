@@ -107,8 +107,6 @@ int main(int argc, char* args[]) {
 }
 
 void request_data(Verlet& particle, int menu_option) {
-<<<<<<< HEAD
-	float dt = 1;
 	float time = 0;
 	float dt = 0.1;
 	fPoint prev_pos, pos, v, final_position, a;
