@@ -23,7 +23,7 @@ int main(int argc, char* args[]) {
 	Verlet particle;
 	ModuleRender render;
 	int menu_option = 0;
-	float dt = 0.1f;
+	float dt = 0.5f;
 	float time = 0;
 
 	//screen limit rectangles
@@ -139,36 +139,24 @@ void request_data(Verlet& particle, int menu_option) {
 		switch (choice)
 		{
 		case 1:
-			cout << "Which is the current position? " << endl << "x: ";
+			cout << "Which is the position of the particle? " << endl << "x: ";
 			cin >> pos.x;
 			cout << "y: ";
 			cin >> pos.y;
-			cout << "Which is the previous position?" << endl << "x: ";
-			cin >> prev_pos.x;
-			cout << "y: ";
-			cin >> prev_pos.y;
 			cout << "Which is the acceleration?" << endl << "x: ";
 			cin >> a.x;
 			cout << "y: ";
 			cin >> a.y;
 			cout << "At which time do you want to know the position?" << endl;
 			cin >> time;
-			pos = Position_at_Time(pos, prev_pos, a, time);
+			pos = Position_at_Time(pos, pos, a, time);
 			cout << "Final position: " << pos.x << ", " << pos.y << endl;
 			break;
 		case 2: 
-			cout << "Which is the initial position of the particle?" << endl << "x: ";
-			cin >> prev_pos.x;
-			cout << "y: ";
-			cin >> prev_pos.y;
-			cout << "Which is the actual position of the particle?" << endl << "x: ";
+			cout << "Which is the position of the particle?" << endl << "x: ";
 			cin >> pos.x;
 			cout << "y: ";
 			cin >> pos.y;
-			cout << "Which is the speed of the particle?" << endl << "x: ";
-			cin >> v.x;
-			cout << "y: ";
-			cin >> v.y;
 			cout << "Which is the acceleration of the particle?" << endl << "x: ";
 			cin >> a.x;
 			cout << "y: ";
@@ -177,10 +165,21 @@ void request_data(Verlet& particle, int menu_option) {
 			cin >> final_position.x;
 			cout << "y: ";
 			cin >> final_position.y;
-			cout << "Time: " << Time_To_Position(prev_pos,a,dt,final_position) << endl;
+			cout << "Time: " << Time_To_Position(pos,a,dt,final_position) << endl;
 			break;
 		case 3:
-			cout << "Terminal velocity: " << Terminal_Velocity(particle) << endl;
+			//ask for values
+			cout << "Which is the value of the gravity?" << endl;
+			cin >> particle.gravity;
+			cout << "Which is mass of the particle?" << endl;
+			cin >> particle.mass;
+			cout << "Which is the density of the particle? " << endl;
+			cin >> particle.density;
+			cout << "Which is the area of the particle?" << endl;
+			cin >> particle.area;
+			cout << "Which is the drag coeficient of the air? " << endl;
+			cin >> particle.drag_coeficient;
+			cout << "Terminal velocity: " << Freefall_Speed(particle.gravity,particle.mass,particle.density,particle.area,particle.drag_coeficient) << endl;
 			break;
 		default:
 			goto LOOP;
