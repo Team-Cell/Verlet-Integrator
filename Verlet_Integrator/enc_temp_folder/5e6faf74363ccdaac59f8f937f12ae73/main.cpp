@@ -106,7 +106,7 @@ void request_data(Verlet& particle, int menu_option) {
 	{
 		int choice = 0;
 		cout << "What do you want to calculate?" << endl;
-		cout << "1. Position at a certain time" << endl;
+		cout << "1. Poisiton at a certain time" << endl;
 		cout << "2. Time to reach a certain position" << endl;
 		cout << "3. Terminal velocity of the particle" << endl;
 		cin >> choice;
