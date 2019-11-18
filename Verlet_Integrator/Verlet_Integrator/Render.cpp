@@ -34,21 +34,26 @@ void ModuleRender::Init() {
 
 
 	//// BALL GRAPHICS INIT ////
-	doraemonrect.x = 0;
-	doraemonrect.y = 0;
-	doraemonrect.w = 27;
-	doraemonrect.h = 27;
-	surfacedoraemon = IMG_Load("Assets/Ball.png");
-	texdoraemon = SDL_CreateTextureFromSurface(renderer, surfacedoraemon);
-	SDL_FreeSurface(surfacedoraemon);
+	particle_rect.x = 0;
+	particle_rect.y = 0;
+	particle_rect.w = 27;
+	particle_rect.h = 27;
+	particle_surface = IMG_Load("Assets/Ball.png");
+	particle_tex = SDL_CreateTextureFromSurface(renderer, particle_surface);
+	SDL_FreeSurface(particle_surface);
 }
 
 void ModuleRender::blit_all(float x_ball, float y_ball) {
-	doraemonrect.x = x_ball;
-	doraemonrect.y = y_ball;
+	particle_rect.x = x_ball;
+	particle_rect.y = y_ball;
 	SDL_RenderPresent(renderer);
-	SDL_RenderCopy(renderer, texdoraemon, NULL, &doraemonrect);
+	SDL_RenderCopy(renderer, particle_tex, NULL, &particle_rect);
 	//SDL_Delay(30);
+}
+
+void ModuleRender::Update(fPoint position) {
+	SDL_RenderPresent(renderer);
+	SDL_RenderCopy(renderer, particle_tex, NULL, &particle_rect);
 }
 
 void ModuleRender::clearScreen() {

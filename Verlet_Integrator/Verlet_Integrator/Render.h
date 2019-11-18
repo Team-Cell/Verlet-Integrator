@@ -20,6 +20,7 @@ public:
 	bool Render();
 	void Init();
 	void blit_all(float, float);
+	void Update(fPoint pos);
 	void clearScreen();
 
 public:
@@ -31,9 +32,9 @@ public:
 	SDL_Texture* tex = nullptr;
 
 	//All Ball Propeties to Render
-	SDL_Rect doraemonrect;
-	SDL_Surface *surfacedoraemon;
-	SDL_Texture * texdoraemon;
+	SDL_Rect particle_rect;
+	SDL_Surface *particle_surface;
+	SDL_Texture * particle_tex;
 
 	SDL_Rect backgroundrect;
 	SDL_Surface *surfacebackground;

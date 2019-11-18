@@ -89,9 +89,6 @@ int main(int argc, char* args[]) {
 			InitialSituation(particle, dt);
 			while (1)
 			{
-				//TODO 1: Create a real time simulation loop
-					//verlet integration
-					//render particle position
 				particle.a = AccelerationSum(particle);
 				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
 				for (int i = 0; i < 4; i++)
@@ -107,6 +104,7 @@ int main(int argc, char* args[]) {
 					time = 0;
 				}
 			}
+			//render particle position
 			break;
 		case 4:
 			goto END;
