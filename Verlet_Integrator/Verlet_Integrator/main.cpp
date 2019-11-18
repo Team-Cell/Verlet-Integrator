@@ -103,6 +103,7 @@ int main(int argc, char* args[]) {
 					CalculateCollisionFinalPosition(particle, time);
 					time = 0;
 				}
+				render.Update(particle.pos);
 			}
 			//render particle position
 			break;

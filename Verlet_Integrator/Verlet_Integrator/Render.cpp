@@ -7,7 +7,7 @@ ModuleRender::ModuleRender() {
 	ball = nullptr;
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO);
 
-	window = SDL_CreateWindow("Verlet Integrator Josep Puto AMO", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+	window = SDL_CreateWindow("Verlet Integrator Josep, Marc i Arnau Putos AMOS", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
@@ -52,6 +52,8 @@ void ModuleRender::blit_all(float x_ball, float y_ball) {
 }
 
 void ModuleRender::Update(fPoint position) {
+	particle_rect.x = position.x;
+	particle_rect.y = position.y;
 	SDL_RenderPresent(renderer);
 	SDL_RenderCopy(renderer, particle_tex, NULL, &particle_rect);
 }
