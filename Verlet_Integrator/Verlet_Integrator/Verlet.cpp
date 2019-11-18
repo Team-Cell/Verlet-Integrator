@@ -26,29 +26,10 @@ Verlet::~Verlet() {}
 
 void InitialSituation(Verlet &particle, float dt) {
 	bool ret = true;
-	/*
-	switch (case_num) {
-	case 0: //acceleration == 0 and dt == 1, both constant
-		particle.prev_pos.x = particle.pos.x - particle.v.x;
-		particle.prev_pos.y = particle.pos.y - particle.v.y;
-		break;
-	case 1: //acceleration == 0 and dt !=||== 1, both constant
-		particle.prev_pos.x = particle.pos.x - particle.v.x * particle.dt;
-		particle.prev_pos.y = particle.pos.y - particle.v.y * particle.dt;
-		break;
-	case 2: //acceleration !=||== 0 and dt == 1, both constant
-		particle.prev_pos.x = particle.pos.x - (particle.v.x - particle.a.x) - 0.5 * particle.a.x;
-		particle.prev_pos.y = particle.pos.y - (particle.v.y - particle.a.y) - 0.5 * particle.a.y;
-		break;
-	case 3: //acceleration !=||== 0 and dt !=||== 1, both constant
-		particle.prev_pos.x = particle.pos.x - (particle.v.x - particle.a.x * particle.dt) * particle.dt - 0.5 * particle.a.x * particle.dt * particle.dt;
-		particle.prev_pos.y = particle.pos.y - (particle.v.y - particle.a.y * particle.dt) * particle.dt - 0.5 * particle.a.y * particle.dt * particle.dt;
-		break;
-	}
-	*/
 	//a = AccelerationSum(particle) * -1;
 	particle.a = AccelerationSum(particle);
-	particle.prev_pos = particle.pos - particle.v * dt + particle.a * 0.5f * dt * dt;
+	particle.prev_pos.x = particle.pos.x - particle.v.x * dt + particle.a.x * 0.5f * dt * dt;
+	particle.prev_pos.y = particle.pos.y - particle.v.y * dt + particle.a.y * 0.5f * dt * dt;
 
 	//particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, particle.dt);
 }
@@ -63,7 +44,7 @@ fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 
 	//a_new = (v_new - vi) / dt;
 
-	cout << "px: " << pos_new.x << " py: " << SCREEN_HEIGHT - pos_new.y << " ax: " << ai.x << " ay: " << -ai.y << endl;
+	cout << "px: " << pos_new.x << " py: " << pos_new.y << " ax: " << ai.x << " ay: " << ai.y << endl;
 
 	prev_pos = pos;
 
@@ -106,7 +87,10 @@ fPoint Verlet_Acceleration(float m, fPoint total_f) {
 
 bool CheckCollision(Verlet particle, VRectangle rect) {
 	bool ret = false;
-	if (particle.pos.x + particle.radius >= rect.x && particle.pos.x - particle.radius <= rect.x + rect.w && particle.pos.y - particle.radius <= rect.y + rect.h && particle.pos.y + particle.radius >= rect.y) {
+	if (particle.pos.x + particle.radius >= rect.x && 
+		particle.pos.x - particle.radius <= rect.x + rect.w 
+		&& particle.pos.y - particle.radius <= rect.y + rect.h 
+		&& particle.pos.y + particle.radius >= rect.y) {
 		ret = true;
 	}
 	return ret;
@@ -250,7 +234,7 @@ float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, f
 fPoint Position_at_Time(fPoint pos, fPoint prev_pos, fPoint a, float time) {
 
 	float time_passed = 0;
-	float dt = 0.1f;
+	float dt = 1.0f;
 	while (time_passed < time)
 	{
 		pos = Verlet_Integration(pos, prev_pos, a, dt);

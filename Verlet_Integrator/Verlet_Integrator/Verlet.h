@@ -26,7 +26,6 @@ public:
 	~Verlet();
 public:
 	fPoint pos;
-	fPoint next_pos;
 	fPoint prev_pos;
 	fPoint v;
 	fPoint a;
@@ -62,7 +61,7 @@ float Terminal_Velocity(Verlet particle);
 
 //position calculators 
 float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, fPoint final_position);
-fPoint Position_at_Time(fPoint pos, fPoint vi, fPoint ai, float dt); //TODO
+fPoint Position_at_Time(fPoint pos, fPoint vi, fPoint ai, float time); //TODO
 float Flight_Time(float vi, float gravity, float angle);
 float Flight_Time(fPoint vi, float gravity);
 

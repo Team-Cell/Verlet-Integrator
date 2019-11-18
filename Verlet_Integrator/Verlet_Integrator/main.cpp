@@ -23,7 +23,7 @@ int main(int argc, char* args[]) {
 	Verlet particle;
 	ModuleRender render;
 	int menu_option = 0;
-	float dt = 0.1f;
+	float dt = 0.5f;
 	float time = 0;
 
 	//screen limit rectangles
@@ -180,7 +180,8 @@ void request_data(Verlet& particle, int menu_option) {
 			cout << "Time: " << Time_To_Position(prev_pos,a,dt,final_position) << endl;
 			break;
 		case 3:
-			cout << "Terminal velocity: " << Terminal_Velocity(particle) << endl;
+			//ask for values
+			//cout << "Terminal velocity: " << Terminal_Velocity(particle) << endl;
 			break;
 		default:
 			goto LOOP;
