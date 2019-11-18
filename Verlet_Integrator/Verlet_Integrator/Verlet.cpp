@@ -28,7 +28,7 @@ void InitialSituation(Verlet &particle, float dt) {
 	bool ret = true;
 	//a = AccelerationSum(particle) * -1;
 	particle.a = AccelerationSum(particle);
-	particle.prev_pos = particle.pos;
+	//particle.prev_pos = particle.pos;
 	particle.prev_pos.x = particle.pos.x - particle.v.x * dt + particle.a.x * 0.5f * dt * dt;
 	particle.prev_pos.y = particle.pos.y - particle.v.y * dt + particle.a.y * 0.5f * dt * dt;
 	//particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, particle.dt);
@@ -232,11 +232,12 @@ float Freefall_Acceleration(float gravity, float m, float friction_const) {
 
 //position calculators
 
-float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, fPoint final_position) {
+float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint acceleration, float dt, fPoint final_position) {
 	float time = 0;
 	Verlet particle;
-	particle.pos = initial_position;
 	particle.a = acceleration;
+	particle.prev_pos = initial_position;
+	particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
 	int max_iterations = 100;
 	int current_iterations = 0;
 	//LOG("here");
@@ -257,19 +258,31 @@ float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, f
 	return time;
 }
 
-fPoint Position_at_Time(fPoint pos, fPoint prev_pos, fPoint a, float time) {
+fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float time) {
 
 	float time_passed = 0;
+	fPoint prev_pos,aux_pos;
 	float dt = 1.0f;
+	prev_pos = pos;
+	pos = Classical_Motion(pos, velocity, acceleration, dt);
 	while (time_passed < time)
 	{
-		pos = Verlet_Integration(pos, prev_pos, a, dt);
+		aux_pos = pos;
+		pos = Verlet_Integration(pos, prev_pos, acceleration, dt);
+		prev_pos = aux_pos;
 		time_passed += dt;
 	}
 
 	//cout << "px: " << pos.x << " py: " << pos.y << "ax: "<< a.x << " ay: " << a.y << endl;
 
 	return pos;
+}
+
+fPoint Classical_Motion(fPoint position, fPoint velocity, fPoint acceleration, float dt) {
+	fPoint final_position;
+	final_position.x = position.x + velocity.x * dt + 0.5f * acceleration.x * dt * dt;
+	final_position.y = position.y + velocity.y * dt + 0.5f * acceleration.y * dt * dt;
+	return final_position;
 }
 
 float Flight_Time(float vi, float gravity, float angle) {

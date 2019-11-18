@@ -125,7 +125,7 @@ int main(int argc, char* args[]) {
 void request_data(Verlet& particle, int menu_option) {
 	float time = 0;
 	float dt = 0.1;
-	fPoint prev_pos, pos, v, final_position, a;
+	fPoint final_position;
 
 	LOOP: if (menu_option == 1)
 	{
@@ -140,32 +140,41 @@ void request_data(Verlet& particle, int menu_option) {
 		{
 		case 1:
 			cout << "Which is the position of the particle? " << endl << "x: ";
-			cin >> pos.x;
+			cin >> particle.pos.x;
 			cout << "y: ";
-			cin >> pos.y;
+			cin >> particle.pos.y;
+			cout << "Which is the initial speed of the particle?" << endl << "x: ";
+			cin >> particle.v.x;
+			cout << "y: ";
+			cin >> particle.v.y;
 			cout << "Which is the acceleration?" << endl << "x: ";
-			cin >> a.x;
+			cin >> particle.a.x;
 			cout << "y: ";
-			cin >> a.y;
+			cin >> particle.a.y;
 			cout << "At which time do you want to know the position?" << endl;
 			cin >> time;
-			pos = Position_at_Time(pos, pos, a, time);
-			cout << "Final position: " << pos.x << ", " << pos.y << endl;
+			//particle.prev_pos = particle.pos;
+			particle.pos = Position_at_Time(particle.pos, particle.v, particle.a, time);
+			cout << "Final position: " << particle.pos.x << ", " << particle.pos.y << endl;
 			break;
 		case 2: 
 			cout << "Which is the position of the particle?" << endl << "x: ";
-			cin >> pos.x;
+			cin >> particle.pos.x;
 			cout << "y: ";
-			cin >> pos.y;
+			cin >> particle.pos.y;
+			cout << "Which is the initial speed of the particle?" << endl << "x: ";
+			cin >> particle.v.x;
+			cout << "y: ";
+			cin >> particle.v.y;
 			cout << "Which is the acceleration of the particle?" << endl << "x: ";
-			cin >> a.x;
+			cin >> particle.a.x;
 			cout << "y: ";
-			cin >> a.y;
+			cin >> particle.a.y;
 			cout << "Which position do you want the particle to reach?" << endl << "x: ";
 			cin >> final_position.x;
 			cout << "y: ";
 			cin >> final_position.y;
-			cout << "Time: " << Time_To_Position(pos,a,dt,final_position) << endl;
+			cout << "Time: " << Time_To_Position(particle.pos, particle.v,particle.a,dt,final_position) << endl;
 			break;
 		case 3:
 			//ask for values

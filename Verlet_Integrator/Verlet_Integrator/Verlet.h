@@ -63,8 +63,9 @@ float Freefall_Speed(float gravity, float m, float air_density, float area, floa
 float Freefall_Acceleration(float gravity, float m, float friction_const);
 
 //position calculators 
-float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, fPoint final_position);
-fPoint Position_at_Time(fPoint pos, fPoint vi, fPoint ai, float time); //TODO
+float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint acceleration, float dt, fPoint final_position);
+fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float time);
+fPoint Classical_Motion(fPoint position, fPoint velocity, fPoint acceleration, float dt = 1.0f);
 float Flight_Time(float vi, float gravity, float angle);
 float Flight_Time(fPoint vi, float gravity);
 
