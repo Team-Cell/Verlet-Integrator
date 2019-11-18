@@ -40,7 +40,7 @@ int main(int argc, char* args[]) {
 	render.blit_all(0, 0);
 
 	//menu loop
-	while ((menu_option != 3) && (menu_option <= 4 || menu_option >= 0)) {
+	while ((menu_option != 4) && (menu_option <= 4 || menu_option >= 0)) {
 		render.Init();
 		//menu
 		cout << "MENU" << endl;
@@ -99,6 +99,8 @@ int main(int argc, char* args[]) {
 }
 
 void request_data(Verlet& particle, int menu_option) {
+	float dt;
+	fPoint prev_pos, pos, v, final_position, a;
 
 	LOOP: if (menu_option == 1)
 	{
@@ -114,21 +116,22 @@ void request_data(Verlet& particle, int menu_option) {
 			//classical motion combined with verlet
 			break;
 		case 2: 
-			float prev_pos, pos, v,a;
-			fPoint final_position;
-			float a;
 			cout << "Which is the initial position of the particle?" << endl;
-			cin >> prev_pos;
+			cin >> prev_pos.x;
+			cin >> prev_pos.y;
 			cout << "Which is the actual position of the particle?" << endl;
-			cin >> pos; 
+			cin >> pos.x;
+			cin >> pos.y;
 			cout << "Which is the speed of the particle?" << endl;
-			cin >> v;
+			cin >> v.x;
+			cin >> v.y;
 			cout << "Which is the acceleration of the particle?" << endl;
-			cin >> a;
+			cin >> a.x;
+			cin >> a.y;
 			cout << "Which position do you want the particle to reach?" << endl;
 			cin >> final_position.x;
 			cin >> final_position.y;
-			cout << "Time: " << Calculate_Time(prev_pos, pos, v, a) << endl;
+			cout << "Time: " << Time_To_Position(prev_pos,a,dt,final_position) << endl;
 			break;
 		case 3:
 			cout << "Terminal velocity: " << Terminal_Velocity(particle) << endl;
