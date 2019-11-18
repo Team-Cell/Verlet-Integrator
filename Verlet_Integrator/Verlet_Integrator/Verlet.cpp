@@ -199,10 +199,11 @@ fPoint AccelerationSum(Verlet particle) {
 	//accelerationSum += DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
 
 
-	// hay error de tipos en dragacceleration y no se porque
 
-	/*accelerationSum.x = DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass) + Calculate_Acceleration(particle.vi, particle.vf, particle.dt) +
-		Parachutist_Acceleration(particle.mass, particle.v.y, particle.gravity, particle.k) + Freefall_Acceleration(particle.gravity, particle.mass, particle.drag_coeficient);*/
+
+	accelerationSum.x = DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass).x + Calculate_Acceleration(particle.vi, particle.vf, particle.dt);
+	accelerationSum.y = DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass).y + Calculate_Acceleration(particle.vi, particle.vf, particle.dt) +
+		Parachutist_Acceleration(particle.mass, particle.v.y, particle.gravity, particle.k) + Freefall_Acceleration(particle.gravity, particle.mass, particle.drag_coeficient);
 
 
 	return accelerationSum;
@@ -212,12 +213,12 @@ float Terminal_Velocity(Verlet particle) {
 	return sqrt((2 * particle.mass * particle.gravity) / (particle.density * particle.drag_coeficient * particle.area));
 }
 
-float Parachutist_Acceleration(float m, float v_y, float gravity, float k) {
+float Parachutist_Acceleration(float m, fPoint v, float gravity, float k) {
 	float acceleration;
 
 	// k: constant based on falling object form
 
-	acceleration = (-m * gravity + k * v_y * v_y) / m;
+	acceleration = (-m * gravity + k * v.y * v.y) / m;
 
 	return acceleration;
 }
