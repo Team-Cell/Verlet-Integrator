@@ -22,13 +22,6 @@ Verlet::Verlet() {
 
 Verlet::~Verlet() {}
 
-bool Verlet::CheckCollision(VRectangle* rect) {
-	return (pos.x < rect->x + rect->w &&
-		pos.x + radius > rect->x &&
-		pos.y < rect->y + rect->h &&
-		radius + pos.y > rect->y);
-}
-
 //initial situation of the particle
 
 void InitialSituation(Verlet &particle, float dt) {
@@ -178,6 +171,7 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 	}
 
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
+
 	if (col_x == true) {
 		particle.v.x = -particle.v.x * 0.9;
 		//particle.a.x = -particle.a.x;
@@ -191,7 +185,7 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 
 void CalculateCollisionFinalPosition(Verlet& particle, float time) {
 	time = particle.dt - time;
-	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
+	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * (time * time);
 	particle.prev_pos = particle.pos - particle.v * particle.dt - particle.a * 0.5 * particle.dt * particle.dt;
 }
 
@@ -253,17 +247,16 @@ float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, f
 	return time;
 }
 
-fPoint Classical_Motion(fPoint pos, fPoint vi, fPoint ai, float dt) {
+fPoint Position_at_Time(fPoint pos, fPoint prev_pos, fPoint a, float time) {
 
-	fPoint pos_new, v_new, a_new;
+	float time_passed = 0;
 
-	pos_new = pos + vi * dt + ai * dt * dt;
+	while (time_passed < time)
+	{
+		pos = Verlet_Integration(pos, prev_pos, a, 0.1f);
+	}
 
-	v_new = vi + ai * dt;
-
-	a_new = (v_new - vi) / dt;
-
-	cout << "px: " << pos_new.x << " py: " << pos_new.y << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
+	//cout << "px: " << pos.x << " py: " << pos.y << "ax: "<< a.x << " ay: " << a.y << endl;
 
 	return pos;
 }

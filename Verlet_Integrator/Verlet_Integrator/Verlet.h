@@ -24,7 +24,6 @@ class Verlet{
 public:
 	Verlet();
 	~Verlet();
-	bool CheckCollision(VRectangle* rect);
 public:
 	fPoint pos;
 	fPoint next_pos;
@@ -63,7 +62,7 @@ float Terminal_Velocity(Verlet particle);
 
 //position calculators 
 float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, fPoint final_position);
-fPoint Classical_Motion(fPoint pos, fPoint vi, fPoint ai, float dt);
+fPoint Position_at_Time(fPoint pos, fPoint vi, fPoint ai, float dt); //TODO
 float Flight_Time(float vi, float gravity, float angle);
 float Flight_Time(fPoint vi, float gravity);
 
