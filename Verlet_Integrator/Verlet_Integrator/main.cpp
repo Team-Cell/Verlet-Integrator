@@ -19,13 +19,15 @@ int main(int argc, char* args[]) {
 
 	int loop_counter = 0;
 	int max_loops = 40;
+	
+	int exit = 0;
 
 	Verlet particle;
 	ModuleRender render;
 	int menu_option = 0;
 	float dt = 0.5f;
 	float time = 0;
-
+	SDL_Event event;
 	//screen limit rectangles
 	VRectangle rectangles[4];
 	int rectangle_thickness = 200;
@@ -87,6 +89,22 @@ int main(int argc, char* args[]) {
 			//simulation loop
 			request_data(particle, 3);
 			InitialSituation(particle, dt);
+			
+			while (exit = 0) {
+				while (SDL_PollEvent(&event)) {
+					switch (event.type) {
+					case SDL_QUIT:
+						exit = 1;
+						break;
+					case SDL_KEYDOWN:
+						if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+							exit = 1;
+							break;
+						}
+					}
+				}
+			
+
 			//TODO 1: Make the loop finish when the user presses escape
 			while (1)
 			{
@@ -106,6 +124,7 @@ int main(int argc, char* args[]) {
 				}
 				render.Update(particle.pos);
 			}
+		}
 			//render particle position
 			break;
 		case 4:
