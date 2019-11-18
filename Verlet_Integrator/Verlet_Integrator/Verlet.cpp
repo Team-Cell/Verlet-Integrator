@@ -218,7 +218,7 @@ float Terminal_Velocity(Verlet particle) {
 	return sqrt((2 * particle.mass * particle.gravity) / (particle.density * particle.drag_coeficient * particle.area));
 }
 
-float Time_To_Distance(fPoint initial_position, fPoint acceleration, float dt, fPoint final_position) {
+float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, fPoint final_position) {
 	float time = 0;
 	Verlet particle;
 	particle.prev_pos = initial_position;

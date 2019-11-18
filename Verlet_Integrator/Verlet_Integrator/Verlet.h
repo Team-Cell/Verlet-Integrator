@@ -47,7 +47,7 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt);
 fPoint Stormer_Verlet(fPoint pos, fPoint pos_new, fPoint a, float dt);
 float Flight_Time(float vi, float gravity, float angle);
 float Flight_Time(fPoint vi, float gravity);
-float Time_To_Distance(float pos, float a, float dt, float distance);
+float Time_To_Position(float pos, float a, float dt, float distance);
 float Calculate_Time(float pos_i, float pos_new, float v, float a);
 fPoint Verlet_Acceleration(float m, fPoint total_f);
 fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt);
