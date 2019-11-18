@@ -169,7 +169,17 @@ void request_data(Verlet& particle, int menu_option) {
 			break;
 		case 3:
 			//ask for values
-			//cout << "Terminal velocity: " << Terminal_Velocity(particle) << endl;
+			cout << "Which is the value of the gravity?" << endl;
+			cin >> particle.gravity;
+			cout << "Which is mass of the particle?" << endl;
+			cin >> particle.mass;
+			cout << "Which is the density of the particle? " << endl;
+			cin >> particle.density;
+			cout << "Which is the area of the particle?" << endl;
+			cin >> particle.area;
+			cout << "Which is the drag coeficient of the air? " << endl;
+			cin >> particle.drag_coeficient;
+			cout << "Terminal velocity: " << Freefall_Speed(particle.gravity,particle.mass,particle.density,particle.area,particle.drag_coeficient) << endl;
 			break;
 		default:
 			goto LOOP;
