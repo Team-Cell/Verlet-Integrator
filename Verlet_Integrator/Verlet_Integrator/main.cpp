@@ -119,6 +119,7 @@ void request_data(Verlet& particle, int menu_option) {
 		cout << "2. Time to reach a certain position" << endl;
 		cout << "3. Terminal velocity of the particle" << endl;
 		cin >> choice;
+		system("cls");
 		switch (choice)
 		{
 		case 1:
@@ -138,19 +139,29 @@ void request_data(Verlet& particle, int menu_option) {
 			break;
 		case 2: 
 			cout << "Which is the initial position of the particle?" << endl;
+			cout << "x: ";
 			cin >> prev_pos.x;
+			cout << "y: ";
 			cin >> prev_pos.y;
 			cout << "Which is the actual position of the particle?" << endl;
+			cout << "x: ";
 			cin >> pos.x;
+			cout << "y: ";
 			cin >> pos.y;
 			cout << "Which is the speed of the particle?" << endl;
+			cout << "x: ";
 			cin >> v.x;
+			cout << "y: ";
 			cin >> v.y;
 			cout << "Which is the acceleration of the particle?" << endl;
+			cout << "x: ";
 			cin >> a.x;
+			cout << "y: ";
 			cin >> a.y;
 			cout << "Which position do you want the particle to reach?" << endl;
+			cout << "x: ";
 			cin >> final_position.x;
+			cout << "y: ";
 			cin >> final_position.y;
 			cout << "Time: " << Time_To_Position(prev_pos,a,dt,final_position) << endl;
 			break;

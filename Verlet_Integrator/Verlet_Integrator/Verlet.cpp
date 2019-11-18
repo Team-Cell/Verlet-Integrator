@@ -63,7 +63,7 @@ fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 
 	//a_new = (v_new - vi) / dt;
 
-	cout << "px: " << pos_new.x << " py: " << SCREEN_HEIGHT - pos_new.y << " ax: " << -ai.x << " ay: " << -ai.y << endl;
+	cout << "px: " << pos_new.x << " py: " << SCREEN_HEIGHT - pos_new.y << " ax: " << ai.x << " ay: " << -ai.y << endl;
 
 	prev_pos = pos;
 
@@ -76,7 +76,7 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 	v_new = vi + ((ai + a_new) * 0.5) * dt;
 
-	cout << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << -a_new.x << " ay: " << -a_new.y << endl;
+	cout << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << -a_new.y << endl;
 
 	return v_new;
 }
@@ -229,7 +229,7 @@ float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, f
 	particle.a = acceleration;
 	int max_iterations = 100;
 	int current_iterations = 0;
-
+	LOG("here");
 	InitialSituation(particle, dt);
 
 	while (particle.pos != final_position)
@@ -250,10 +250,11 @@ float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, f
 fPoint Position_at_Time(fPoint pos, fPoint prev_pos, fPoint a, float time) {
 
 	float time_passed = 0;
-
+	float dt = 0.1f;
 	while (time_passed < time)
 	{
-		pos = Verlet_Integration(pos, prev_pos, a, 0.1f);
+		pos = Verlet_Integration(pos, prev_pos, a, dt);
+		time_passed += dt;
 	}
 
 	//cout << "px: " << pos.x << " py: " << pos.y << "ax: "<< a.x << " ay: " << a.y << endl;
