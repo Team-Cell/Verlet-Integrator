@@ -16,38 +16,37 @@ void request_data(Verlet& particle, int menu_option);
 int main(int argc, char* args[]) {
 
 	LOG("Starting Integrator");
+
 	int loop_counter = 0;
 
 	Verlet particle;
-
 	ModuleRender render;
+	int menu_option = 0;
+	float dt = 0.4f;
 
+	//screen limit rectangles
 	VRectangle rectangles[4];
 	int rectangle_thickness = 200;
 	VRectangle top_rectangle(0, -SCREEN_HEIGHT, SCREEN_WIDTH, rectangle_thickness);
 	VRectangle left_rectangle(-rectangle_thickness, 0, rectangle_thickness,SCREEN_HEIGHT);
 	VRectangle right_rectangle(SCREEN_WIDTH, 0, rectangle_thickness, SCREEN_HEIGHT);
 	VRectangle bottom_rectangle(0, SCREEN_HEIGHT, SCREEN_WIDTH, rectangle_thickness);
-
-	render.Init();
-
 	rectangles[0] = top_rectangle;
 	rectangles[1] = left_rectangle;
 	rectangles[2] = right_rectangle;
 	rectangles[3] = bottom_rectangle;
 
-	int menu_option = 0;
-	float dt = 0.4f;
-
+	render.Init();
 	render.blit_all(0, 0);
 
+	//menu loop
 	while ((menu_option != 3) && (menu_option <= 4 || menu_option >= 0)) {
 		render.Init();
 		//menu
 		cout << "MENU" << endl;
 		cout << "What do you want to do?" << endl;
 		cout << "1. Calculate specific values" << endl;
-		cout << "Do a graphical representation of the position" << endl;
+		cout << "2. Do a graphical representation of the position" << endl;
 		cout << "3. Simulate in real time" << endl;
 		cout << "4. Quit" << endl;
 		cin >> menu_option;
@@ -78,6 +77,15 @@ int main(int argc, char* args[]) {
 			}
 			break;
 		case 3:
+			//simulation loop
+			//while SDL_SCANCODE != ESCAPE
+			{
+				//verlet integration
+				//render particle position
+			}
+			break;
+		case 4:
+			goto END;
 			break;
 		default:
 			break;
@@ -85,9 +93,8 @@ int main(int argc, char* args[]) {
 		//char_const_acc = 'A';
 		cout << endl << endl;
 	}
-	
 
-	system("pause");
+	END: system("pause");
 	return 0;
 }
 
@@ -100,16 +107,31 @@ void request_data(Verlet& particle, int menu_option) {
 		cout << "1. Poisiton at a certain time" << endl;
 		cout << "2. Time to reach a certain position" << endl;
 		cout << "3. Terminal velocity of the particle" << endl;
+		cin >> choice;
 		switch (choice)
 		{
 		case 1:
 			//classical motion combined with verlet
 			break;
 		case 2: 
-			//calculate time
+			float prev_pos, pos, v,a;
+			fPoint final_position;
+			float a;
+			cout << "Which is the initial position of the particle?" << endl;
+			cin >> prev_pos;
+			cout << "Which is the actual position of the particle?" << endl;
+			cin >> pos; 
+			cout << "Which is the speed of the particle?" << endl;
+			cin >> v;
+			cout << "Which is the acceleration of the particle?" << endl;
+			cin >> a;
+			cout << "Which position do you want the particle to reach?" << endl;
+			cin >> final_position.x;
+			cin >> final_position.y;
+			cout << "Time: " << Calculate_Time(prev_pos, pos, v, a) << endl;
 			break;
 		case 3:
-			cout << "Terminal velocity" << Terminal_Velocity << endl;
+			cout << "Terminal velocity: " << Terminal_Velocity(particle) << endl;
 			break;
 		default:
 			goto LOOP;

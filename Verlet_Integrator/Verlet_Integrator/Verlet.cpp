@@ -214,22 +214,36 @@ float Calculate_Time(float pos_i, float pos_new, float v, float a) {
 	return time;
 }
 
-//Additional formulas
+float Terminal_Velocity(Verlet particle) {
+	return sqrt((2 * particle.mass * particle.gravity) / (particle.density * particle.drag_coeficient * particle.area));
+}
 
-float Time_To_Distance(float pos, float a, float dt, float distance) {
-	float prev_pos = pos;
-	float time = 0.0f;
-	float temp_pos;
+float Time_To_Distance(fPoint initial_position, fPoint acceleration, float dt, fPoint final_position) {
+	float time = 0;
+	Verlet particle;
+	particle.prev_pos = initial_position;
+	particle.a = acceleration;
+	int max_iterations = 100;
+	int current_iterations = 0;
 
-	while (pos < distance)
+	InitialSituation(particle, dt);
+
+	while (particle.pos != final_position)
 	{
-		time += dt;
-		temp_pos = pos;
-		pos = 2 * pos - prev_pos + a * dt * dt;
-		prev_pos = temp_pos;
+		if (current_iterations > max_iterations) {
+			cout << "The particle can't reach this position" << endl;
+			break;
+		}
+		else
+		{
+			particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+			current_iterations++;
+		}
 	}
 	return time;
 }
+
+//Additional formulas
 
 fPoint Verlet_Acceleration(float m, fPoint total_f) {
 	fPoint a_new;
@@ -287,8 +301,4 @@ float Flight_Time(fPoint vi, float gravity) {
 	time = (2 * vi.y) / gravity;
 
 	return time;
-}
-
-float Terminal_Velocity(Verlet particle) {
-	return sqrt( (2 * particle.mass * particle.gravity) / (particle.density*particle.drag_coeficient*particle.area) );
 }
