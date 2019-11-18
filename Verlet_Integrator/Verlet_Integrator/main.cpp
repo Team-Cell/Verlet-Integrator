@@ -18,11 +18,13 @@ int main(int argc, char* args[]) {
 	LOG("Starting Integrator");
 
 	int loop_counter = 0;
+	int max_loops = 40;
 
 	Verlet particle;
 	ModuleRender render;
 	int menu_option = 0;
-	float dt = 0.4f;
+	float dt = 0.1f;
+	float time = 0;
 
 	//screen limit rectangles
 	VRectangle rectangles[4];
@@ -62,15 +64,20 @@ int main(int argc, char* args[]) {
 			InitialSituation(particle, dt);
 
 			//main loop
-			while (loop_counter < 40) {
+			while (loop_counter < max_loops) {
 				particle.a = AccelerationSum(particle);
 				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
 				for (int i = 0; i < 4; i++)
 				{
 					if (CheckCollision(particle, rectangles[i])) {
 						cout << "Collision" << endl;
-						SolveCollision(particle, rectangles[i]);
+						time += CalculateCollisionPosition(particle, rectangles[i]);
 					}
+				}
+				if (time > 0)
+				{
+					CalculateCollisionFinalPosition(particle, time);
+					time = 0;
 				}
 				render.blit_all(particle.pos.x, particle.pos.y);
 				loop_counter++;
@@ -80,6 +87,7 @@ int main(int argc, char* args[]) {
 			//simulation loop
 			//while SDL_SCANCODE != ESCAPE
 			{
+			//TODO 1: Create a real time simulation loop
 				//verlet integration
 				//render particle position
 			}
@@ -99,7 +107,8 @@ int main(int argc, char* args[]) {
 }
 
 void request_data(Verlet& particle, int menu_option) {
-	float dt;
+	float dt = 1;
+	float time = 0;
 	fPoint prev_pos, pos, v, final_position, a;
 
 	LOOP: if (menu_option == 1)
@@ -113,7 +122,19 @@ void request_data(Verlet& particle, int menu_option) {
 		switch (choice)
 		{
 		case 1:
-			//classical motion combined with verlet
+			cout << "Which is the current position? " << endl;
+			cin >> pos.x;
+			cin >> pos.y;
+			cout << "Which is the previous position?" << endl;
+			cin >> prev_pos.x;
+			cin >> prev_pos.y;
+			cout << "Which is the acceleration?" << endl;
+			cin >> a.x;
+			cin >> a.y;
+			cout << "At which time do you want to know the position?" << endl;
+			cin >> time;
+			pos = Position_at_Time(pos, prev_pos, a, time);
+			cout << "Final position: " << pos.x << ", " << pos.y << endl;
 			break;
 		case 2: 
 			cout << "Which is the initial position of the particle?" << endl;
