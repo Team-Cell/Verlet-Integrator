@@ -61,7 +61,8 @@ int main(int argc, char* args[]) {
 		case 2:
 			request_data(particle, 2);
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << -particle.a.y << endl;
-			InitialSituation(particle, dt);
+			particle.prev_pos = particle.pos;
+			particle.pos = particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
 
 			//main loop
 			while (loop_counter < max_loops) {
@@ -86,7 +87,8 @@ int main(int argc, char* args[]) {
 		case 3:
 			//simulation loop
 			request_data(particle, 3);
-			InitialSituation(particle, dt);
+			particle.prev_pos = particle.pos;
+			particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
 			//TODO 1: Make the loop finish when the user presses escape
 			while (1)
 			{
