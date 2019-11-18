@@ -41,27 +41,36 @@ public:
 };
 
 void InitialSituation(Verlet &particle, float dt);
+
+//main verlet
 fPoint Verlet_Integration(fPoint pos_i, fPoint& pos_o, fPoint ai, float dt);
-fPoint Classical_Motion(fPoint pos, fPoint vi, fPoint ai, float dt);
 fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt);
 fPoint Stormer_Verlet(fPoint pos, fPoint pos_new, fPoint a, float dt);
-float Flight_Time(float vi, float gravity, float angle);
-float Flight_Time(fPoint vi, float gravity);
-float Time_To_Position(float pos, float a, float dt, float distance);
-float Calculate_Time(float pos_i, float pos_new, float v, float a);
 fPoint Verlet_Acceleration(float m, fPoint total_f);
-fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt);
-fPoint Forces_Sum(fPoint f1, fPoint f2);
-fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoint speed, float mass);
+
+//collision related 
 bool CheckCollision(Verlet particle, VRectangle rect);
+void SolveCollision(Verlet particle, VRectangle rect);
+float Calculate_Time(float pos_i, float pos_new, float v, float a);
 float CalculateCollisionPosition(Verlet& particle, VRectangle rect);
 void CalculateCollisionFinalPosition(Verlet& particle, float time);
+
+//acceleration and velocity
+fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoint speed, float mass);
+fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt);
 fPoint AccelerationSum(Verlet particle);
-void SolveCollision(Verlet particle, VRectangle rect);
 float Terminal_Velocity(Verlet particle);
 
-float Module(fPoint var);
+//position calculators 
+float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, fPoint final_position);
+fPoint Classical_Motion(fPoint pos, fPoint vi, fPoint ai, float dt);
+float Flight_Time(float vi, float gravity, float angle);
+float Flight_Time(fPoint vi, float gravity);
 
+//additional formulas
+
+fPoint Forces_Sum(fPoint f1, fPoint f2);
+float Module(fPoint var);
 
 #endif // !_VERLET_H_
 

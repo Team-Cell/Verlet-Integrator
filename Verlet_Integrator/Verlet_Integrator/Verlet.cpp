@@ -22,6 +22,15 @@ Verlet::Verlet() {
 
 Verlet::~Verlet() {}
 
+bool Verlet::CheckCollision(VRectangle* rect) {
+	return (pos.x < rect->x + rect->w &&
+		pos.x + radius > rect->x &&
+		pos.y < rect->y + rect->h &&
+		radius + pos.y > rect->y);
+}
+
+//initial situation of the particle
+
 void InitialSituation(Verlet &particle, float dt) {
 	bool ret = true;
 	/*
@@ -51,8 +60,7 @@ void InitialSituation(Verlet &particle, float dt) {
 	//particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, particle.dt);
 }
 
-
-//Main formulas
+//main verlet
 
 fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 
@@ -67,21 +75,6 @@ fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
 	prev_pos = pos;
 
 	return pos_new;
-}
-
-fPoint Classical_Motion(fPoint pos, fPoint vi, fPoint ai, float dt) {
-
-	fPoint pos_new, v_new, a_new;
-
-	pos_new = pos + vi * dt + ai * dt * dt;
-
-	v_new = vi + ai * dt;
-
-	a_new = (v_new - vi) / dt;
-
-	cout << "px: " << pos_new.x << " py: " << pos_new.y << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
-
-	return pos;
 }
 
 fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
@@ -101,27 +94,22 @@ fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, fPoint a, float dt) {
 
 	next_pos = Verlet_Integration(pos, prev_pos, a, dt);
 
-	v_new = (next_pos - pos)/dt;
+	v_new = (next_pos - pos) / dt;
 
 	cout << "px: " << next_pos.x << " py: " << next_pos.y << " vx: " << v_new.x << " vy: " << v_new.y << endl;
 
 	return v_new;
 }
 
-fPoint AccelerationSum(Verlet particle) {
-	fPoint accelerationSum;
-	//accelerationSum.x = accelerationSum.y = 0;
-	accelerationSum = particle.a;
-	//accelerationSum += DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
-	return accelerationSum;
+fPoint Verlet_Acceleration(float m, fPoint total_f) {
+	fPoint a_new;
+
+	a_new = total_f / m;
+
+	return a_new;
 }
 
-fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoint speed, float mass) {
-	fPoint acceleration;
-	acceleration.x = ((0.5 * density * drag_coefficient * area) * (speed.x * speed.x)) / mass;
-	acceleration.y = ((0.5 * density * drag_coefficient * area) * (speed.y * speed.y)) / mass;
-	return acceleration;
-}
+//collision related
 
 bool CheckCollision(Verlet particle, VRectangle rect) {
 	bool ret = false;
@@ -129,13 +117,6 @@ bool CheckCollision(Verlet particle, VRectangle rect) {
 		ret = true;
 	}
 	return ret;
-}
-
-bool Verlet::CheckCollision(VRectangle* rect) {
-		return (pos.x < rect->x + rect->w &&
-			pos.x + radius > rect->x &&
-			pos.y < rect->y + rect->h &&
-			radius + pos.y > rect->y);
 }
 
 void SolveCollision(Verlet particle, VRectangle rect)
@@ -146,7 +127,7 @@ void SolveCollision(Verlet particle, VRectangle rect)
 	aux_pos = particle.prev_pos;
 	particle.prev_pos = particle.pos;
 	particle.pos = aux_pos;
-	while (CheckCollision(particle,rect))
+	while (CheckCollision(particle, rect))
 	{
 		particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, a, 0.1);
 	}
@@ -155,17 +136,35 @@ void SolveCollision(Verlet particle, VRectangle rect)
 	particle.pos = aux_pos;
 }
 
+float Calculate_Time(float pos_i, float pos_new, float v, float a) {
+	float time, time1, time2, t_pow;
+
+	//v * time + a * 0.5 * time * time + pos_i - pos_new = 0;
+	if (a == 0) {
+		time = (pos_new - pos_i) / v;
+		return time;
+	}
+	t_pow = pow((v * v) - ((pos_i - pos_new) * a * 2), 0.5);
+	time1 = (-v + t_pow) / a;
+	time2 = (-v - t_pow) / a;
+	if (time1 > 0)time = time1;
+	else if (time2 > 0)time = time2;
+	else time = 0;
+
+	return time;
+}
+
 float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 
 	float time = 0;
 	bool col_x, col_y;
 	col_x = col_y = false;
-	
+
 	if (particle.prev_pos.x + particle.radius < rect.x) {
 		time = Calculate_Time(particle.prev_pos.x, rect.x, particle.v.x, particle.a.x);
 		col_x = true;
 	}
-	else if(particle.prev_pos.x - particle.radius > rect.x + rect.w) {
+	else if (particle.prev_pos.x - particle.radius > rect.x + rect.w) {
 		time = Calculate_Time(particle.prev_pos.x, rect.x + rect.w, particle.v.x, particle.a.x);
 		col_x = true;
 	}
@@ -193,30 +192,41 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 void CalculateCollisionFinalPosition(Verlet& particle, float time) {
 	time = particle.dt - time;
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
-	particle.prev_pos=particle.pos- particle.v * particle.dt - particle.a * 0.5 * particle.dt * particle.dt;
+	particle.prev_pos = particle.pos - particle.v * particle.dt - particle.a * 0.5 * particle.dt * particle.dt;
 }
 
-float Calculate_Time(float pos_i, float pos_new, float v, float a) {
-	float time, time1, time2, t_pow;
+//acceleration and velocity
 
-	//v * time + a * 0.5 * time * time + pos_i - pos_new = 0;
-	if (a == 0) {
-		time = (pos_new - pos_i) / v;
-		return time;
-	}
-	t_pow = pow((v * v) - ((pos_i - pos_new) * a * 2), 0.5);
-	time1 = (-v + t_pow) / a;
-	time2 = (-v - t_pow) / a;
-	if (time1 > 0)time = time1;
-	else if (time2 > 0)time = time2;
-	else time = 0;
+fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoint speed, float mass) {
+	fPoint acceleration;
+	acceleration.x = ((0.5 * density * drag_coefficient * area) * (speed.x * speed.x)) / mass;
+	acceleration.y = ((0.5 * density * drag_coefficient * area) * (speed.y * speed.y)) / mass;
+	return acceleration;
+}
 
-	return time;
+fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt) {
+
+	fPoint af;
+
+	af.x = (vf.x - vi.x) / dt;
+	af.y = (vf.y - vi.y) / dt;
+
+	return af;
+}
+
+fPoint AccelerationSum(Verlet particle) {
+	fPoint accelerationSum;
+	//accelerationSum.x = accelerationSum.y = 0;
+	accelerationSum = particle.a;
+	//accelerationSum += DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
+	return accelerationSum;
 }
 
 float Terminal_Velocity(Verlet particle) {
 	return sqrt((2 * particle.mass * particle.gravity) / (particle.density * particle.drag_coeficient * particle.area));
 }
+
+//position calculators
 
 float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, fPoint final_position) {
 	float time = 0;
@@ -243,46 +253,19 @@ float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, f
 	return time;
 }
 
-//Additional formulas
+fPoint Classical_Motion(fPoint pos, fPoint vi, fPoint ai, float dt) {
 
-fPoint Verlet_Acceleration(float m, fPoint total_f) {
-	fPoint a_new;
+	fPoint pos_new, v_new, a_new;
 
-	a_new = total_f / m;
+	pos_new = pos + vi * dt + ai * dt * dt;
 
-	return a_new;
-}
+	v_new = vi + ai * dt;
 
-fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt) {
+	a_new = (v_new - vi) / dt;
 
-	fPoint af;
+	cout << "px: " << pos_new.x << " py: " << pos_new.y << " vx: " << v_new.x << " vy: " << v_new.y << " ax: " << a_new.x << " ay: " << a_new.y << endl;
 
-	af.x = (vf.x - vi.x) / dt;
-	af.y = (vf.y - vi.y) / dt;
-
-	return af;
-}
-
-fPoint Forces_Sum(fPoint f1, fPoint f2) {
-	fPoint total_f;
-
-	total_f = f1 + f2;
-
-	return total_f;
-}
-
-//This while could be used to calculate a number of forces before sending to the Verlet_Acceleration function
-/*p2Point<float> Calculate_Total_Forces(int number_forces) {
-	while (number_forces > 1) {
-		Calculate_Two_Forces()
-		number_forces--;
-	}
-}*/
-
-float Module(fPoint var) {
-
-	return sqrt(var.x * var.x + var.y * var.y);
-
+	return pos;
 }
 
 float Flight_Time(float vi, float gravity, float angle) {
@@ -302,3 +285,27 @@ float Flight_Time(fPoint vi, float gravity) {
 
 	return time;
 }
+
+//additional formulas
+
+fPoint Forces_Sum(fPoint f1, fPoint f2) {
+	fPoint total_f;
+
+	total_f = f1 + f2;
+
+	return total_f;
+}
+
+float Module(fPoint var) {
+
+	return sqrt(var.x * var.x + var.y * var.y);
+
+}
+
+//This while could be used to calculate a number of forces before sending to the Verlet_Acceleration function
+/*p2Point<float> Calculate_Total_Forces(int number_forces) {
+	while (number_forces > 1) {
+		Calculate_Two_Forces()
+		number_forces--;
+	}
+}*/
