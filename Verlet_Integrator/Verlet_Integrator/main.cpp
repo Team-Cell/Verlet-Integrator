@@ -85,11 +85,27 @@ int main(int argc, char* args[]) {
 			break;
 		case 3:
 			//simulation loop
-			//while SDL_SCANCODE != ESCAPE
+			request_data(particle, 3);
+			InitialSituation(particle, dt);
+			while (1)
 			{
-			//TODO 1: Create a real time simulation loop
-				//verlet integration
-				//render particle position
+				//TODO 1: Create a real time simulation loop
+					//verlet integration
+					//render particle position
+				particle.a = AccelerationSum(particle);
+				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+				for (int i = 0; i < 4; i++)
+				{
+					if (CheckCollision(particle, rectangles[i])) {
+						cout << "Collision" << endl;
+						time += CalculateCollisionPosition(particle, rectangles[i]);
+					}
+				}
+				if (time > 0)
+				{
+					CalculateCollisionFinalPosition(particle, time);
+					time = 0;
+				}
 			}
 			break;
 		case 4:
@@ -174,6 +190,46 @@ void request_data(Verlet& particle, int menu_option) {
 
 	if (menu_option == 2)
 	{
+		char char_const_acc = 'A';
+		cout << "Which is the initial position?:" << endl;
+		cin >> particle.pos.x >> particle.pos.y;
+		particle.pos.y = SCREEN_HEIGHT - particle.pos.y;
+		cout << "Which is the initial speed?:" << endl;
+		cin >> particle.v.x >> particle.v.y;
+		particle.v.y = -particle.v.y;
+		while ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')) {
+			cout << "Do you want gravity to be the only acceleration?: " << endl << "(Yes: Y / No: N)" << endl;
+			cin >> char_const_acc;
+			if ((char_const_acc == 'y') || (char_const_acc == 'Y')) {
+				//cout << "Which is the initial acceleration?: " << endl;
+				//cin >> particle.a.x >> particle.a.y;
+				//particle.a.y = -particle.a.y;
+				cout << "Which is the gravity?" << endl;
+				cin >> particle.gravity;
+				particle.gravity = -particle.gravity;
+				particle.a.y = particle.gravity;
+			}
+			if ((char_const_acc == 'n') || (char_const_acc == 'N')) {
+				cout << "Which is the gravity?" << endl;
+				cin >> particle.gravity;
+				particle.gravity = -particle.gravity;
+				cout << "Which is the aerodynamic drag coeficient?: " << endl;
+				cin >> particle.drag_coeficient;
+				cout << "Which is the density of the particle?: " << endl;
+				cin >> particle.density;
+				cout << "Which is the area?: " << endl;
+				cin >> particle.area;
+			}
+			if ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')) {
+				cout << endl << "You entered an invalid answer." << endl;
+			}
+		}
+		cout << "Which is the mass?:" << endl;
+		cin >> particle.mass;
+		system("cls");
+	}
+
+	if (menu_option == 3) {
 		char char_const_acc = 'A';
 		cout << "Which is the initial position?:" << endl;
 		cin >> particle.pos.x >> particle.pos.y;
