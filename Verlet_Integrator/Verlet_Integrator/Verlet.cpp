@@ -154,19 +154,19 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 	col_x = col_y = false;
 
 	if (particle.prev_pos.x + particle.radius < rect.x) {
-		time = Calculate_Time(particle.prev_pos.x, rect.x, particle.v.x, particle.a.x);
+		time = Calculate_Time(particle.prev_pos.x, rect.x - particle.radius, particle.v.x, particle.a.x);
 		col_x = true;
 	}
 	else if (particle.prev_pos.x - particle.radius > rect.x + rect.w) {
-		time = Calculate_Time(particle.prev_pos.x, rect.x + rect.w, particle.v.x, particle.a.x);
+		time = Calculate_Time(particle.prev_pos.x, rect.x + rect.w + particle.radius, particle.v.x, particle.a.x);
 		col_x = true;
 	}
 	else if (particle.prev_pos.y + particle.radius < rect.y) {
-		time = Calculate_Time(particle.prev_pos.y, rect.y, particle.v.y, particle.a.y);
+		time = Calculate_Time(particle.prev_pos.y, rect.y - particle.radius, particle.v.y, particle.a.y);
 		col_y = true;
 	}
 	else if (particle.prev_pos.y - particle.radius > rect.y + rect.h) {
-		time = Calculate_Time(particle.prev_pos.y, rect.y + rect.h, particle.v.y, particle.a.y);
+		time = Calculate_Time(particle.prev_pos.y, rect.y + rect.h + particle.radius, particle.v.y, particle.a.y);
 		col_y = true;
 	}
 
