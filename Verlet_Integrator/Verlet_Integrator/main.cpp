@@ -87,6 +87,7 @@ int main(int argc, char* args[]) {
 			//simulation loop
 			request_data(particle, 3);
 			InitialSituation(particle, dt);
+			//TODO 1: Make the loop finish when the user presses escape
 			while (1)
 			{
 				particle.a = AccelerationSum(particle);

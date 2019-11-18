@@ -52,6 +52,7 @@ void ModuleRender::blit_all(float x_ball, float y_ball) {
 }
 
 void ModuleRender::Update(fPoint position) {
+	//TODO 2:Make the previous ball disappear
 	particle_rect.x = position.x;
 	particle_rect.y = position.y;
 	SDL_RenderPresent(renderer);
