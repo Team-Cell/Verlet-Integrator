@@ -28,27 +28,27 @@ void InitialSituation(Verlet &particle, float dt) {
 	bool ret = true;
 	//a = AccelerationSum(particle) * -1;
 	particle.a = AccelerationSum(particle);
-	particle.prev_pos.x = particle.pos.x - particle.v.x * dt + particle.a.x * 0.5f * dt * dt;
-	particle.prev_pos.y = particle.pos.y - particle.v.y * dt + particle.a.y * 0.5f * dt * dt;
-
+	particle.prev_pos = particle.pos;
+	//particle.prev_pos.x = particle.pos.x - particle.v.x * dt + particle.a.x * 0.5f * dt * dt;
+	//particle.prev_pos.y = particle.pos.y - particle.v.y * dt + particle.a.y * 0.5f * dt * dt;
 	//particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, particle.dt);
 }
 
 //main verlet
 
-fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint ai, float dt) {
+fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint a, float dt) {
 
-	fPoint pos_new;
+	//fPoint pos_new;
 
-	pos_new = pos + (pos - prev_pos) + ai * dt * dt;
+	pos = pos + (pos - prev_pos) + a * dt * dt;
 
 	//a_new = (v_new - vi) / dt;
 
-	cout << "px: " << pos_new.x << " py: " << pos_new.y << " ax: " << ai.x << " ay: " << ai.y << endl;
+	cout << "px: " << pos.x << " py: " << pos.y << " ax: " << a.x << " ay: " << -a.y << endl;
 
 	prev_pos = pos;
 
-	return pos_new;
+	return pos;
 }
 
 fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
@@ -213,7 +213,7 @@ float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, f
 	particle.a = acceleration;
 	int max_iterations = 100;
 	int current_iterations = 0;
-	LOG("here");
+	//LOG("here");
 	InitialSituation(particle, dt);
 
 	while (particle.pos != final_position)
