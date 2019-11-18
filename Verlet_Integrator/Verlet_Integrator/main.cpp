@@ -123,14 +123,17 @@ void request_data(Verlet& particle, int menu_option) {
 		switch (choice)
 		{
 		case 1:
-			cout << "Which is the current position? " << endl;
+			cout << "Which is the current position? " << endl << "x: ";
 			cin >> pos.x;
+			cout << "y: ";
 			cin >> pos.y;
-			cout << "Which is the previous position?" << endl;
+			cout << "Which is the previous position?" << endl << "x: ";
 			cin >> prev_pos.x;
+			cout << "y: ";
 			cin >> prev_pos.y;
-			cout << "Which is the acceleration?" << endl;
+			cout << "Which is the acceleration?" << endl << "x: ";
 			cin >> a.x;
+			cout << "y: ";
 			cin >> a.y;
 			cout << "At which time do you want to know the position?" << endl;
 			cin >> time;
@@ -138,28 +141,23 @@ void request_data(Verlet& particle, int menu_option) {
 			cout << "Final position: " << pos.x << ", " << pos.y << endl;
 			break;
 		case 2: 
-			cout << "Which is the initial position of the particle?" << endl;
-			cout << "x: ";
+			cout << "Which is the initial position of the particle?" << endl << "x: ";
 			cin >> prev_pos.x;
 			cout << "y: ";
 			cin >> prev_pos.y;
-			cout << "Which is the actual position of the particle?" << endl;
-			cout << "x: ";
+			cout << "Which is the actual position of the particle?" << endl << "x: ";
 			cin >> pos.x;
 			cout << "y: ";
 			cin >> pos.y;
-			cout << "Which is the speed of the particle?" << endl;
-			cout << "x: ";
+			cout << "Which is the speed of the particle?" << endl << "x: ";
 			cin >> v.x;
 			cout << "y: ";
 			cin >> v.y;
-			cout << "Which is the acceleration of the particle?" << endl;
-			cout << "x: ";
+			cout << "Which is the acceleration of the particle?" << endl << "x: ";
 			cin >> a.x;
 			cout << "y: ";
 			cin >> a.y;
-			cout << "Which position do you want the particle to reach?" << endl;
-			cout << "x: ";
+			cout << "Which position do you want the particle to reach?" << endl << "x: ";
 			cin >> final_position.x;
 			cout << "y: ";
 			cin >> final_position.y;
