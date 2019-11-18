@@ -58,6 +58,9 @@ fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoin
 fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt);
 fPoint AccelerationSum(Verlet particle);
 float Terminal_Velocity(Verlet particle);
+float Parachutist_Acceleration(float m, float v_y, float gravity, float k);
+float Freefall_Speed(float gravity, float m, float air_density, float area, float friction_const);
+float Freefall_Acceleration(float gravity, float m, float friction_const);
 
 //position calculators 
 float Time_To_Position(fPoint initial_position, fPoint acceleration, float dt, fPoint final_position);
