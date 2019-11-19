@@ -16,13 +16,6 @@ void request_data(Verlet& particle, int menu_option);
 int main(int argc, char* args[]) {
 
 	LOG("Starting Integrator");
-	//TODO: Do couts of position, velocity and acceleration at each iteration
-	/*
-	Functions:
-	time to position
-	grafica
-	position at time
-	*/
 
 	int loop_counter = 0;
 	int max_loops = 40;
@@ -94,6 +87,7 @@ int main(int argc, char* args[]) {
 				}
 				render.blit_all(particle.pos.x, particle.pos.y);
 				loop_counter++;
+
 			}
 			break;
 		case 3:
@@ -115,7 +109,6 @@ int main(int argc, char* args[]) {
 						}
 					}
 				}
-			//TODO 1: Make the loop finish when the user presses escape
 			while (1)
 			{
 				particle.a = AccelerationSum(particle);

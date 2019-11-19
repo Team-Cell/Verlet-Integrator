@@ -259,6 +259,7 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 					current_iterations++;
 					time += dt;
 				}
+				cout << "px: " << particle.pos.x << " py: " << particle.pos.y << " vx: " << velocity.x << " vy: " << velocity.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
 		else
@@ -275,6 +276,7 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 					current_iterations++;
 					time += dt;
 				}
+				cout << "px: " << particle.pos.x << " py: " << particle.pos.y << " vx: " << velocity.x << " vy: " << velocity.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
 	}
@@ -294,6 +296,7 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 					current_iterations++;
 					time += dt;
 				}
+				cout << "px: " << particle.pos.x << " py: " << particle.pos.y << " vx: " << velocity.x << " vy: " << velocity.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
 		else
@@ -310,6 +313,7 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 					current_iterations++;
 					time += dt;
 				}
+				cout << "px: " << particle.pos.x << " py: " << particle.pos.y << " vx: " << velocity.x << " vy: " << velocity.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
 	}
@@ -330,6 +334,7 @@ fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float 
 		pos = Verlet_Integration(pos, prev_pos, acceleration, dt);
 		prev_pos = aux_pos;
 		time_passed += dt;
+		cout << "px: " << pos.x << " py: " << pos.y << " vx: " << velocity.x << " vy: " << velocity.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 	}
 
 	return pos;
