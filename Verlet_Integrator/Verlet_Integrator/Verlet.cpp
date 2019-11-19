@@ -316,13 +316,14 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 	return time;
 }
 
-fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float time) {
-
-	float time_passed = 0;
+fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float time) 
+{	
 	fPoint prev_pos,aux_pos;
 	float dt = 1.0f;
+	float time_passed = dt;
 	prev_pos = pos;
 	pos = Classical_Motion(pos, velocity, acceleration, dt);
+
 	while (time_passed < time)
 	{
 		aux_pos = pos;
@@ -330,8 +331,6 @@ fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float 
 		prev_pos = aux_pos;
 		time_passed += dt;
 	}
-
-	//cout << "px: " << pos.x << " py: " << pos.y << "ax: "<< a.x << " ay: " << a.y << endl;
 
 	return pos;
 }

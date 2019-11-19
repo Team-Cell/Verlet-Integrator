@@ -7,7 +7,7 @@ ModuleRender::ModuleRender() {
 	ball = nullptr;
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO);
 
-	window = SDL_CreateWindow("Verlet Integrator Josep, Marc i Arnau Putos AMOS", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+	window = SDL_CreateWindow("Verlet Integrator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }

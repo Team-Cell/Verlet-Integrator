@@ -16,6 +16,13 @@ void request_data(Verlet& particle, int menu_option);
 int main(int argc, char* args[]) {
 
 	LOG("Starting Integrator");
+	//TODO: Do couts of position, velocity and acceleration at each iteration
+	/*
+	Functions:
+	time to position
+	grafica
+	position at time
+	*/
 
 	int loop_counter = 0;
 	int max_loops = 40;
