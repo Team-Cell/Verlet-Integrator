@@ -93,50 +93,11 @@ int main(int argc, char* args[]) {
 		case 3:
 			//simulation loop
 			request_data(particle, 3);
-			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << -particle.a.y << endl;
 			particle.prev_pos = particle.pos;
 			particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
 
-			//main loop
-			while (loop_counter < max_loops) {
-				particle.a = AccelerationSum(particle);
-				temp_pos = particle.pos;
-				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
-				cout << "px: " << particle.pos.x << " py: " << SCREEN_HEIGHT - particle.pos.y << " ax: " << particle.a.x << " ay: " << -particle.a.y << endl;
-				particle.prev_pos = temp_pos;
-				for (int i = 0; i < 4; i++)
-				{
-					if (CheckCollision(particle, rectangles[i])) {
-						cout << "Collision" << endl;
-						time += CalculateCollisionPosition(particle, rectangles[i]);
-					}
-				}
-				if (time > 0)
-				{
-					CalculateCollisionFinalPosition(particle, time);
-					time = 0;
-				}
-				render.blit_all(particle.pos.x, particle.pos.y);
-				loop_counter++;
 
-			}
-
-			break;
-			
-			/*while (exit = 0) {
-				while (SDL_PollEvent(&event)) {
-					switch (event.type) {
-					case SDL_QUIT:
-						exit = 1;
-						break;
-					case SDL_KEYDOWN:
-						if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
-							exit = 1;
-							break;
-						}
-					}
-				}
-			while (1)
+			while (exit = 0)
 			{
 				particle.a = AccelerationSum(particle);
 				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
@@ -153,10 +114,22 @@ int main(int argc, char* args[]) {
 					time = 0;
 				}
 				render.Update(particle.pos);
+
+				while (SDL_PollEvent(&event)) {
+					switch (event.type) {
+					case SDL_QUIT:
+						exit = 1;
+						break;
+					case SDL_KEYDOWN:
+						if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+							exit = 1;
+						break;
+					}
+				}
 			}
-		}*/
-			//render particle position
-			break;
+
+
+
 		case 4:
 			goto END;
 			break;
