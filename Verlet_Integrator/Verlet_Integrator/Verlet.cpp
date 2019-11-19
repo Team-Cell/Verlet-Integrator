@@ -195,6 +195,8 @@ fPoint AccelerationSum(Verlet particle) {
 	//accelerationSum.x = accelerationSum.y = 0;
 	accelerationSum = particle.a;
 	//accelerationSum += DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
+	/*accelerationSum.x = DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass) + Calculate_Acceleration(particle.vi, particle.vf, particle.dt) +
+		Parachutist_Acceleration(particle.mass, particle.v.y, particle.gravity, particle.k) + Freefall_Acceleration(particle.gravity, particle.mass, particle.drag_coeficient);*/
 	return accelerationSum;
 }
 
