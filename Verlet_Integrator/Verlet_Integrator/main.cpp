@@ -216,16 +216,18 @@ void request_data(Verlet& particle, int menu_option) {
 			goto LOOP;
 			break;
 		}
-	}
-
-	if (menu_option == 2)
+	}else if (menu_option == 2)
 	{
 		char char_const_acc = 'A';
-		cout << "Which is the initial position?:" << endl;
-		cin >> particle.pos.x >> particle.pos.y;
+		cout << "Which is the initial position?:" << endl << "x: ";
+		cin >> particle.pos.x;
+		cout << "y: ";
+		cin >> particle.pos.y;
 		particle.pos.y = SCREEN_HEIGHT - particle.pos.y;
-		cout << "Which is the initial speed?:" << endl;
-		cin >> particle.v.x >> particle.v.y;
+		cout << "Which is the initial speed?:" << endl << "x: ";
+		cin >> particle.v.x;
+		cout << "y: ";
+		cin >> particle.v.y;
 		particle.v.y = -particle.v.y;
 		while ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')) {
 			cout << "Do you want gravity to be the only acceleration?: " << endl << "(Yes: Y / No: N)" << endl;
@@ -257,15 +259,17 @@ void request_data(Verlet& particle, int menu_option) {
 		cout << "Which is the mass?:" << endl;
 		cin >> particle.mass;
 		system("cls");
-	}
-
-	if (menu_option == 3) {
+	}else if (menu_option == 3) {
 		char char_const_acc = 'A';
-		cout << "Which is the initial position?:" << endl;
-		cin >> particle.pos.x >> particle.pos.y;
+		cout << "Which is the initial position?:" << endl << "x: ";
+		cin >> particle.pos.x;
+		cout << "y: ";
+		cin >> particle.pos.y;
 		particle.pos.y = SCREEN_HEIGHT - particle.pos.y;
-		cout << "Which is the initial speed?:" << endl;
-		cin >> particle.v.x >> particle.v.y;
+		cout << "Which is the initial speed?:" << endl << "x: ";
+		cin >> particle.v.x;
+		cout << "y: "; 
+		cin >> particle.v.y;
 		particle.v.y = -particle.v.y;
 		while ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')) {
 			cout << "Do you want gravity to be the only acceleration?: " << endl << "(Yes: Y / No: N)" << endl;
