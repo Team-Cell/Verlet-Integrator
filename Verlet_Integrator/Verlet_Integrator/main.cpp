@@ -120,6 +120,7 @@ int main(int argc, char* args[]) {
 				loop_counter++;
 
 			}
+
 			break;
 			
 			/*while (exit = 0) {
