@@ -216,6 +216,7 @@ void request_data(Verlet& particle, int menu_option) {
 			goto LOOP;
 			break;
 		}
+		system("cls");
 	}else if (menu_option == 2)
 	{
 		char char_const_acc = 'A';
