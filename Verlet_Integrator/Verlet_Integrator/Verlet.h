@@ -28,13 +28,10 @@ public:
 	fPoint pos;
 	fPoint prev_pos;
 	fPoint v;
-	fPoint vi;
-	fPoint vf;
 	fPoint a;
 	float density;
 	float area;
 	float drag_coeficient;
-	float k;
 	float dt;
 	float mass;
 	int radius;
