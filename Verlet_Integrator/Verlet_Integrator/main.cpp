@@ -147,7 +147,9 @@ int main(int argc, char* args[]) {
 void request_data(Verlet& particle, int menu_option) {
 	float time = 0;
 	float dt = 0.1;
-	fPoint final_position;
+	float final_position;
+	char axis;
+	int axis_option = 0;
 
 	LOOP: if (menu_option == 1)
 	{
@@ -193,11 +195,14 @@ void request_data(Verlet& particle, int menu_option) {
 			cin >> particle.a.x;
 			cout << "y: ";
 			cin >> particle.a.y;
-			cout << "Which position do you want the particle to reach?" << endl << "x: ";
-			cin >> final_position.x;
-			cout << "y: ";
-			cin >> final_position.y;
-			cout << "Time: " << Time_To_Position(particle.pos, particle.v,particle.a,dt,final_position) << endl;
+			// We ask which axis and which is the final position, and it returns us the time to reach that position
+			cout << "On which axis is the position? <x> or <y>";
+			cin >> axis;
+			if (axis == 'x')axis_option = 1;
+			if (axis == 'y')axis_option = 2;
+			cout << "Which is the final position in that axis?"<< endl;
+			cin >> final_position;
+			cout << "Time: " << Time_To_Position(particle.pos, particle.v,particle.a,dt,final_position, axis_option) << endl;
 			system("pause");
 			break;
 		case 3:
@@ -206,7 +211,7 @@ void request_data(Verlet& particle, int menu_option) {
 			cin >> particle.gravity;
 			cout << "Which is mass of the particle?" << endl;
 			cin >> particle.mass;
-			cout << "Which is the density of the particle? " << endl;
+			cout << "Which is the density of the air? " << endl;
 			cin >> particle.density;
 			cout << "Which is the area of the particle?" << endl;
 			cin >> particle.area;
@@ -251,7 +256,7 @@ void request_data(Verlet& particle, int menu_option) {
 				particle.gravity = -particle.gravity;
 				cout << "Which is the aerodynamic drag coeficient?: " << endl;
 				cin >> particle.drag_coeficient;
-				cout << "Which is the density of the particle?: " << endl;
+				cout << "Which is the density of the air?: " << endl;
 				cin >> particle.density;
 				cout << "Which is the area?: " << endl;
 				cin >> particle.area;
@@ -293,7 +298,7 @@ void request_data(Verlet& particle, int menu_option) {
 				particle.gravity = -particle.gravity;
 				cout << "Which is the aerodynamic drag coeficient?: " << endl;
 				cin >> particle.drag_coeficient;
-				cout << "Which is the density of the particle?: " << endl;
+				cout << "Which is the density of the air?: " << endl;
 				cin >> particle.density;
 				cout << "Which is the area?: " << endl;
 				cin >> particle.area;

@@ -232,7 +232,7 @@ float Freefall_Acceleration(float gravity, float m, float friction_const) {
 
 //position calculators
 
-float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint acceleration, float dt, fPoint final_position) {
+float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint acceleration, float dt, float final_position, int axis_option) {
 	float time = 0;
 	Verlet particle;
 	particle.a = acceleration;
@@ -243,16 +243,74 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 	//LOG("here");
 	InitialSituation(particle, dt);
 
-	while (particle.pos != final_position)
+	if (axis_option == 1)
 	{
-		if (current_iterations > max_iterations) {
-			cout << "The particle can't reach this position" << endl;
-			break;
+		if (final_position > 0)
+		{
+			while (particle.pos.x < final_position)
+			{
+				if (current_iterations > max_iterations) {
+					cout << "The particle can't reach this position" << endl;
+					break;
+				}
+				else
+				{
+					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+					current_iterations++;
+					time += dt;
+				}
+			}
 		}
 		else
 		{
-			particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
-			current_iterations++;
+			while (particle.pos.x > final_position)
+			{
+				if (current_iterations > max_iterations) {
+					cout << "The particle can't reach this position" << endl;
+					break;
+				}
+				else
+				{
+					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+					current_iterations++;
+					time += dt;
+				}
+			}
+		}
+	}
+	if (axis_option == 2)
+	{
+		if (final_position > 0)
+		{
+			while (particle.pos.y < final_position)
+			{
+				if (current_iterations > max_iterations) {
+					cout << "The particle can't reach this position" << endl;
+					break;
+				}
+				else
+				{
+					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+					current_iterations++;
+					time += dt;
+				}
+			}
+		}
+		else
+		{
+			while (particle.pos.y > final_position)
+			{
+				if (current_iterations > max_iterations) {
+					cout << "The particle can't reach this position" << endl;
+					break;
+				}
+				else
+				{
+					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+					current_iterations++;
+					time += dt;
+				}
+			}
 		}
 	}
 	return time;
