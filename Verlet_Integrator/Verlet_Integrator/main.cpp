@@ -19,13 +19,13 @@ int main(int argc, char* args[]) {
 
 	int loop_counter = 0;
 	int max_loops = 40;
-	
+	fPoint temp_pos;
 	int exit = 0;
 
 	Verlet particle;
 	ModuleRender render;
 	int menu_option = 0;
-	float dt = 0.5f;
+	float dt = 1.0f;
 	float time = 0;
 	SDL_Event event;
 	//screen limit rectangles
@@ -64,12 +64,15 @@ int main(int argc, char* args[]) {
 			request_data(particle, 2);
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << -particle.a.y << endl;
 			particle.prev_pos = particle.pos;
-			particle.pos = particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
+			particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
 
 			//main loop
 			while (loop_counter < max_loops) {
 				particle.a = AccelerationSum(particle);
+				temp_pos = particle.pos;
 				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+				cout << "px: " << particle.pos.x << " py: " << SCREEN_HEIGHT - particle.pos.y << " ax: " << particle.a.x << " ay: " << -particle.a.y << endl;
+				particle.prev_pos = temp_pos;
 				for (int i = 0; i < 4; i++)
 				{
 					if (CheckCollision(particle, rectangles[i])) {

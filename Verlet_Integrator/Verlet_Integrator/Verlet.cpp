@@ -38,15 +38,13 @@ void InitialSituation(Verlet &particle, float dt) {
 
 fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint a, float dt) {
 
-	//fPoint pos_new;
-
 	pos = pos + (pos - prev_pos) + a * dt * dt;
 
 	//a_new = (v_new - vi) / dt;
 
-	cout << "px: " << pos.x << " py: " << pos.y << " ax: " << a.x << " ay: " << -a.y << endl;
+	//cout << "px: " << pos.x << " py: " << pos.y << " ax: " << a.x << " ay: " << -a.y << endl;
 
-	prev_pos = pos;
+	//prev_pos = pos;
 
 	return pos;
 }
