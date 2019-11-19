@@ -177,7 +177,8 @@ void request_data(Verlet& particle, int menu_option) {
 			cin >> time;
 			//particle.prev_pos = particle.pos;
 			particle.pos = Position_at_Time(particle.pos, particle.v, particle.a, time);
-			cout << "Final position: " << particle.pos.x << ", " << particle.pos.y << endl;
+			cout << "Final position: (" << particle.pos.x << ", " << particle.pos.y << ")" << endl;
+			system("pause");
 			break;
 		case 2: 
 			cout << "Which is the position of the particle?" << endl << "x: ";
@@ -197,6 +198,7 @@ void request_data(Verlet& particle, int menu_option) {
 			cout << "y: ";
 			cin >> final_position.y;
 			cout << "Time: " << Time_To_Position(particle.pos, particle.v,particle.a,dt,final_position) << endl;
+			system("pause");
 			break;
 		case 3:
 			//ask for values
@@ -211,6 +213,7 @@ void request_data(Verlet& particle, int menu_option) {
 			cout << "Which is the drag coeficient of the air? " << endl;
 			cin >> particle.drag_coeficient;
 			cout << "Terminal velocity: " << Freefall_Speed(particle.gravity,particle.mass,particle.density,particle.area,particle.drag_coeficient) << endl;
+			system("pause");
 			break;
 		default:
 			goto LOOP;
