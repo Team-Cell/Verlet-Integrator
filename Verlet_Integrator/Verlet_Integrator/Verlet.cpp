@@ -38,13 +38,13 @@ void InitialSituation(Verlet &particle, float dt) {
 
 
 
-fPoint Verlet_Integration(fPoint pos, fPoint& prev_pos, fPoint a, float dt) {
-	pos = pos + (pos - prev_pos) + a * dt * dt;
+fPoint Verlet_Integration(fPoint pos, fPoint prev_pos, fPoint a, float dt) {
 
 	//a_new = (v_new - vi) / dt;
 
-	//cout << "px: " << pos.x << " py: " << pos.y << " ax: " << a.x << " ay: " << -a.y << endl;
+	pos = pos + (pos - prev_pos) + a * dt * dt;
 
+	//cout << "px: " << pos.x << " py: " << pos.y << " ax: " << a.x << " ay: " << -a.y << endl;
 	//prev_pos = pos;
 
 	return pos;
@@ -65,13 +65,15 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, fPoint a, float dt) {
 
-	fPoint v_new, next_pos;
+	fPoint temp_pos, v_new;
 
-	next_pos = Verlet_Integration(pos, prev_pos, a, dt);
+	temp_pos = pos;
+	pos = Verlet_Integration(pos, prev_pos, a, dt);
+	prev_pos = temp_pos;
 
-	v_new = (next_pos - pos) / dt;
+	v_new = (pos - prev_pos) / dt;
 
-	cout << "px: " << next_pos.x << " py: " << next_pos.y << " vx: " << v_new.x << " vy: " << v_new.y << endl;
+	cout << "px: " << pos.x << " py: " << pos.y << " vx: " << v_new.x << " vy: " << v_new.y << endl;
 
 	return v_new;
 }
