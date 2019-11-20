@@ -26,12 +26,10 @@ Verlet::~Verlet() {}
 
 void InitialSituation(Verlet &particle, float dt) {
 	bool ret = true;
-	//a = AccelerationSum(particle) * -1;
+
 	particle.a = AccelerationSum(particle);
-	//particle.prev_pos = particle.pos;
 	particle.prev_pos.x = particle.pos.x - particle.v.x * dt + particle.a.x * 0.5f * dt * dt;
 	particle.prev_pos.y = particle.pos.y - particle.v.y * dt + particle.a.y * 0.5f * dt * dt;
-	//particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, particle.dt);
 }
 
 //main verlet
@@ -40,12 +38,7 @@ void InitialSituation(Verlet &particle, float dt) {
 
 fPoint Verlet_Integration(fPoint pos, fPoint prev_pos, fPoint a, float dt) {
 
-	//a_new = (v_new - vi) / dt;
-
 	pos = pos + (pos - prev_pos) + a * dt * dt;
-
-	//cout << "px: " << pos.x << " py: " << pos.y << " ax: " << a.x << " ay: " << -a.y << endl;
-	//prev_pos = pos;
 
 	return pos;
 }
@@ -88,6 +81,7 @@ fPoint Verlet_Acceleration(float m, fPoint total_f) {
 
 //collision related
 
+//we can now if a body is colliding checking all the cases in which it doesn't collide
 bool CheckCollision(Verlet particle, VRectangle rect) {
 	bool ret = false;
 	if (particle.pos.x + particle.radius >= rect.x && 
@@ -119,14 +113,15 @@ void SolveCollision(Verlet particle, VRectangle rect)
 float Calculate_Time(float pos_i, float pos_new, float v, float a) {
 	float time, time1, time2, t_pow;
 
-	//v * time + a * 0.5 * time * time + pos_i - pos_new = 0;
 	if (a == 0) {
 		time = (pos_new - pos_i) / v;
 		return time;
 	}
+
 	t_pow = pow((v * v) - ((pos_i - pos_new) * a * 2), 0.5);
 	time1 = (-v + t_pow) / a;
 	time2 = (-v - t_pow) / a;
+
 	if (time1 > 0)time = time1;
 	else if (time2 > 0)time = time2;
 	else time = 0;
@@ -204,8 +199,8 @@ fPoint AccelerationSum(Verlet particle) {
 	//accelerationSum.x = accelerationSum.y = 0;
 	accelerationSum = particle.a;
 	//accelerationSum += DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass);
-	/*accelerationSum.x = DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass) + Calculate_Acceleration(particle.vi, particle.vf, particle.dt) +
-		Parachutist_Acceleration(particle.mass, particle.v.y, particle.gravity, particle.k) + Freefall_Acceleration(particle.gravity, particle.mass, particle.drag_coeficient);*/
+	//accelerationSum.x += DragAcceleration(particle.density, particle.drag_coeficient, particle.area, particle.v, particle.mass).x + Calculate_Acceleration(particle.vi, particle.vf, particle.dt) +
+		//Parachutist_Acceleration(particle.mass, particle.v.y, particle.gravity, particle.k) + Freefall_Acceleration(particle.gravity, particle.mass, particle.drag_coeficient);*/
 	return accelerationSum;
 }
 
@@ -259,19 +254,12 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 		{
 			while (particle.pos.x < final_position)
 			{
-				if (current_iterations > max_iterations) {
-					cout << "The particle can't reach this position" << endl;
-					break;
-				}
-				else
-				{
-					temp_pos = particle.pos;
-					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
-					particle.prev_pos = temp_pos;
+				temp_pos = particle.pos;
+				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+				particle.prev_pos = temp_pos;
 
-					current_iterations++;
-					time += dt;
-				}
+				current_iterations++;
+				time += dt;
 				cout << "Time: " << time << " px: " << particle.pos.x << " py: " << particle.pos.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
@@ -279,19 +267,13 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 		{
 			while (particle.pos.x > final_position)
 			{
-				if (current_iterations > max_iterations) {
-					cout << "The particle can't reach this position" << endl;
-					break;
-				}
-				else
-				{
-					temp_pos = particle.pos;
-					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
-					particle.prev_pos = temp_pos;
+				temp_pos = particle.pos;
+				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+				particle.prev_pos = temp_pos;
 
-					current_iterations++;
-					time += dt;
-				}
+				current_iterations++;
+				time += dt;
+
 				cout << "Time: "<< time << " px: " << particle.pos.x << " py: " << particle.pos.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
@@ -304,19 +286,13 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 		{
 			while (particle.pos.y < final_position)
 			{
-				if (current_iterations > max_iterations) {
-					cout << "The particle can't reach this position" << endl;
-					break;
-				}
-				else
-				{
-					temp_pos = particle.pos;
-					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
-					particle.prev_pos = temp_pos;
+				temp_pos = particle.pos;
+				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+				particle.prev_pos = temp_pos;
 
-					current_iterations++;
-					time += dt;
-				}
+				current_iterations++;
+				time += dt;
+
 				cout << "Time: " << time << " px: " << particle.pos.x << " py: " << particle.pos.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
@@ -324,19 +300,13 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 		{
 			while (particle.pos.y > final_position)
 			{
-				if (current_iterations > max_iterations) {
-					cout << "The particle can't reach this position" << endl;
-					break;
-				}
-				else
-				{
-					temp_pos = particle.pos;
-					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
-					particle.prev_pos = temp_pos;
+				temp_pos = particle.pos;
+				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+				particle.prev_pos = temp_pos;
 
-					current_iterations++;
-					time += dt;
-				}
+				current_iterations++;
+				time += dt;
+
 				cout << "Time: " << time << " px: " << particle.pos.x << " py: " << particle.pos.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
@@ -368,13 +338,14 @@ fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float 
 
 fPoint Classical_Motion(fPoint position, fPoint velocity, fPoint acceleration, float dt) {
 	fPoint final_position;
+
 	final_position.x = position.x + velocity.x * dt + 0.5f * acceleration.x * dt * dt;
 	final_position.y = position.y + velocity.y * dt + 0.5f * acceleration.y * dt * dt;
+
 	return final_position;
 }
 
 float Flight_Time(float vi, float gravity, float angle) {
-
 	float time;
 
 	time = (2 * vi * sin(angle * PI / 180)) / gravity;
@@ -383,7 +354,6 @@ float Flight_Time(float vi, float gravity, float angle) {
 }
 
 float Flight_Time(fPoint vi, float gravity) {
-
 	float time;
 
 	time = (2 * vi.y) / gravity;
@@ -406,8 +376,6 @@ float Module(fPoint var) {
 	return sqrt(var.x * var.x + var.y * var.y);
 
 }
-
-
 
 //This while could be used to calculate a number of forces before sending to the Verlet_Acceleration function
 /*p2Point<float> Calculate_Total_Forces(int number_forces) {
