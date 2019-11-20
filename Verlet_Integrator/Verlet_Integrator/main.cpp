@@ -21,6 +21,7 @@ int main(int argc, char* args[]) {
 	int max_loops = 40;
 	fPoint temp_pos;
 	int exit = 0;
+	int last_time;
 
 	Verlet particle;
 	ModuleRender render;
@@ -96,10 +97,12 @@ int main(int argc, char* args[]) {
 			particle.prev_pos = particle.pos;
 			particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
 			LOG("particle.v= %f, %f",particle.v.x,particle.v.y);
+			last_time = SDL_GetTicks();
 
 			while (exit == 0)
 			{
-				dt = 0.0001;
+				dt = (SDL_GetTicks() - last_time) / 1000;
+				last_time = SDL_GetTicks();
 				LOG("X: %f, %f", particle.v.x, particle.a.x);
 				particle.a = AccelerationSum(particle);
 				temp_pos = particle.pos;
@@ -123,7 +126,7 @@ int main(int argc, char* args[]) {
 				}
 				render.Update(particle.pos);
 				LOG("X: %f, %f", particle.v.x, particle.a.x);
-
+				/*
 				while (SDL_PollEvent(&event)) {
 					switch (event.type) {
 					case SDL_QUIT:
@@ -134,7 +137,7 @@ int main(int argc, char* args[]) {
 							exit = 1;
 						break;
 					}
-				}
+				}*/
 				LOG("X: %f, %f", particle.v.x, particle.a.x);
 			}
 

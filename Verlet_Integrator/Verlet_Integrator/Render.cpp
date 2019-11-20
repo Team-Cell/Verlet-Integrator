@@ -60,7 +60,7 @@ void ModuleRender::Update(fPoint position) {
 	
 	SDL_RenderCopy(renderer, particle_tex, NULL, &particle_rect);
 	SDL_RenderPresent(renderer);
-	SDL_Delay(500);
+	//SDL_Delay(500);
 }
 
 void ModuleRender::clearScreen() {
