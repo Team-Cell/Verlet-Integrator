@@ -140,18 +140,22 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 	bool col_x, col_y;
 	col_x = col_y = false;
 
+	//if the particle hits the right collider
 	if (particle.prev_pos.x + particle.radius < rect.x) {
 		time = Calculate_Time(particle.prev_pos.x, rect.x - particle.radius, particle.v.x, particle.a.x);
 		col_x = true;
 	}
+	//if the particle hits the left collider
 	else if (particle.prev_pos.x - particle.radius > rect.x + rect.w) {
 		time = Calculate_Time(particle.prev_pos.x, rect.x + rect.w + particle.radius, particle.v.x, particle.a.x);
 		col_x = true;
 	}
+	//if the particle hits the bottom collider
 	else if (particle.prev_pos.y + particle.radius < rect.y) {
 		time = Calculate_Time(particle.prev_pos.y, rect.y - particle.radius, particle.v.y, particle.a.y);
 		col_y = true;
 	}
+	//if the particle hits the top collider
 	else if (particle.prev_pos.y - particle.radius > rect.y + rect.h) {
 		time = Calculate_Time(particle.prev_pos.y, rect.y + rect.h + particle.radius, particle.v.y, particle.a.y);
 		col_y = true;
@@ -335,11 +339,12 @@ fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float 
 
 	while (time_passed < time)
 	{
+		cout << "Time passed: " << time_passed << " px: " << pos.x << " py: " << pos.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 		aux_pos = pos;
 		pos = Verlet_Integration(pos, prev_pos, acceleration, dt);
 		prev_pos = aux_pos;
 		time_passed += dt;
-		cout << "px: " << pos.x << " py: " << pos.y << " vx: " << velocity.x << " vy: " << velocity.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
+	
 	}
 
 	return pos;

@@ -13,7 +13,7 @@ using namespace std;
 
 #define RECTANGLE_THICKNESS 200
 
-void request_data(Verlet& particle, int menu_option);
+void request_data(Verlet& particle, int menu_option, int submenu_option = 0);
 
 int main(int argc, char* args[]) {
 
@@ -27,17 +27,22 @@ int main(int argc, char* args[]) {
 
 	Verlet particle;
 	ModuleRender render;
+
 	int menu_option = 0;
+	int submenu_option = 0;
+
 	float dt = 1.0f;
 	float time = 0;
+	float current_time = 0;
+
 	SDL_Event event;
 	//screen limit rectangles
 	VRectangle rectangles[4];
-	int rectangle_thickness = 400;
-	VRectangle top_rectangle(0, -RECTANGLE_THICKNESS, SCREEN_WIDTH, RECTANGLE_THICKNESS);
+	VRectangle top_rectangle(0, -RECTANGLE_THICKNESS, SCREEN_WIDTH + 2 * RECTANGLE_THICKNESS, RECTANGLE_THICKNESS);
 	VRectangle left_rectangle(-RECTANGLE_THICKNESS, 0, RECTANGLE_THICKNESS,SCREEN_HEIGHT);
 	VRectangle right_rectangle(SCREEN_WIDTH, 0, RECTANGLE_THICKNESS, SCREEN_HEIGHT);
-	VRectangle bottom_rectangle(0, SCREEN_HEIGHT, SCREEN_WIDTH, RECTANGLE_THICKNESS);
+	VRectangle bottom_rectangle(-RECTANGLE_THICKNESS, SCREEN_HEIGHT, SCREEN_WIDTH + 2*RECTANGLE_THICKNESS, RECTANGLE_THICKNESS);
+
 	rectangles[0] = top_rectangle;
 	rectangles[1] = left_rectangle;
 	rectangles[2] = right_rectangle;
@@ -61,20 +66,30 @@ int main(int argc, char* args[]) {
 		switch (menu_option)
 		{
 		case 1:
-			request_data(particle, 1);
+			cout << "What do you want to calculate?" << endl;
+			cout << "1. Position at a certain time" << endl;
+			cout << "2. Time to reach a certain position" << endl;
+			cout << "3. Terminal velocity of the particle" << endl;
+			cin >> submenu_option;
+			system("cls");
+			request_data(particle, 1,submenu_option);
 			break;
 		case 2:
 			request_data(particle, 2);
 			cout << "Case dt: " << particle.dt << " and a: " << particle.a.x << ", " << -particle.a.y << endl;
 			particle.prev_pos = particle.pos;
+
+			//first we calculate the first position of the particle
 			particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
 
 			//main loop
 			while (loop_counter < max_loops) {
+				//we calculate the sum of the accelerations applied
 				particle.a = AccelerationSum(particle);
+				//we can now iterate using Verlet
 				temp_pos = particle.pos;
 				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
-				cout << "px: " << particle.pos.x << " py: " << SCREEN_HEIGHT - particle.pos.y << " ax: " << particle.a.x << " ay: " << -particle.a.y << endl;
+				cout << "Time: " << current_time << "px: " << particle.pos.x << " py: " << SCREEN_HEIGHT - particle.pos.y << " ax: " << particle.a.x << " ay: " << -particle.a.y << endl;
 				particle.prev_pos = temp_pos;
 				for (int i = 0; i < 4; i++)
 				{
@@ -90,7 +105,7 @@ int main(int argc, char* args[]) {
 				}
 				render.blit_all(particle.pos.x, particle.pos.y);
 				loop_counter++;
-
+				current_time += particle.dt;
 			}
 			break;
 		case 3:
@@ -103,7 +118,8 @@ int main(int argc, char* args[]) {
 
 			while (exit == 0)
 			{
-				dt = (SDL_GetTicks() - last_time) / 1000;
+				//dt = (SDL_GetTicks() - last_time) / 1000;
+				dt = 0.1;
 				last_time = SDL_GetTicks();
 				LOG("X: %f, %f", particle.v.x, particle.a.x);
 				particle.a = AccelerationSum(particle);
@@ -142,9 +158,6 @@ int main(int argc, char* args[]) {
 				}*/
 				LOG("X: %f, %f", particle.v.x, particle.a.x);
 			}
-
-
-
 		case 4:
 			goto END;
 			break;
@@ -152,14 +165,14 @@ int main(int argc, char* args[]) {
 			break;
 		}
 		//char_const_acc = 'A';
-		cout << endl << endl;
+		//cout << endl << endl;
 	}
 
 	END: system("pause");
 	return 0;
 }
 
-void request_data(Verlet& particle, int menu_option) {
+void request_data(Verlet& particle, int menu_option, int submenu_option) {
 	float time = 0;
 	float dt = 0.1;
 	float final_position;
@@ -168,14 +181,7 @@ void request_data(Verlet& particle, int menu_option) {
 
 	LOOP: if (menu_option == 1)
 	{
-		int choice = 0;
-		cout << "What do you want to calculate?" << endl;
-		cout << "1. Position at a certain time" << endl;
-		cout << "2. Time to reach a certain position" << endl;
-		cout << "3. Terminal velocity of the particle" << endl;
-		cin >> choice;
-		system("cls");
-		switch (choice)
+		switch (submenu_option)
 		{
 		case 1:
 			cout << "Which is the position of the particle? " << endl << "x: ";
@@ -192,7 +198,6 @@ void request_data(Verlet& particle, int menu_option) {
 			cin >> particle.a.y;
 			cout << "At which time do you want to know the position?" << endl;
 			cin >> time;
-			//particle.prev_pos = particle.pos;
 			particle.pos = Position_at_Time(particle.pos, particle.v, particle.a, time);
 			cout << "Final position: (" << particle.pos.x << ", " << particle.pos.y << ")" << endl;
 			system("pause");
