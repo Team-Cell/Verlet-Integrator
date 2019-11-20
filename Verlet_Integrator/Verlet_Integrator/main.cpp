@@ -31,7 +31,7 @@ int main(int argc, char* args[]) {
 	SDL_Event event;
 	//screen limit rectangles
 	VRectangle rectangles[4];
-	int rectangle_thickness = 200;
+	int rectangle_thickness = 400;
 	VRectangle top_rectangle(0, -SCREEN_HEIGHT, SCREEN_WIDTH, rectangle_thickness);
 	VRectangle left_rectangle(-rectangle_thickness, 0, rectangle_thickness,SCREEN_HEIGHT);
 	VRectangle right_rectangle(SCREEN_WIDTH, 0, rectangle_thickness, SCREEN_HEIGHT);
