@@ -101,7 +101,9 @@ int main(int argc, char* args[]) {
 			{
 				LOG("X: %f, %f", particle.v.x, particle.a.x);
 				particle.a = AccelerationSum(particle);
+				temp_pos = particle.pos;
 				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+				particle.prev_pos = temp_pos;
 				LOG("X: %f, %f", particle.v.x, particle.a.x);
 				cout << "px: " << particle.pos.x << " py: " << SCREEN_HEIGHT - particle.pos.y << " ax: " << particle.a.x << " ay: " << -particle.a.y << endl;
 				for (int i = 0; i < 4; i++)
