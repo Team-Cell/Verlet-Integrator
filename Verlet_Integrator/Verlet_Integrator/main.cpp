@@ -11,6 +11,8 @@ using namespace std;
 #pragma comment(lib, "SDL/libx86/SDL2.lib")
 #pragma comment(lib, "SDL/libx86/SDL2main.lib")
 
+#define RECTANGLE_THICKNESS 200
+
 void request_data(Verlet& particle, int menu_option);
 
 int main(int argc, char* args[]) {
@@ -32,10 +34,10 @@ int main(int argc, char* args[]) {
 	//screen limit rectangles
 	VRectangle rectangles[4];
 	int rectangle_thickness = 400;
-	VRectangle top_rectangle(0, -SCREEN_HEIGHT, SCREEN_WIDTH, rectangle_thickness);
-	VRectangle left_rectangle(-rectangle_thickness, 0, rectangle_thickness,SCREEN_HEIGHT);
-	VRectangle right_rectangle(SCREEN_WIDTH, 0, rectangle_thickness, SCREEN_HEIGHT);
-	VRectangle bottom_rectangle(0, SCREEN_HEIGHT, SCREEN_WIDTH, rectangle_thickness);
+	VRectangle top_rectangle(0, -RECTANGLE_THICKNESS, SCREEN_WIDTH, RECTANGLE_THICKNESS);
+	VRectangle left_rectangle(-RECTANGLE_THICKNESS, 0, RECTANGLE_THICKNESS,SCREEN_HEIGHT);
+	VRectangle right_rectangle(SCREEN_WIDTH, 0, RECTANGLE_THICKNESS, SCREEN_HEIGHT);
+	VRectangle bottom_rectangle(0, SCREEN_HEIGHT, SCREEN_WIDTH, RECTANGLE_THICKNESS);
 	rectangles[0] = top_rectangle;
 	rectangles[1] = left_rectangle;
 	rectangles[2] = right_rectangle;
