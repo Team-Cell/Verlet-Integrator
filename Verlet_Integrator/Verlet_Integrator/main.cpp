@@ -99,6 +99,7 @@ int main(int argc, char* args[]) {
 
 			while (exit == 0)
 			{
+				dt = 0.0001;
 				LOG("X: %f, %f", particle.v.x, particle.a.x);
 				particle.a = AccelerationSum(particle);
 				temp_pos = particle.pos;
