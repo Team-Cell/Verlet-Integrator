@@ -95,25 +95,31 @@ int main(int argc, char* args[]) {
 			request_data(particle, 3);
 			particle.prev_pos = particle.pos;
 			particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
+			LOG("particle.v= %f, %f",particle.v.x,particle.v.y);
 
-
-			while (exit = 0)
+			while (exit == 0)
 			{
+				LOG("X: %f, %f", particle.v.x, particle.a.x);
 				particle.a = AccelerationSum(particle);
 				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+				LOG("X: %f, %f", particle.v.x, particle.a.x);
+				cout << "px: " << particle.pos.x << " py: " << SCREEN_HEIGHT - particle.pos.y << " ax: " << particle.a.x << " ay: " << -particle.a.y << endl;
 				for (int i = 0; i < 4; i++)
 				{
+					LOG("X: %f, %f", particle.v.x, particle.a.x);
 					if (CheckCollision(particle, rectangles[i])) {
 						cout << "Collision" << endl;
 						time += CalculateCollisionPosition(particle, rectangles[i]);
 					}
 				}
+				LOG("X: %f, %f", particle.v.x, particle.a.x);
 				if (time > 0)
 				{
 					CalculateCollisionFinalPosition(particle, time);
 					time = 0;
 				}
 				render.Update(particle.pos);
+				LOG("X: %f, %f", particle.v.x, particle.a.x);
 
 				while (SDL_PollEvent(&event)) {
 					switch (event.type) {
@@ -126,6 +132,7 @@ int main(int argc, char* args[]) {
 						break;
 					}
 				}
+				LOG("X: %f, %f", particle.v.x, particle.a.x);
 			}
 
 
@@ -202,7 +209,7 @@ void request_data(Verlet& particle, int menu_option) {
 			if (axis == 'y')axis_option = 2;
 			cout << "Which is the final position in that axis?"<< endl;
 			cin >> final_position;
-			cout << "Time: " << Time_To_Position(particle.pos, particle.v,particle.a,dt,final_position, axis_option) << endl;
+			//cout << "Time: " << Time_To_Position(particle.pos, particle.v,particle.a,dt,final_position, axis_option) << endl;
 			system("pause");
 			break;
 		case 3:
