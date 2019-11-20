@@ -199,10 +199,11 @@ void request_data(Verlet& particle, int menu_option, int submenu_option) {
 			cout << "At which time do you want to know the position?" << endl;
 			cin >> time;
 			particle.pos = Position_at_Time(particle.pos, particle.v, particle.a, time);
-			cout << "Final position: (" << particle.pos.x << ", " << particle.pos.y << ")" << endl;
+			cout << "Final position: (" << particle.pos.x << ", " << particle.pos.y << ")" << " m" <<endl;
 			system("pause");
 			break;
 		case 2: 
+			dt = 1;
 			cout << "Which is the position of the particle?" << endl << "x: ";
 			cin >> particle.pos.x;
 			cout << "y: ";
@@ -216,13 +217,13 @@ void request_data(Verlet& particle, int menu_option, int submenu_option) {
 			cout << "y: ";
 			cin >> particle.a.y;
 			// We ask which axis and which is the final position, and it returns us the time to reach that position
-			cout << "On which axis is the position? <x> or <y>";
+			cout << "On which axis is the position you want to reach? <x> or <y> ";
 			cin >> axis;
-			if (axis == 'x')axis_option = 1;
-			if (axis == 'y')axis_option = 2;
+			if ((axis == 'x')||(axis =='X'))axis_option = 1;
+			if ((axis == 'y')||(axis =='Y'))axis_option = 2;
 			cout << "Which is the final position in that axis?"<< endl;
 			cin >> final_position;
-			//cout << "Time: " << Time_To_Position(particle.pos, particle.v,particle.a,dt,final_position, axis_option) << endl;
+			cout << "Time: " << Time_To_Position(particle.pos, particle.v,particle.a,dt,final_position, axis_option) << " s" <<endl;
 			system("pause");
 			break;
 		case 3:
@@ -233,11 +234,11 @@ void request_data(Verlet& particle, int menu_option, int submenu_option) {
 			cin >> particle.mass;
 			cout << "Which is the density of the air? " << endl;
 			cin >> particle.density;
-			cout << "Which is the area of the particle?" << endl;
-			cin >> particle.area;
 			cout << "Which is the drag coeficient of the air? " << endl;
 			cin >> particle.drag_coeficient;
-			cout << "Terminal velocity: " << Freefall_Speed(particle.gravity,particle.mass,particle.density,particle.area,particle.drag_coeficient) << endl;
+			cout << "Which is the area of the particle?" << endl;
+			cin >> particle.area;
+			cout << "Terminal velocity: " << Terminal_Velocity(particle.gravity, particle.mass, particle.density, particle.drag_coeficient, particle.area) << " m/s"<< endl;
 			system("pause");
 			break;
 		default:

@@ -209,8 +209,8 @@ fPoint AccelerationSum(Verlet particle) {
 	return accelerationSum;
 }
 
-float Terminal_Velocity(Verlet particle) {
-	return sqrt((2 * particle.mass * particle.gravity) / (particle.density * particle.drag_coeficient * particle.area));
+float Terminal_Velocity(float gravity, float mass, float density, float drag_coefficient, float area) {
+	return sqrt((2 * mass * abs(gravity)) / (density * drag_coefficient * area));
 }
 
 float Parachutist_Acceleration(float m, fPoint v, float gravity, float k) {
@@ -244,14 +244,15 @@ float Freefall_Acceleration(float gravity, float m, float friction_const) {
 float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint acceleration, float dt, float final_position, int axis_option) {
 	float time = 0;
 	Verlet particle;
-	particle.a = acceleration;
-	particle.prev_pos = initial_position;
-	particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
 	int max_iterations = 100;
 	int current_iterations = 0;
-	//LOG("here");
-	InitialSituation(particle, dt);
+	fPoint temp_pos;
 
+	particle.a = acceleration;
+	particle.prev_pos = initial_position;
+	particle.pos = Classical_Motion(initial_position, velocity, particle.a, dt);
+
+	//the final position is on the x axis
 	if (axis_option == 1)
 	{
 		if (final_position > 0)
@@ -264,11 +265,14 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 				}
 				else
 				{
+					temp_pos = particle.pos;
 					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+					particle.prev_pos = temp_pos;
+
 					current_iterations++;
 					time += dt;
 				}
-				cout << "px: " << particle.pos.x << " py: " << particle.pos.y << " vx: " << velocity.x << " vy: " << velocity.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
+				cout << "Time: " << time << " px: " << particle.pos.x << " py: " << particle.pos.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
 		else
@@ -281,14 +285,19 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 				}
 				else
 				{
+					temp_pos = particle.pos;
 					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+					particle.prev_pos = temp_pos;
+
 					current_iterations++;
 					time += dt;
 				}
-				cout << "px: " << particle.pos.x << " py: " << particle.pos.y << " vx: " << velocity.x << " vy: " << velocity.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
+				cout << "Time: "<< time << " px: " << particle.pos.x << " py: " << particle.pos.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
 	}
+
+	//the final position is on the y axis
 	if (axis_option == 2)
 	{
 		if (final_position > 0)
@@ -301,11 +310,14 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 				}
 				else
 				{
+					temp_pos = particle.pos;
 					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+					particle.prev_pos = temp_pos;
+
 					current_iterations++;
 					time += dt;
 				}
-				cout << "px: " << particle.pos.x << " py: " << particle.pos.y << " vx: " << velocity.x << " vy: " << velocity.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
+				cout << "Time: " << time << " px: " << particle.pos.x << " py: " << particle.pos.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
 		else
@@ -318,11 +330,14 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 				}
 				else
 				{
+					temp_pos = particle.pos;
 					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+					particle.prev_pos = temp_pos;
+
 					current_iterations++;
 					time += dt;
 				}
-				cout << "px: " << particle.pos.x << " py: " << particle.pos.y << " vx: " << velocity.x << " vy: " << velocity.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
+				cout << "Time: " << time << " px: " << particle.pos.x << " py: " << particle.pos.y << " ax: " << acceleration.x << " ay: " << acceleration.y << endl;
 			}
 		}
 	}

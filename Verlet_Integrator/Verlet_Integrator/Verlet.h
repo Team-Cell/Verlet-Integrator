@@ -57,7 +57,7 @@ void CalculateCollisionFinalPosition(Verlet& particle, float time);
 fPoint DragAcceleration(float density, float drag_coefficient, float area, fPoint speed, float mass);
 fPoint Calculate_Acceleration(fPoint vi, fPoint vf, float dt);
 fPoint AccelerationSum(Verlet particle);
-float Terminal_Velocity(Verlet particle);
+float Terminal_Velocity(float gravity, float mass, float density, float drag_coefficient, float area);
 float Parachutist_Acceleration(float m, float v_y, float gravity, float k);
 float Freefall_Speed(float gravity, float m, float air_density, float area, float friction_const);
 float Freefall_Acceleration(float gravity, float m, float friction_const);
