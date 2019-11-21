@@ -59,11 +59,8 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, float dt) {
 
 	fPoint v_new;
-	/*
-	temp_pos = pos;
+
 	pos = Verlet_Integration(pos, prev_pos, a, dt);
-	prev_pos = temp_pos;
-	*/
 	v_new = (pos - prev_pos) / dt;
 
 	cout << "px: " << pos.x << " py: " << pos.y << " vx: " << v_new.x << " vy: " << v_new.y << endl;
