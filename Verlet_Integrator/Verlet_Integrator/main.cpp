@@ -110,6 +110,7 @@ int main(int argc, char* args[]) {
 			break;
 		case 3:
 			//simulation loop
+		
 			request_data(particle, 3);
 			particle.prev_pos = particle.pos;
 			particle.pos = Classical_Motion(particle.pos, particle.v, particle.a, dt);
@@ -118,45 +119,60 @@ int main(int argc, char* args[]) {
 
 			while (exit == 0)
 			{
-				//dt = (SDL_GetTicks() - last_time) / 1000;
-				dt = 0.1;
-				last_time = SDL_GetTicks();
-				LOG("X: %f, %f", particle.v.x, particle.a.x);
-				particle.a = AccelerationSum(particle);
-				temp_pos = particle.pos;
-				particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
-				particle.prev_pos = temp_pos;
-				LOG("X: %f, %f", particle.v.x, particle.a.x);
-				cout << "px: " << particle.pos.x << " py: " << SCREEN_HEIGHT - particle.pos.y << " ax: " << particle.a.x << " ay: " << -particle.a.y << endl;
-				for (int i = 0; i < 4; i++)
-				{
-					LOG("X: %f, %f", particle.v.x, particle.a.x);
-					if (CheckCollision(particle, rectangles[i])) {
-						cout << "Collision" << endl;
-						time += CalculateCollisionPosition(particle, rectangles[i]);
-					}
-				}
-				LOG("X: %f, %f", particle.v.x, particle.a.x);
-				if (time > 0)
-				{
-					CalculateCollisionFinalPosition(particle, time);
-					time = 0;
-				}
-				render.Update(particle.pos);
-				LOG("X: %f, %f", particle.v.x, particle.a.x);
-				/*
 				while (SDL_PollEvent(&event)) {
-					switch (event.type) {
-					case SDL_QUIT:
-						exit = 1;
-						break;
-					case SDL_KEYDOWN:
-						if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
-							exit = 1;
-						break;
+					//dt = (SDL_GetTicks() - last_time) / 1000;
+					dt = 0.1;
+					last_time = SDL_GetTicks();
+					LOG("X: %f, %f", particle.v.x, particle.a.x);
+					particle.a = AccelerationSum(particle);
+					temp_pos = particle.pos;
+					particle.pos = Verlet_Integration(particle.pos, particle.prev_pos, particle.a, dt);
+					particle.prev_pos = temp_pos;
+					LOG("X: %f, %f", particle.v.x, particle.a.x);
+					cout << "px: " << particle.pos.x << " py: " << SCREEN_HEIGHT - particle.pos.y << " ax: " << particle.a.x << " ay: " << -particle.a.y << endl;
+					for (int i = 0; i < 4; i++)
+					{
+						LOG("X: %f, %f", particle.v.x, particle.a.x);
+						if (CheckCollision(particle, rectangles[i])) {
+							cout << "Collision" << endl;
+							time += CalculateCollisionPosition(particle, rectangles[i]);
+						}
 					}
-				}*/
-				LOG("X: %f, %f", particle.v.x, particle.a.x);
+					LOG("X: %f, %f", particle.v.x, particle.a.x);
+					if (time > 0)
+					{
+						CalculateCollisionFinalPosition(particle, time);
+						time = 0;
+					}
+					render.Update(particle.pos);
+					LOG("X: %f, %f", particle.v.x, particle.a.x);
+
+					/*
+					while (SDL_PollEvent(&event)) {
+						switch (event.type) {
+						case SDL_QUIT:
+							exit = 1;
+							break;
+						case SDL_KEYDOWN:
+							if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+								exit = 1;
+							break;
+						}
+					}*/
+					LOG("X: %f, %f", particle.v.x, particle.a.x);
+					if (event.type == SDL_KEYDOWN) {
+						switch (event.key.keysym.sym) {
+						case SDLK_ESCAPE:
+							exit = 1;
+							break;
+					
+						}
+					
+					}
+					else {
+						exit = 1;
+					}
+				}
 			}
 		case 4:
 			goto END;
