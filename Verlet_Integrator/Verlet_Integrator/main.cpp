@@ -22,7 +22,7 @@ int main(int argc, char* args[]) {
 	int loop_counter = 0;
 	int max_loops = 40;
 	fPoint temp_pos;
-	int exit = 0;
+	bool exit = true;
 	int last_time;
 
 	Verlet particle;
@@ -117,7 +117,7 @@ int main(int argc, char* args[]) {
 			LOG("particle.v= %f, %f",particle.v.x,particle.v.y);
 			last_time = SDL_GetTicks();
 
-			while (exit == 0)
+			while (exit = true)
 			{
 				while (1) {
 					//dt = (SDL_GetTicks() - last_time) / 1000;
@@ -147,8 +147,8 @@ int main(int argc, char* args[]) {
 					render.Update(particle.pos);
 					LOG("X: %f, %f", particle.v.x, particle.a.x);
 
-					/*
-					while (SDL_PollEvent(&event)) {
+					
+					/*while (SDL_PollEvent(&event)) {
 						switch (event.type) {
 						case SDL_QUIT:
 							exit = 1;
@@ -160,20 +160,21 @@ int main(int argc, char* args[]) {
 						}
 					}*/
 					LOG("X: %f, %f", particle.v.x, particle.a.x);
-					/*
+					
 					if (event.type == SDL_KEYDOWN) {
 						switch (event.key.keysym.sym) {
 						case SDLK_ESCAPE:
-							exit = 1;
+							exit = false;
 							break;
+							//return exit;
 					
 						}
 					
 					}
 					else {
-						exit = 1;
+						exit = true;
 					}
-					*/
+					
 				}
 			}
 		case 4:
@@ -303,6 +304,7 @@ void request_data(Verlet& particle, int menu_option, int submenu_option) {
 			if ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')) {
 				cout << endl << "You entered an invalid answer." << endl;
 			}
+			//breaks if particle.gravity is not a number
 		}
 		cout << "Which is the mass?:" << endl;
 		cin >> particle.mass;
@@ -344,7 +346,9 @@ void request_data(Verlet& particle, int menu_option, int submenu_option) {
 				cin >> particle.area;
 			}
 			if ((char_const_acc != 'y') && (char_const_acc != 'Y') && (char_const_acc != 'n') && (char_const_acc != 'N')) {
-				cout << endl << "You entered an invalid answer." << endl;
+				
+					cout << endl << "You entered an invalid answer." << endl;
+				
 			}
 		}
 		cout << "Which is the mass?:" << endl;
