@@ -117,7 +117,6 @@ float Calculate_Time(float pos_i, float pos_new, float v, float a) {
 		time = (pos_new - pos_i) / v;
 		return time;
 	}
-
 	t_pow = pow((v * v) - ((pos_i - pos_new) * a * 2), 0.5);
 	time1 = (-v + t_pow) / a;
 	time2 = (-v - t_pow) / a;
@@ -147,18 +146,20 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 	}
 	//if the particle hits the bottom collider
 	else if (particle.prev_pos.y + particle.radius < rect.y) {
+		particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
 		time = Calculate_Time(particle.prev_pos.y, rect.y - particle.radius, particle.v.y, particle.a.y);
 		col_y = true;
 	}
 	//if the particle hits the top collider
 	else if (particle.prev_pos.y - particle.radius > rect.y + rect.h) {
+		particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
 		time = Calculate_Time(particle.prev_pos.y, rect.y + rect.h + particle.radius, particle.v.y, particle.a.y);
 		col_y = true;
 	}
 
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
 
-	particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
+	particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, time);
 
 	if (col_x == true) {
 		particle.v.x = -particle.v.x * 0.9;
@@ -172,9 +173,10 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 }
 
 void CalculateCollisionFinalPosition(Verlet& particle, float time) {
+	float time1 = time;
 	time = particle.dt - time;
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * (time * time);
-	particle.prev_pos = particle.pos - particle.v * particle.dt - particle.a * 0.5 * particle.dt * particle.dt;
+	particle.prev_pos = particle.pos - particle.v * time1 - particle.a * 0.5 * time1 * time1;
 	if ((particle.pos.y > SCREEN_HEIGHT) && (floor(particle.v.y) == 0))
 	{
 		particle.pos.y = SCREEN_HEIGHT - 20;
