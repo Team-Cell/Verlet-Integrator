@@ -69,6 +69,16 @@ fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos,fPoint a, float dt) {
 	return v_new;
 }
 
+
+float Stormer_Verlet(float pos, float prev_pos, float a, float dt) {
+
+	float v_new;
+
+	v_new = (pos - prev_pos - 0.5*a*dt*dt) / dt;
+
+	return v_new;
+}
+
 fPoint Verlet_Acceleration(float m, fPoint total_f) {
 	fPoint a_new;
 
@@ -107,7 +117,7 @@ void SolveCollision(Verlet particle, VRectangle rect)
 	particle.pos = aux_pos;
 }
 
-float Calculate_Time(float pos_i, float pos_new, float v, float a) {
+float Calculate_Time(float pos_i, float pos_new, float v, float a, float dt) {
 	float time, time1, time2, t_pow;
 
 	if (a == 0) {
@@ -118,8 +128,8 @@ float Calculate_Time(float pos_i, float pos_new, float v, float a) {
 	time1 = (-v + t_pow) / a;
 	time2 = (-v - t_pow) / a;
 
-	if (time1 > 0)time = time1;
-	else if (time2 > 0)time = time2;
+	if (time1 > 0 && time1 < dt)time = time1;
+	else if (time2 > 0 && time2 < dt)time = time2;
 	else time = 0;
 
 	return time;
@@ -133,24 +143,24 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 
 	//if the particle hits the right collider
 	if (particle.prev_pos.x + particle.radius < rect.x) {
-		time = Calculate_Time(particle.prev_pos.x, rect.x - particle.radius, particle.v.x, particle.a.x);
+		time = Calculate_Time(particle.prev_pos.x, rect.x - particle.radius, particle.v.x, particle.a.x, particle.dt);
 		col_x = true;
 	}
 	//if the particle hits the left collider
 	else if (particle.prev_pos.x - particle.radius > rect.x + rect.w) {
-		time = Calculate_Time(particle.prev_pos.x, rect.x + rect.w + particle.radius, particle.v.x, particle.a.x);
+		time = Calculate_Time(particle.prev_pos.x, rect.x + rect.w + particle.radius, particle.v.x, particle.a.x, particle.dt);
 		col_x = true;
 	}
 	//if the particle hits the bottom collider
 	else if (particle.prev_pos.y + particle.radius < rect.y) {
-		particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
-		time = Calculate_Time(particle.prev_pos.y, rect.y - particle.radius, particle.v.y, particle.a.y);
+		particle.v.y = Stormer_Verlet(particle.pos.y, particle.prev_pos.y, particle.a.y, particle.dt);
+		time = Calculate_Time(particle.prev_pos.y, rect.y - particle.radius, particle.v.y, particle.a.y, particle.dt);
 		col_y = true;
 	}
 	//if the particle hits the top collider
 	else if (particle.prev_pos.y - particle.radius > rect.y + rect.h) {
-		particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
-		time = Calculate_Time(particle.prev_pos.y, rect.y + rect.h + particle.radius, particle.v.y, particle.a.y);
+		particle.v.y = Stormer_Verlet(particle.pos.y, particle.prev_pos.y, particle.a.y, particle.dt);
+		time = Calculate_Time(particle.prev_pos.y, rect.y + rect.h + particle.radius, particle.v.y, particle.a.y, particle.dt);
 		col_y = true;
 	}
 
@@ -160,10 +170,12 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 
 	if (col_x == true) {
 		particle.v.x = -particle.v.x * 0.9;
+		particle.v.y = particle.v.y * 0.9;
 		//particle.a.x = -particle.a.x;
 	}
 	else if (col_y == true) {
 		particle.v.y = -particle.v.y * 0.9;
+		particle.v.x = particle.v.x * 0.9;
 		//particle.a.y = -particle.a.y;
 	}
 	return time;
