@@ -79,7 +79,6 @@ fPoint Verlet_Acceleration(float m, fPoint total_f) {
 
 //collision related
 
-//we can now if a body is colliding checking all the cases in which it doesn't collide
 bool CheckCollision(Verlet particle, VRectangle rect) {
 	bool ret = false;
 	if (particle.pos.x + particle.radius >= rect.x &&
@@ -222,12 +221,12 @@ float Terminal_Velocity(float gravity, float mass, float density, float drag_coe
 	return sqrt((2 * mass * abs(gravity)) / (density * drag_coefficient * area));
 }
 
-float Parachutist_Acceleration(float m, fPoint v, float gravity, float k) {
+float Parachutist_Acceleration(float m, float v_y, float gravity, float k) {
 	float acceleration;
 
 	// k: constant based on falling object form
 
-	acceleration = (-m * gravity + k * v.y * v.y) / m;
+	acceleration = (-m * gravity + k * v_y * v_y) / m;
 
 	return acceleration;
 }
