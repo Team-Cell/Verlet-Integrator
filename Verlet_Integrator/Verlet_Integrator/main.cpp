@@ -119,7 +119,7 @@ int main(int argc, char* args[]) {
 
 			while (exit == 0)
 			{
-				while (SDL_PollEvent(&event)) {
+				while (1) {
 					//dt = (SDL_GetTicks() - last_time) / 1000;
 					dt = 0.1;
 					last_time = SDL_GetTicks();
@@ -160,6 +160,7 @@ int main(int argc, char* args[]) {
 						}
 					}*/
 					LOG("X: %f, %f", particle.v.x, particle.a.x);
+					/*
 					if (event.type == SDL_KEYDOWN) {
 						switch (event.key.keysym.sym) {
 						case SDLK_ESCAPE:
@@ -172,6 +173,7 @@ int main(int argc, char* args[]) {
 					else {
 						exit = 1;
 					}
+					*/
 				}
 			}
 		case 4:

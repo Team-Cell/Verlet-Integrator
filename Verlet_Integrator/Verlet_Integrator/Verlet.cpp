@@ -58,12 +58,12 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 
 fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, fPoint a, float dt) {
 
-	fPoint temp_pos, v_new;
-
+	fPoint v_new;
+	/*
 	temp_pos = pos;
 	pos = Verlet_Integration(pos, prev_pos, a, dt);
 	prev_pos = temp_pos;
-
+	*/
 	v_new = (pos - prev_pos) / dt;
 
 	cout << "px: " << pos.x << " py: " << pos.y << " vx: " << v_new.x << " vy: " << v_new.y << endl;
@@ -158,6 +158,8 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
 
+	particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
+
 	if (col_x == true) {
 		particle.v.x = -particle.v.x * 0.9;
 		//particle.a.x = -particle.a.x;
@@ -173,6 +175,12 @@ void CalculateCollisionFinalPosition(Verlet& particle, float time) {
 	time = particle.dt - time;
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * (time * time);
 	particle.prev_pos = particle.pos - particle.v * particle.dt - particle.a * 0.5 * particle.dt * particle.dt;
+	if ((particle.pos.y > SCREEN_HEIGHT) && (floor(particle.v.y) == 0))
+	{
+		particle.pos.y = SCREEN_HEIGHT - 20;
+		particle.v.y = 0;
+		particle.a.y = 0;
+	}
 }
 
 //acceleration and velocity
