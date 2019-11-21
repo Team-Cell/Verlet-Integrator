@@ -43,8 +43,8 @@ void InitialSituation(Verlet &particle, float dt);
 //main verlet
 fPoint Verlet_Integration(fPoint pos, fPoint prev_pos, fPoint ai, float dt);
 fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt);
-fPoint Stormer_Verlet(fPoint pos, fPoint pos_new, float dt);
 float Stormer_Verlet(float pos, float pos_new, float a, float dt);
+fPoint Stormer_Verlet(fPoint pos, fPoint pos_new, fPoint a, float dt);
 fPoint Verlet_Acceleration(float m, fPoint total_f);
 
 //collision related 

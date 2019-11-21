@@ -56,14 +56,12 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 	return v_new;
 }
 
-fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, float dt) {
+fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos,fPoint a, float dt) {
 
 	fPoint v_new;
-	/*
-	temp_pos = pos;
+
 	pos = Verlet_Integration(pos, prev_pos, a, dt);
-	prev_pos = temp_pos;
-	*/
+
 	v_new = (pos - prev_pos) / dt;
 
 	cout << "px: " << pos.x << " py: " << pos.y << " vx: " << v_new.x << " vy: " << v_new.y << endl;
@@ -94,9 +92,9 @@ fPoint Verlet_Acceleration(float m, fPoint total_f) {
 //we can now if a body is colliding checking all the cases in which it doesn't collide
 bool CheckCollision(Verlet particle, VRectangle rect) {
 	bool ret = false;
-	if (particle.pos.x + particle.radius >= rect.x && 
-		particle.pos.x - particle.radius <= rect.x + rect.w 
-		&& particle.pos.y - particle.radius <= rect.y + rect.h 
+	if (particle.pos.x + particle.radius >= rect.x &&
+		particle.pos.x - particle.radius <= rect.x + rect.w
+		&& particle.pos.y - particle.radius <= rect.y + rect.h
 		&& particle.pos.y + particle.radius >= rect.y) {
 		ret = true;
 	}
@@ -169,8 +167,7 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
 
-
-	particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.dt);
+	particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
 
 	if (col_x == true) {
 		particle.v.x = -particle.v.x * 0.9;
@@ -229,7 +226,7 @@ fPoint AccelerationSum(Verlet particle) {
 	{
 		accelerationSum = particle.a;
 	}
-	
+
 	return accelerationSum;
 }
 
@@ -343,8 +340,8 @@ float Time_To_Position(fPoint initial_position, fPoint velocity, fPoint accelera
 	return time;
 }
 
-fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float time) 
-{	
+fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float time)
+{
 	fPoint prev_pos,aux_pos;
 	float dt = 1.0f;
 	float time_passed = dt;
@@ -358,7 +355,7 @@ fPoint Position_at_Time(fPoint pos, fPoint velocity, fPoint acceleration, float 
 		pos = Verlet_Integration(pos, prev_pos, acceleration, dt);
 		prev_pos = aux_pos;
 		time_passed += dt;
-	
+
 	}
 
 	return pos;
