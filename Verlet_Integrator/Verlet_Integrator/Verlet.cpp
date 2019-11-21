@@ -60,7 +60,7 @@ fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos,fPoint a, float dt) {
 
 	fPoint v_new;
 
-	pos = Verlet_Integration(pos, prev_pos, a, dt);
+	//pos = Verlet_Integration(pos, prev_pos, a, dt);
 
 	v_new = (pos - prev_pos) / dt;
 
