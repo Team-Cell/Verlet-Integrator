@@ -56,11 +56,12 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 	return v_new;
 }
 
-fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos, float dt) {
+fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos,fPoint a, float dt) {
 
 	fPoint v_new;
 
 	pos = Verlet_Integration(pos, prev_pos, a, dt);
+
 	v_new = (pos - prev_pos) / dt;
 
 	cout << "px: " << pos.x << " py: " << pos.y << " vx: " << v_new.x << " vy: " << v_new.y << endl;
@@ -155,7 +156,7 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
 
-	particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.dt);
+	particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
 
 	if (col_x == true) {
 		particle.v.x = -particle.v.x * 0.9;
