@@ -175,12 +175,6 @@ void CalculateCollisionFinalPosition(Verlet& particle, float time) {
 	time = particle.dt - time;
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * (time * time);
 	particle.prev_pos = particle.pos - particle.v * particle.dt - particle.a * 0.5 * particle.dt * particle.dt;
-	if ((particle.pos.y > SCREEN_HEIGHT) && (floor(particle.v.y) == 0))
-	{
-		particle.pos.y = SCREEN_HEIGHT - 20;
-		particle.v.y = 0;
-		particle.a.y = 0;
-	}
 }
 
 //acceleration and velocity
