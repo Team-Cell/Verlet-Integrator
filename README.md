@@ -1,16 +1,18 @@
 # Verlet-Integrator
 
 ## Introduction
-Verlet integrator created for our physics II subject at University.
-
+Verlet integrator created for our physics II subject at CITM in Terrassa.
 
 ## Team
-* Pablo Galve: https://github.com/pablogalve
-* Marc Pagès: https://github.com/marcpages2020
-* Silvino Medina: https://github.com/silvino00
-* Arnau Falgueras: https://github.com/arnau77
 * Pol Camacho: https://github.com/polcamacho
-* Josep Sánchez: https://github.com/daskza19
+* Arnau Falgueras: https://github.com/arnau77
+* Pablo Galve: https://github.com/pablogalve
+* Silvino Medina: https://github.com/silvino00
+* Marc Pagès: https://github.com/marcpages2020
 * Roger Pérez: https://github.com/rugiacreed
-* Carlos Redolar: https://github.com/carlosredolar
 * Marc Ramos: https://github.com/Ramsubito
+* Carlos Redolar: https://github.com/carlosredolar
+* Josep Sánchez: https://github.com/daskza19
+
+
+
