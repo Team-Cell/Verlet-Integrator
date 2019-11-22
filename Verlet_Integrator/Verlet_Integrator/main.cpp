@@ -22,7 +22,7 @@ int main(int argc, char* args[]) {
 	int loop_counter = 0;
 	int max_loops = 40;
 	fPoint temp_pos;
-	bool exit = true;
+	bool exit = false;
 	int last_time;
 
 	Verlet particle;
@@ -35,7 +35,7 @@ int main(int argc, char* args[]) {
 	float time = 0;
 	float current_time = 0;
 
-	SDL_Event event;
+
 	//screen limit rectangles
 	VRectangle rectangles[4];
 	VRectangle top_rectangle(0, -RECTANGLE_THICKNESS, SCREEN_WIDTH + 2 * RECTANGLE_THICKNESS, RECTANGLE_THICKNESS);
@@ -117,7 +117,7 @@ int main(int argc, char* args[]) {
 			LOG("particle.v= %f, %f",particle.v.x,particle.v.y);
 			last_time = SDL_GetTicks();
 
-			while (exit = true)
+			while (exit == false)
 			{
 				while (1) {
 					//dt = (SDL_GetTicks() - last_time) / 1000;
@@ -159,22 +159,7 @@ int main(int argc, char* args[]) {
 							break;
 						}
 					}*/
-					LOG("X: %f, %f", particle.v.x, particle.a.x);
-					
-					if (event.type == SDL_KEYDOWN) {
-						switch (event.key.keysym.sym) {
-						case SDLK_ESCAPE:
-							exit = false;
-							break;
-							//return exit;
-					
-						}
-					
-					}
-					else {
-						exit = true;
-					}
-					
+					LOG("X: %f, %f", particle.v.x, particle.a.x);					
 				}
 			}
 		case 4:
