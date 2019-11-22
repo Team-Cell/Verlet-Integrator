@@ -61,9 +61,21 @@ fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos,fPoint a, float dt) {
 	fPoint v_new;
 
 	//pos = Verlet_Integration(pos, prev_pos, a, dt);
-
-	v_new = (pos - prev_pos) / dt;
-
+	
+	if (a.x == 0 && a.y == 0) {
+		v_new = (pos - prev_pos) / dt;
+	}
+	else if (a.x == 0) {
+		v_new.y = (pos.y - prev_pos.y - 0.5 * a.y * dt * dt) / dt;
+		v_new.x = (pos.x - prev_pos.x) / dt;
+	}
+	else if (a.y == 0) {
+		v_new.x = (pos.x - prev_pos.x - 0.5 * a.x * dt * dt) / dt;
+		v_new.y = (pos.y - prev_pos.y) / dt;
+	}
+	else {
+		v_new = (pos - prev_pos - a * dt * dt * 0.5) / dt;
+	}
 	cout << "px: " << pos.x << " py: " << pos.y << " vx: " << v_new.x << " vy: " << v_new.y << endl;
 
 	return v_new;
@@ -78,6 +90,7 @@ fPoint Verlet_Acceleration(float m, fPoint total_f) {
 }
 
 //collision related
+
 
 //we can now if a body is colliding checking all the cases in which it doesn't collide
 bool CheckCollision(Verlet particle, VRectangle rect) {
@@ -108,7 +121,7 @@ void SolveCollision(Verlet particle, VRectangle rect)
 	particle.pos = aux_pos;
 }
 
-float Calculate_Time(float pos_i, float pos_new, float v, float a) {
+float Calculate_Time(float pos_i, float pos_new, float v, float a, float dt) {
 	float time, time1, time2, t_pow;
 
 	if (a == 0) {
@@ -119,8 +132,8 @@ float Calculate_Time(float pos_i, float pos_new, float v, float a) {
 	time1 = (-v + t_pow) / a;
 	time2 = (-v - t_pow) / a;
 
-	if (time1 > 0)time = time1;
-	else if (time2 > 0)time = time2;
+	if (time1 > 0 && time1 < dt)time = time1;
+	else if (time2 > 0 && time2 < dt)time = time2;
 	else time = 0;
 
 	return time;
@@ -132,46 +145,46 @@ float CalculateCollisionPosition(Verlet& particle, VRectangle rect) {
 	bool col_x, col_y;
 	col_x = col_y = false;
 
+	particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
+
+
 	//if the particle hits the right collider
 	if (particle.prev_pos.x + particle.radius < rect.x) {
-		time = Calculate_Time(particle.prev_pos.x, rect.x - particle.radius, particle.v.x, particle.a.x);
+		time = Calculate_Time(particle.prev_pos.x, rect.x - particle.radius, particle.v.x, particle.a.x, particle.dt);
 		col_x = true;
 	}
 	//if the particle hits the left collider
 	else if (particle.prev_pos.x - particle.radius > rect.x + rect.w) {
-		time = Calculate_Time(particle.prev_pos.x, rect.x + rect.w + particle.radius, particle.v.x, particle.a.x);
+		time = Calculate_Time(particle.prev_pos.x, rect.x + rect.w + particle.radius, particle.v.x, particle.a.x, particle.dt);
 		col_x = true;
 	}
 	//if the particle hits the bottom collider
 	else if (particle.prev_pos.y + particle.radius < rect.y) {
-		particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
-		time = Calculate_Time(particle.prev_pos.y, rect.y - particle.radius, particle.v.y, particle.a.y);
+		time = Calculate_Time(particle.prev_pos.y, rect.y - particle.radius, particle.v.y, particle.a.y, particle.dt);
 		col_y = true;
 	}
 	//if the particle hits the top collider
 	else if (particle.prev_pos.y - particle.radius > rect.y + rect.h) {
-		particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
-		time = Calculate_Time(particle.prev_pos.y, rect.y + rect.h + particle.radius, particle.v.y, particle.a.y);
+		time = Calculate_Time(particle.prev_pos.y, rect.y + rect.h + particle.radius, particle.v.y, particle.a.y, particle.dt);
 		col_y = true;
 	}
 
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * time * time;
 
-	particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, particle.dt);
+	particle.v = Stormer_Verlet(particle.pos, particle.prev_pos, particle.a, time);
 
 	if (col_x == true) {
 		particle.v.x = -particle.v.x * 0.9;
-		//particle.a.x = -particle.a.x;
+		particle.v.y *=0.9;
 	}
 	else if (col_y == true) {
 		particle.v.y = -particle.v.y * 0.9;
-		//particle.a.y = -particle.a.y;
+		particle.v.x *= 0.9;
 	}
 	return time;
 }
 
 void CalculateCollisionFinalPosition(Verlet& particle, float time) {
-	float time1 = time;
 	time = particle.dt - time;
 	particle.pos = particle.prev_pos + particle.v * time + particle.a * 0.5 * (time * time);
 
