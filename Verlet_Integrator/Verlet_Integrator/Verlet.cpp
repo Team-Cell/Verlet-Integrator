@@ -59,8 +59,6 @@ fPoint Velocity_Verlet(fPoint vi, fPoint ai, fPoint a_new, float dt) {
 fPoint Stormer_Verlet(fPoint pos, fPoint prev_pos,fPoint a, float dt) {
 
 	fPoint v_new;
-
-	//pos = Verlet_Integration(pos, prev_pos, a, dt);
 	
 	if (a.x == 0 && a.y == 0) {
 		v_new = (pos - prev_pos) / dt;
